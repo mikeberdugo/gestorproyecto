@@ -75,6 +75,18 @@
     position: absolute;
     right: 8px;
   }
+
+  .panel {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  .contColor {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+  }
+
 </style>
 
 <div class="main detail">
@@ -86,7 +98,7 @@
                 <div class="panel panel-default" style="min-height: 400px;" >
                     <div class="panel-heading kanban-column-header">
                         <h3 class="panel-title">
-                            <div class="contColor">color</div>
+                            <div class="contColor" style="width: 12px; height: 22px;" data-id="{{ columna.id }}"></div>
                             {{ columna.titulo }}
                             <a href="#" class="pull-right"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
                         </h3>

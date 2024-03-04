@@ -1,3 +1,5 @@
+
+
 $(function(){
    $( ".column" ).sortable({
       connectWith: ".column",
@@ -25,3 +27,30 @@ $(function(){
         });
    });
 });
+
+// Capturando el contenedor
+var contenedor = document.querySelector('.row.mt-10');
+
+// Capturando todos los elementos con la clase "contColor" dentro del contenedor
+var elementosContColor = contenedor.querySelectorAll('.contColor');
+
+// Iterando sobre los elementos y capturando los valores de los atributos data-id
+elementosContColor.forEach(function(elemento) {
+    var id = elemento.getAttribute('data-id');
+   
+    if (id == 16) {
+        elemento.style.backgroundColor ="#70728F";
+    }
+
+    if (id == 17) {
+        elemento.style.backgroundColor ="#e44057";
+    }
+
+    if (id == 18) {
+        elemento.style.backgroundColor ="#e47c40";
+    }
+    if (id == 19) {
+        elemento.style.backgroundColor ="#a8e440";
+    }
+});
+
