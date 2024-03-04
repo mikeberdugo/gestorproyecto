@@ -258,3 +258,6 @@ def mover_tarjeta(request, tarjeta_id, columna_id):
     return HttpResponse("Ok")
 
 
+def nuevaactividad(request , id_bamba):
+    
+    return render(request , '././user/nuevaactividad.html')

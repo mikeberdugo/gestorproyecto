@@ -1,0 +1,48 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+
+{% block title %} Gestión de Proyecto - {{ proyecto.name }} {% endblock %}
+{% block name %}
+    {{ proyecto.name }}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
+{% endblock %}
+
+{% block conten %}
+<form name="projectForm"  class="ng-pristine ng-invalid ng-invalid-required" method="POST" >
+    {% csrf_token %}
+    <div ng-include="'projects/create/import-project-form-common/name.html'">
+        <fieldset>
+            <label for="project-name">Nombre del Proyecto</label>
+            <input type="text" placeholder="Nombre del Proyecto (Requerido)" name="project-name" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
+        </fieldset>
+    </div>
+    <div>
+        <fieldset>
+            <label for="project-description">Descripción del Proyecto</label>
+            <textarea placeholder="Descripción del Proyecto (Requerido)"  name="project-descrip"  data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+        </fieldset>
+    </div>
+    <fieldset>
+        <label for="project-priority">Gerentes</label>
+        <select id="project-managers" name="project-managers">
+            {% for usuario in gerentes %}
+            <option value="{{ usuario.id }}"> {{ usuario.usuario.first_name }} {{ usuario.usuario.last_name }} </option>
+            {% endfor %}
+        </select>
+    </fieldset>
+    <div ng-include="'projects/create/import-project-form-common/actions.html'">
+        <div class="create-project-action">
+            <button variant="secondary" type="button" title="Volver" class="btn-small create-project-action-cancel">Volver</button>
+            <button type="submit" class="btn-small create-project-action-submit" title="Asignar Proyecto">Asignar Proyecto</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static './js/scripts.js' %}"></script>
+{% endblock %}
