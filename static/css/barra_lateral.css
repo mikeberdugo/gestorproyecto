@@ -22,9 +22,9 @@ body{
 .contenedor-principal{
     display: grid;
 	grid-template-rows: repeat(10, 1fr);
-	grid-template-columns: repeat(12, 1fr);
 	gap: 0;
     height: 100%;
+    position: relative;
 	width: 100%;
 }
 
@@ -233,9 +233,11 @@ hr{
 }
 
 /*Contenedor principal*/
-.contdatos{
+.contdatos {
+    position: absolute;
     background-color: white;
-    margin-top: 48px;
-    grid-area: 1 / 2 / 12 / 14;   
+    grid-area: 1 / 2 / 12 / 14;
+    left: -5rem;
+    top: 7rem;
+    width: 100%;
 }
-
