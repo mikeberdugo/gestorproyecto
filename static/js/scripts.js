@@ -29,28 +29,23 @@ $(function(){
 });
 
 // Capturando el contenedor
-var contenedor = document.querySelector('.row.mt-10');
+const contenedor = document.querySelector('.row.mt-10');
+
+// Mapeando los valores de id con sus respectivos colores
+const colores = {
+  16: "#70728F",
+  17: "#e44057",
+  18: "#e47c40",
+  19: "#a8e440"
+};
 
 // Capturando todos los elementos con la clase "contColor" dentro del contenedor
-var elementosContColor = contenedor.querySelectorAll('.contColor');
+const elementosContColor = contenedor.querySelectorAll('.contColor');
 
-// Iterando sobre los elementos y capturando los valores de los atributos data-id
-elementosContColor.forEach(function(elemento) {
-    var id = elemento.getAttribute('data-id');
-   
-    if (id == 16) {
-        elemento.style.backgroundColor ="#70728F";
-    }
-
-    if (id == 17) {
-        elemento.style.backgroundColor ="#e44057";
-    }
-
-    if (id == 18) {
-        elemento.style.backgroundColor ="#e47c40";
-    }
-    if (id == 19) {
-        elemento.style.backgroundColor ="#a8e440";
-    }
+// Iterando sobre los elementos y asignando el color correspondiente
+elementosContColor.forEach(elemento => {
+  const id = elemento.getAttribute('data-id');
+  if (colores[id]) {
+    elemento.style.backgroundColor = colores[id];
+  }
 });
-
