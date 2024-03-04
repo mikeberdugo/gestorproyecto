@@ -152,6 +152,8 @@ def nuevoproyecto(request , codigo):
 def crearprojecto(request , codigo):        
     return render(request, './user/createproject.html')
 
+
+
 def asignar(request):
     gerentes = Usuario.objects.filter(rol='gerente')
     

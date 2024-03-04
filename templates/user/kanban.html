@@ -58,12 +58,11 @@
     <div class="row mt-10">
         <br>
         {% for columna in tablero.columnas.all %}
-            <div class="col-md-2">
-                <div class="panel panel-default">
+            <div class="col-md-3">
+                <div class="panel panel-default" style="min-height: 400px;" >
                     <div class="panel-heading kanban-column-header">
                         <h3 class="panel-title">{{ columna.titulo }}
-                            <a href="#" class="pull-right"><span class="glyphicon glyphicon-plus"
-                                                                     aria-hidden="true"></span></a>
+                            <a href="#" class="pull-right"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
                         </h3>
                     </div>
                     <div class="panel-body column" data-id="{{ columna.id }}">

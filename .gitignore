@@ -1,0 +1,15 @@
+# Archivos temporales de Visual Studio Code
+.vscode/
+*.vscode/
+
+# Archivos temporales de Django
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Archivos de configuración local de Django
+*.sqlite3
+*.db
+*.log
+
