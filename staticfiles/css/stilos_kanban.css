@@ -1,0 +1,39 @@
+.kanban-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.kanban-column {
+    width: 30%;
+    margin-right: 20px;
+    border-radius: 5px;
+    padding: 10px;
+    min-height: 200px;
+    background-color: #f8f9fa; /* Fondo gris claro */
+    border: 1px solid #dee2e6;
+}
+
+.kanban-column-header {
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px 5px 0 0;
+    text-align: center;
+}
+
+.kanban-column-body {
+    padding: 10px;
+}
+
+.kanban-card {
+    background-color: #fff; /* Fondo blanco para las tareas */
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+/* Estilos para diferentes estados de los títulos de las columnas */
+.kanban-column.todo .kanban-column-header { background-color: #007bff; }
+.kanban-column.in-progress .kanban-column-header { background-color: #ffc107; }
+.kanban-column.done .kanban-column-header { background-color: #28a745; }
+.kanban-column.closed .kanban-column-header { background-color: #dc3545; }
