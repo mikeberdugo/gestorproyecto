@@ -265,3 +265,9 @@ def nuevaactividad(request , id_bamba):
 def riesgos(request , ):
     
     return render(request , '././user/riesgos.html')
+
+def pagina1(request):
+    
+    porcentaje={'porcentaje1':'10%', 'porcentaje2':'20%', 'porcentaje3':'30%', 'porcentaje4':'40%', 'porcentaje5':'50%', 'porcentaje6':'60%', 'porcentaje7':'70%', 'porcentaje8':'90%', 'porcentaje9':'90%', 'porcentaje10':'100%' }
+    
+    return render(request , '././user/pagina1.html',{'porcentaje':porcentaje,})
