@@ -48,4 +48,5 @@ elementosContColor.forEach(elemento => {
   if (colores[id]) {
     elemento.style.backgroundColor = colores[id];
   }
+  
 });
