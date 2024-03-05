@@ -261,3 +261,7 @@ def mover_tarjeta(request, tarjeta_id, columna_id):
 def nuevaactividad(request , id_bamba):
     
     return render(request , '././user/nuevaactividad.html')
+
+def riesgos(request , ):
+    
+    return render(request , '././user/riesgos.html')
