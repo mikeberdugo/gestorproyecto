@@ -98,13 +98,10 @@ hr {
 }
 
 .menu {
-
     justify-content: left;
     align-items: center;
-
     height: 40px;
     color: #DFDFDF;
-
     flex-direction: column;
 }
 
@@ -115,6 +112,7 @@ hr {
     transition: all 0.8s ease;
     top: 48px;
     width: 50px;
+    z-index: 1;
 }
 
 /*contenedor menu lateral abierto*/
