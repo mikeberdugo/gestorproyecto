@@ -236,10 +236,16 @@ hr {
 .contdatos {
     position: absolute;
     background-color: white;
-    grid-area: 1 / 2 / 12 / 14;
+    grid-area: 1 / 3 / 12 / 14;
     left: -5rem;
     top: 7rem;
     width: 100%;
+    overflow-y: scroll;
+}
+
+form.ng-pristine.ng-invalid.ng-invalid-required {
+    padding: 24px;
+    height: 540px;
 }
 
 
