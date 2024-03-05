@@ -258,6 +258,45 @@ def mover_tarjeta(request, tarjeta_id, columna_id):
     return HttpResponse("Ok")
 
 
-def nuevaactividad(request , id_bamba):
+def nuevaactividad(request , id_project , id_columna):
+    columna = id_columna and get_object_or_404(Columna, id=id_columna) or None
     
-    return render(request , '././user/nuevaactividad.html')
+    proyecto = Proyecto.objects.filter(id=id_project).first()
+    if proyecto:
+        tablero = proyecto.tablero
+    
+    context = {
+        'email': 'user.email',
+        'first_name': 'user.first_name',
+    }    
+    
+    if request.method == 'POST':
+        nombre_actividad = request.POST.get('actividad-nombre')
+        descripcion_actividad = request.POST.get('actividad-descripcion')
+        fecha_inicio = request.POST.get('actividad-fecha-inicio')
+        fecha_fin = request.POST.get('actividad-fecha-fin')
+        
+        actividad = Hito.objects.create(
+            nombre=nombre_actividad,
+            descripcion=descripcion_actividad,
+            proyecto=proyecto,
+            fecha_inicio=fecha_inicio,
+            fecha_fin=fecha_fin,
+        )
+        
+        actividad.save()
+        
+        tarjeta = Tarjeta.objects.create(
+            actividad=actividad,
+            columna = columna,
+            titulo = nombre_actividad , 
+            descripcion = descripcion_actividad, 
+        )
+        
+        tarjeta.columna = columna
+        
+        tarjeta.save()
+        print(tarjeta)
+        return redirect('kanban', id_project=proyecto.id)
+    
+    return render(request , '././user/nuevaactividad.html', {'context':context , 'tablero':tablero , 'proyecto' : proyecto })

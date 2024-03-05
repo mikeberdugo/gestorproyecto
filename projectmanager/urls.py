@@ -17,7 +17,7 @@ urlpatterns = [
     ## gestor de kanban 
     path('prueba',gestion,name='gesstion'),
     path('project/project/<str:id_proyect>/',proyecto,name='project'), 
-    path('project/project/<str:id_proyect>/kanba/new/', nuevaactividad ,name = 'nuevaactividad'),
+    path('project/project/<str:id_project>/kanba/new/<str:id_columna>/', nuevaactividad ,name = 'nuevaactividad'),
     path('project/project/<str:id_project>/kanban', kanban, name='kanban'),
     path('tarjeta/<int:tarjeta_id>/mover/<int:columna_id>/', mover_tarjeta, name='mover_tarjeta'),
     

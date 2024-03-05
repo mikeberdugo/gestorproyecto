@@ -11,35 +11,61 @@
 {% endblock %}
 
 {% block conten %}
-<form name="projectForm"  class="ng-pristine ng-invalid ng-invalid-required" method="POST" >
-    {% csrf_token %}
-    <div ng-include="'projects/create/import-project-form-common/name.html'">
-        <fieldset>
-            <label for="project-name">Nombre del Proyecto</label>
-            <input type="text" placeholder="Nombre del Proyecto (Requerido)" name="project-name" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
-        </fieldset>
+<div class="main detail"> 
+    <h1 tg-main-title="" i18n-section-name="Nueva Actividad" title="Nueva Actividad" ><span> Nueva Actividad </span></h1>
+    <div class="col-md-8 main detail">
+        <form name="actividadForm" class="ng-pristine ng-invalid ng-invalid-required" method="POST">
+            {% csrf_token %}
+            <div>
+                <fieldset >
+                    <label for="actividad-nombre">Nombre de la Actividad</label>
+                    <input type="text" placeholder="Nombre de la Actividad (Requerido)" name="actividad-nombre" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
+                </fieldset>
+            </div>
+            <div>
+                <fieldset  >
+                    <label for="actividad-descripcion">Descripción de la Actividad</label>
+                    <textarea placeholder="Descripción de la Actividad (Requerido)" name="actividad-descripcion" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+                </fieldset>
+            </div>
+           <!-- <fieldset  >
+                <label for="actividad-proyecto">Proyecto</label>
+                <select id="actividad-proyecto" name="actividad-proyecto">
+                    {% for proyecto in proyectos %}
+                    <option value="{{ proyecto.id }}"> {{ proyecto.name }} </option>
+                    {% endfor %}
+                </select>
+            </fieldset>  -->
+            <fieldset  >
+                <label for="actividad-fecha-inicio">Fecha de Inicio</label>
+                <input type="date" name="actividad-fecha-inicio" required="required">
+            </fieldset>
+            <fieldset  >
+                <label for="actividad-fecha-fin">Fecha de Fin</label>
+                <input type="date" name="actividad-fecha-fin" required="required">
+            </fieldset>
+            <!-- <fieldset  >
+                <label for="actividad-asignado">Asignado</label>
+                <select id="actividad-asignado" name="actividad-asignado">
+                    {% for usuario in usuarios %}
+                    <option value="{{ usuario.id }}"> {{ usuario.usuario.username }} </option>
+                    {% endfor %}
+                </select>
+            </fieldset> -->
+            <div>
+                <br>
+                <br>
+                <fieldset>
+                    <button variant="secondary" type="button" title="Volver" class="btn-small create-actividad-action-cancel">Volver</button>
+                    <button type="submit" class="btn-small  create-actividad-action-submit" title="Crear Actividad">Crear Actividad</button>
+                </fieldset>
+            </div>
+        </form>
+
     </div>
-    <div>
-        <fieldset>
-            <label for="project-description">Descripción del Proyecto</label>
-            <textarea placeholder="Descripción del Proyecto (Requerido)"  name="project-descrip"  data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
-        </fieldset>
-    </div>
-    <fieldset>
-        <label for="project-priority">Gerentes</label>
-        <select id="project-managers" name="project-managers">
-            {% for usuario in gerentes %}
-            <option value="{{ usuario.id }}"> {{ usuario.usuario.first_name }} {{ usuario.usuario.last_name }} </option>
-            {% endfor %}
-        </select>
-    </fieldset>
-    <div ng-include="'projects/create/import-project-form-common/actions.html'">
-        <div class="create-project-action">
-            <button variant="secondary" type="button" title="Volver" class="btn-small create-project-action-cancel">Volver</button>
-            <button type="submit" class="btn-small create-project-action-submit" title="Asignar Proyecto">Asignar Proyecto</button>
-        </div>
-    </div>
-</form>
+</div>
+
+
 
 {% endblock %}
 

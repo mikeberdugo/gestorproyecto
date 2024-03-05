@@ -100,8 +100,8 @@ class Hito(models.Model):
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
     fecha_inicio = models.DateField()
     fecha_fin = models.DateField()
-    asignado = models.ForeignKey(Usuario,on_delete=models.CASCADE) ## general una relacion de uno a muchos 
-
+    asignado = models.ForeignKey(Usuario,on_delete=models.CASCADE , null=True, blank=True ) ## general una relacion de uno a muchos 
+    porcentaje = models.FloatField(null=True, blank=True ,default = 0.0)
 
 
 #! validar hitos donde se encuentran 
@@ -235,21 +235,14 @@ class Columna(models.Model):
         t.save()
         return t
 
-class Postit(models.Model):
+class Tarjeta(models.Model):
     titulo = models.CharField(max_length=200)
     columna = models.ForeignKey(Columna, related_name='tarjetas', on_delete=models.CASCADE)  
     actividad = models.ForeignKey(Hito, on_delete=models.CASCADE)
+    descripcion = MarkupField(markup_type='markdown')
+    participantes = models.ManyToManyField(authmodels.User,blank=True )
+
     
-
-    def __str__(self):
-        return self.titulo
-
-class Tarjeta(Postit):
-    descripcion = MarkupField()
-    participantes = models.ManyToManyField(authmodels.User)
-
-    def __str__(self):
-        return self.titulo
 
 class Recurso(models.Model):
     nombre = models.CharField(max_length=200)
