@@ -15,6 +15,10 @@ urlpatterns = [
     path('project/asignar/new',asignar,name='asignar'),
     path('project/12',diagrama,name='diagramas'),
 
+    #oscar
+    path('tareas/taiga/',crear_comentario),
+    path('lecciones/tabla',lecciones),
+
     #brayan
     path('project/riesgos/',riesgos,name='riesgos'),
     path('project/MatrizRiesgo',Matriz_riesgo,name='Matriz_riesgo'),

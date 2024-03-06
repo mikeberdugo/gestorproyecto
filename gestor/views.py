@@ -325,3 +325,25 @@ def riesgos(request):
 def Matriz_riesgo(request):
     info =  MatrizRiesgo.objects.all()
     return render(request, '././user/Matriz_riesgo.html',{'tablita': info})
+
+
+
+#post lecciones aprendidas
+def crear_comentario(request):
+    if request.method == 'POST':
+        nuevo_comentario = ComentarioTarea(
+            identificando_problema=request.POST['identificando_problema'],
+            causa=request.POST['causa'],
+            solucion=request.POST['solucion'],
+            planes_mejora_aplicados=request.POST['planes_mejora_aplicados'],
+            resultados_planes_mejora=request.POST['resultados_planes_mejora']
+        )
+        nuevo_comentario.save()
+        return HttpResponse('¡Comentario guardado correctamente!')
+    else:
+        return render(request, '././user/tareas.html')
+    
+#get lecciones aprendidas  
+def lecciones(request):
+    info = ComentarioTarea.objects.all()
+    return render(request, "././user/lecciones.html",{'ComentarioTareas': info})
