@@ -13,11 +13,12 @@ urlpatterns = [
     path('project/new/<str:codigo>',nuevoproyecto,name='nuevoproyecto'),
     path('project/create',crearprojecto,name='crearprojecto'),
     path('project/asignar/new',asignar,name='asignar'),
-    path('project/12',diagrama,name='diagrama'),
-    path('project/riesgos',riesgos,name='riesgos'),
-    path('project/pagina1',pagina1,name='pagina1'),
-    path('tareas/taiga/',crear_comentario),
-    path('lecciones/tabla',lecciones),
+    path('project/12',diagrama,name='diagramas'),
+
+    #brayan
+    path('project/riesgos/',riesgos,name='riesgos'),
+    path('project/MatrizRiesgo',Matriz_riesgo,name='Matriz_riesgo'),
+
     ## gestor de kanban 
     path('prueba',gestion,name='gesstion'),
     path('project/project/<str:id_proyect>/',proyecto,name='project'), 

@@ -16,56 +16,49 @@
     <div ng-include="'projects/create/import-project-form-common/name.html'">
         <fieldset>
             <label for="project-name">Nombre del Riesgo</label>
-            <input type="text" placeholder="Nombre del Proyecto (Requerido)" name="project-name" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
+            <input type="text" placeholder="Nombre del Proyecto (Requerido)" name="matriz-name" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
         </fieldset>
     </div>
     <div>
         <fieldset>
             <label for="project-description">Descripción del Riesgo</label>
-            <textarea placeholder="Descripción del Proyecto (Requerido)"  name="project-descrip"  data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+            <textarea placeholder="Descripción del Proyecto (Requerido)"  name="matriz-descrip"  data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
         </fieldset>
     </div>
     <div>
         <fieldset>
             <label for="project-causas">Causas del Riesgo</label>
-            <textarea placeholder="Causas del Riesgo"  name="project-causas"  data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+            <textarea placeholder="Causas del Riesgo"  name="matriz-causas"  data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
         </fieldset>
     </div>
     <div>
         <fieldset>
             <label for="project-mitigacion">Plan de Mitigación</label>
-            <input type="text" placeholder="Plan de Mitigación" name="project-mitigacion" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
+            <input type="text" placeholder="Plan de Mitigación" name="matriz-mitigacion" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
         </fieldset>
     </div>
     <div>
         <fieldset>
             <label for="project-impact">Descripción del impacto en alcance</label>
-            <input type="text" placeholder="Impacto en alcance" name="project-impact" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
+            <input type="text" placeholder="Impacto en alcance" name="matriz-impact" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
         </fieldset>
     </div>
     <div>
         <fieldset>
             <label for="impact-tiempo">Descripción del impacto en Tiempo</label>
-            <input type="text" placeholder="Impacto en tiempo" name="impact-tiempo" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
+            <input type="text" placeholder="Impacto en tiempo" name="matriz-tiempo" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
         </fieldset>
     </div>
     <div>
         <fieldset>
             <label for="impact-costo">Descripción del impacto Costo</label>
-            <input type="text" placeholder="Impacto Costo" name="impact-costo" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
+            <input type="text" placeholder="Impacto Costo" name="matriz-costo" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
         </fieldset>
     </div>
-    <fieldset>
-        <label for="project-priority">Gerentes</label>
-        <select id="project-managers" name="project-managers">
-            {% for usuario in gerentes %}
-            <option value="{{ usuario.id }}"> {{ usuario.usuario.first_name }} {{ usuario.usuario.last_name }} </option>
-            {% endfor %}
-        </select>
-    </fieldset>
+    
     <fieldset>
         <label for="project-priority">Probabilidad (Ocurrencia)</label>
-        <select id="project-probabilidad" name="project-probabilidad">
+        <select id="project-probabilidad" name="matriz-probabilidad">
             <option value="1">hola</option>
             <option value="2"></option>
             <option value="3"></option>
@@ -75,7 +68,7 @@
     </fieldset>
     <fieldset>
         <label for="project-priority">Gravedad Impacto</label>
-        <select id="gravedad-impact" name="gravedad-impact">
+        <select id="gravedad-impact" name="matriz-gravedad">
             <option value="1"></option>
             <option value="2"></option>
             <option value="3"></option>
@@ -85,7 +78,7 @@
     </fieldset>
     <fieldset>
         <label for="project-riesgo">Valor de Riesgo</label>
-        <select id="project-riesgo" name="project-riesgo">
+        <select id="project-riesgo" name="matriz-valorriesgo">
             <option value="1"></option>
             <option value="2"></option>
             <option value="3"></option>
@@ -95,7 +88,7 @@
     </fieldset>
     <fieldset>
         <label for="project-priority">Nivel de Riesgo</label>
-        <select id="nivel-riesgo" name="nivel-riesgo">
+        <select id="nivel-riesgo" name="matriz-nivelriesgo">
             <option value="1"></option>
             <option value="2"></option>
             <option value="3"></option>

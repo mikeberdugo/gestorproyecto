@@ -8,6 +8,7 @@ from .pruebas import *
 from .models import * 
 from collections import defaultdict
 from django.http import HttpResponse
+
 ## funciones propias 
 from .mail import *
 import random
@@ -262,33 +263,65 @@ def nuevaactividad(request , id_bamba):
     
     return render(request , '././user/nuevaactividad.html')
 
-def riesgos(request , ):
-    
-    return render(request , '././user/riesgos.html')
+""" 
+class MatrizRiesgo(models.Model):
+    nombre = models.CharField(max_length=200 )
+    descripcion = models.TextField()
+    Causas = models.CharField(max_length=200 )
+    Plan = models.CharField(max_length=200 )
+    Descripcion_tiempo = models.CharField(max_length=200 )
+    Descripcion_alcance = models.CharField(max_length=200 )
+    Descripcion_costo = models.CharField(max_length=200 )
+    probavilidad = models.CharField(max_length=20, choices=GAVEDAD)
+    gravedad = models.CharField(max_length=20, choices=GAVEDAD)
+    riesgo = models.CharField(max_length=20, choices=RIESGOS)
+    materializo = models.CharField(max_length=200 ) 
+    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
+    acciones_mitigacion = models.TextField()
 
-def pagina1(request):
-    
-    porcentaje={'porcentaje1':'10%', 'porcentaje2':'20%', 'porcentaje3':'30%', 'porcentaje4':'40%', 'porcentaje5':'50%', 'porcentaje6':'60%', 'porcentaje7':'70%', 'porcentaje8':'90%', 'porcentaje9':'90%', 'porcentaje10':'100%' }
-    
-    return render(request , '././user/pagina1.html',{'porcentaje':porcentaje,})
+    def str(self):
+        return f"Matriz de Riesgo para {self.proyecto.name}"
 
+"""
 
-#post lecciones aprendidas
-def crear_comentario(request):
+def riesgos(request):
     if request.method == 'POST':
-        nuevo_comentario = ComentarioTarea(
-            identificando_problema=request.POST['identificando_problema'],
-            causa=request.POST['causa'],
-            solucion=request.POST['solucion'],
-            planes_mejora_aplicados=request.POST['planes_mejora_aplicados'],
-            resultados_planes_mejora=request.POST['resultados_planes_mejora']
+        id_project = request.POST.get('id_project')
+
+        matriz_name = request.POST.get('matriz-name')
+        matriz_descrip = request.POST.get('matriz-descrip')
+        matriz_causas = request.POST.get('matriz-causas')
+        matriz_mitigacion = request.POST.get('matriz-mitigacion')
+        matriz_impact = request.POST.get('matriz-impact')
+        matriz_tiempo = request.POST.get('matriz-tiempo')
+        matriz_costo = request.POST.get('matriz-costo')
+        matriz_probabilidad = request.POST.get('matriz-probabilidad')
+        matriz_gravedad = request.POST.get('matriz-gravedad')
+        matriz_valorriesgo = request.POST.get('matriz-valorriesgo')
+        matriz_nivelriesgo = request.POST.get('matriz-nivelriesgo')
+
+        Matriz_riesgos = MatrizRiesgo.objects.create(
+            nombre=matriz_name,
+            descripcion=matriz_descrip,
+            Causas=matriz_causas,
+            Plan=matriz_mitigacion,
+            Descripcion_tiempo=matriz_tiempo,
+            Descripcion_alcance=matriz_impact,
+            Descripcion_costo=matriz_costo,
+            probavilidad=matriz_probabilidad,
+            gravedad=matriz_gravedad,
+            riesgo=matriz_valorriesgo,
+            materializo=matriz_nivelriesgo,
         )
-        nuevo_comentario.save()
-        return HttpResponse('¡Comentario guardado correctamente!')
-    else:
-        return render(request, '././user/tareas.html')
+
     
-#get lecciones aprendidas  
-def lecciones(request):
-    info = ComentarioTarea.objects.all()
-    return render(request, "././user/lecciones.html",{'ComentarioTareas': info})
+
+        # Devolver la respuesta renderizando la plantilla con el contexto
+    
+    return render(request, '././user/riesgos.html',);
+
+
+
+def Matriz_riesgo(request):
+    info =  MatrizRiesgo.objects.all()
+    return render(request, '././user/Matriz_riesgo.html',{'tablita': info})
