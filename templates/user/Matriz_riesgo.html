@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css">
+    </head>
+    <body>
+        <table id="tabla_riesgos" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombre de riesgo</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Probabilidad</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Gravedad impacto</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Valor riesgo</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nivel riesgo</font></font></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tigre Nixon</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">sistema arquitecto</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Edimburgo</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">61</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2011-04-25</font></font></td>
+                </tr>
+                <tr>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Garrett inviernos</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Contador</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Tokio</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">63</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2011-07-25</font></font></td>
+                </tr>
+                <tr>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Ashton Cox</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Autor técnico junior</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">San Francisco</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">66</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2009-01-12</font></font></td>
+                </tr>
+                <tr>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">cedric kelly</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Desarrollador senior de javascript</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Edimburgo</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">22</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">2012-03-29</font></font></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>   
+        <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.0.1/js/dataTables.tailwindcss.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+
+
+        
+
+
+
+        <script>//función para mostrar los datos en la tabla de colaboradores
+            $(document).ready(function () {
+                var table = $("#tabla_riesgos").DataTable({
+                    searching: true,
+                    language: {
+                        url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
+                    },
+                    autoWidth: true,
+                    processing: true,
+                });
+            });
+        </script>    
+        
+    </body>
+</html>
+
+

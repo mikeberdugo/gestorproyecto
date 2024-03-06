@@ -8,6 +8,7 @@ from .pruebas import *
 from .models import * 
 from collections import defaultdict
 from django.http import HttpResponse
+
 ## funciones propias 
 from .mail import *
 import random
@@ -262,6 +263,66 @@ def nuevaactividad(request , id_bamba):
     
     return render(request , '././user/nuevaactividad.html')
 
+""" 
+class MatrizRiesgo(models.Model):
+    nombre = models.CharField(max_length=200 )
+    descripcion = models.TextField()
+    Causas = models.CharField(max_length=200 )
+    Plan = models.CharField(max_length=200 )
+    Descripcion_tiempo = models.CharField(max_length=200 )
+    Descripcion_alcance = models.CharField(max_length=200 )
+    Descripcion_costo = models.CharField(max_length=200 )
+    probavilidad = models.CharField(max_length=20, choices=GAVEDAD)
+    gravedad = models.CharField(max_length=20, choices=GAVEDAD)
+    riesgo = models.CharField(max_length=20, choices=RIESGOS)
+    materializo = models.CharField(max_length=200 ) 
+    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
+    acciones_mitigacion = models.TextField()
+
+    def str(self):
+        return f"Matriz de Riesgo para {self.proyecto.name}"
+
+"""
+
 def riesgos(request , ):
+    if request.method == 'POST':
+        matriz_name = request.POST.get('matriz-name')
+        matriz_descrip = request.POST.get('matriz-descrip')
+        matriz_causas = request.POST.get('matriz-causas')
+        matriz_mitigacion = request.POST.get('matriz-mitigacion')
+        matriz_impact = request.POST.get('matriz-impact')
+        matriz_tiempo = request.POST.get('matriz-tiempo')
+        matriz_costo = request.POST.get('matriz-costo')
+        matriz_probabilidad = request.POST.get('matriz-probabilidad')
+        matriz_gravedad = request.POST.get('matriz-gravedad')
+        matriz_valorriesgo = request.POST.get('matriz-valorriesgo')
+        matriz_nivelriesgo = request.POST.get('matriz-nivelriesgo')
+
+        
+        
+        matriz = MatrizRiesgo.objects.create(
+            nombre = matriz_name ,
+            descripcion = matriz_descrip ,
+            causas = matriz_causas ,
+            Plan = matriz_mitigacion ,
+            Descripcion_tiempo = matriz_tiempo,
+            Descripcion_alcance = matriz_impact ,
+            Descripcion_costo = matriz_costo ,
+            probavilidad = matriz_probabilidad,
+            gravedad = matriz_gravedad,
+            riesgo = matriz_valorriesgo ,
+            materializo = matriz_nivelriesgo,
+        )
+        
+        #return redirect('././project/riesgos')
     
-    return render(request , '././user/riesgos.html')
+    
+    # Si el método de la solicitud no es POST, renderiza el formulario
+    
+    return render(request, '././project/riesgos.html', {'form': form})
+
+
+def Matriz_riesgo(request , ):
+    
+    
+    return render(request, '././user/Matriz_riesgo.html')
