@@ -325,8 +325,6 @@ def riesgos(request):
 
 
 
-
-
 def Matriz_riesgo(request):
     info =  MatrizRiesgo.objects.all()
     return render(request, '././user/Matriz_riesgo.html',{'tablita': info})
