@@ -271,3 +271,24 @@ def pagina1(request):
     porcentaje={'porcentaje1':'10%', 'porcentaje2':'20%', 'porcentaje3':'30%', 'porcentaje4':'40%', 'porcentaje5':'50%', 'porcentaje6':'60%', 'porcentaje7':'70%', 'porcentaje8':'90%', 'porcentaje9':'90%', 'porcentaje10':'100%' }
     
     return render(request , '././user/pagina1.html',{'porcentaje':porcentaje,})
+
+
+#post lecciones aprendidas
+def crear_comentario(request):
+    if request.method == 'POST':
+        nuevo_comentario = ComentarioTarea(
+            identificando_problema=request.POST['identificando_problema'],
+            causa=request.POST['causa'],
+            solucion=request.POST['solucion'],
+            planes_mejora_aplicados=request.POST['planes_mejora_aplicados'],
+            resultados_planes_mejora=request.POST['resultados_planes_mejora']
+        )
+        nuevo_comentario.save()
+        return HttpResponse('¡Comentario guardado correctamente!')
+    else:
+        return render(request, '././user/tareas.html')
+    
+#get lecciones aprendidas  
+def lecciones(request):
+    info = ComentarioTarea.objects.all()
+    return render(request, "././user/lecciones.html",{'ComentarioTareas': info})
