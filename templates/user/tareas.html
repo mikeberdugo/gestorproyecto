@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="fragment" content="!">
+    <meta name="description" content="">
+    <meta name="keywords" content="agile, scrum, taiga, management, project, developer, designer, user experience">
+    <link rel="stylesheet" href="{% static './css/tareas.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-HA8aIQXlN7sUkuqzGZK8r+4LntXBzPwONCzqOUiD54/1xbS49rI/12py9U3WlRj9WcmWlvqzB8lyqbqE2tzBxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <link rel="icon" type="image/png" href="http://localhost:9000/v-1708598134890/images/favicon.png">
+        <title>Lecciones colvaProject</title>
+</head>
+
+    <style>
+        #project-managers option:checked {
+            display: none;
+        }
+    </style>
+    
+<body tg-main="" ng-class="{'rtl': isRTL}" class="">
+    <tg-legacy ng-version="10.0.14"></tg-legacy>
+    <div ng-if="!errorHandling.showingError">
+        <div ng-view="" class="master">
+            <tg-create-project-form type="kanban">
+                <div class="create-project">
+                    <div ng-if="vm.type == 'kanban'" class="create-project-title-wrapper">
+                        <tg-svg svg-icon="icon-kanban">
+                            <svg class="icon icon-kanban" >
+                                <use xlink:href="#icon-kanban" href="#icon-kanban"></use>
+                            </svg>
+                        </tg-svg>
+                        <h1 translate="PROJECT.CREATE.TEMPLATE_KANBAN" class="create-project-title">Lecciones aprendidas</h1>
+                    </div>
+                    <h3 ng-if="vm.type == 'kanban'" translate="PROJECT.CREATE.TEMPLATE_KANBAN_DESC" class="create-project-description"></h3>
+                    <form method="post" name="projectForm" ng-submit="vm.submit()" novalidate="novalidate" class="ng-pristine ng-invalid ng-invalid-required">
+                        {% csrf_token %}
+                        <div ng-include="'projects/create/import-project-form-common/name.html'">
+                            <fieldset>
+                                <label translate="PROJECT.COMMON.DETAILS" for="project-name">Identificacion el problema</label>
+                                <input id="identificando_problema" name="identificando_problema" ng-class="{'checksley-error': !!vm.errorList.includes('name') }" type="text" ng-model="vm.projectForm.name" placeholder="Identificacion (Requerido)" name="project-name" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
+                            </fieldset>
+                        </div>
+                        <div ng-include="'projects/create/import-project-form-common/description.html'">
+                            <fieldset>
+                                <label translate="PROJECT.COMMON.DESCRIPTION" for="project-description">Causa</label>
+                                <textarea id="causa" name="causa" ng-class="{'checksley-error': !!vm.errorList.includes('description') }" ng-model="vm.projectForm.description" placeholder="Cauda del problema (Requerido)" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+                            </fieldset>
+                        </div>
+                        <div ng-include="'projects/create/import-project-form-common/description.html'">
+                            <fieldset>
+                                <label translate="PROJECT.COMMON.DESCRIPTION" for="project-description">Solución</label>
+                                <textarea id="solucion" name="solucion"  ng-class="{'checksley-error': !!vm.errorList.includes('description') }" ng-model="vm.projectForm.description" placeholder="Solucion del problema (Requerido)" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+                            </fieldset>
+                        </div>
+                        <div ng-include="'projects/create/import-project-form-common/description.html'">
+                            <fieldset>
+                                <label translate="PROJECT.COMMON.DESCRIPTION" for="project-description">Planes de mejora aplicados</label>
+                                <textarea id="planes_mejora_aplicados" name="planes_mejora_aplicados" ng-class="{'checksley-error': !!vm.errorList.includes('description') }" ng-model="vm.projectForm.description" placeholder="Plan de mejora (Requerido)" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+                            </fieldset>
+                        </div>
+                        <div ng-include="'projects/create/import-project-form-common/description.html'">
+                            <fieldset>
+                                <label translate="PROJECT.COMMON.DESCRIPTION" for="project-description">Resultados de los planes de mejora</label>
+                                <textarea id="resultados_planes_mejora" name="resultados_planes_mejora" ng-class="{'checksley-error': !!vm.errorList.includes('description') }" ng-model="vm.projectForm.description" placeholder="Resultado del plan(Requerido)" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+                            </fieldset>
+                        </div>
+                        <div ng-include="'projects/create/import-project-form-common/actions.html'">
+                            <div class="create-project-action">
+                                <button variant="secondary" type="button"  title="Volver"  class="btn-small create-project-action-cancel">Volver</button>
+                                <button type="submit" class="btn-small create-project-action-submit" title="Asignar Proyecto"  >Costo</button>
+                            </div>
+                        </div>
+                    </form>                    
+                </div>
+            </tg-create-project-form>
+        </div>
+    </div>
+</body>
+</html>
