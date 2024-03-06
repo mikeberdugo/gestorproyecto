@@ -13,8 +13,8 @@ urlpatterns = [
     path('project/new/<str:codigo>',nuevoproyecto,name='nuevoproyecto'),
     path('project/create',crearprojecto,name='crearprojecto'),
     path('project/asignar/new',asignar,name='asignar'),
-    path('project/12',diagrama,name='diagrama'),
-    path('project/riesgos',riesgos,name='riesgos'),
+    path('project/12',diagrama,name='diagramas'),
+    path('project/<str:id_bamba>riesgos/',riesgos,name='riesgos'),
     path('project/MatrizRiesgo',Matriz_riesgo,name='Matriz_riesgo'),
 
     ## gestor de kanban 

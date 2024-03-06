@@ -284,8 +284,10 @@ class MatrizRiesgo(models.Model):
 
 """
 
-def riesgos(request , ):
+def riesgos(request):
     if request.method == 'POST':
+        id_project = request.POST.get('id_project')
+
         matriz_name = request.POST.get('matriz-name')
         matriz_descrip = request.POST.get('matriz-descrip')
         matriz_causas = request.POST.get('matriz-causas')
@@ -298,31 +300,33 @@ def riesgos(request , ):
         matriz_valorriesgo = request.POST.get('matriz-valorriesgo')
         matriz_nivelriesgo = request.POST.get('matriz-nivelriesgo')
 
-        
-        
-        matriz = MatrizRiesgo.objects.create(
-            nombre = matriz_name ,
-            descripcion = matriz_descrip ,
-            causas = matriz_causas ,
-            Plan = matriz_mitigacion ,
-            Descripcion_tiempo = matriz_tiempo,
-            Descripcion_alcance = matriz_impact ,
-            Descripcion_costo = matriz_costo ,
-            probavilidad = matriz_probabilidad,
-            gravedad = matriz_gravedad,
-            riesgo = matriz_valorriesgo ,
-            materializo = matriz_nivelriesgo,
+        Matriz_riesgos = MatrizRiesgo.objects.create(
+            nombre=matriz_name,
+            descripcion=matriz_descrip,
+            Causas=matriz_causas,
+            Plan=matriz_mitigacion,
+            Descripcion_tiempo=matriz_tiempo,
+            Descripcion_alcance=matriz_impact,
+            Descripcion_costo=matriz_costo,
+            probavilidad=matriz_probabilidad,
+            gravedad=matriz_gravedad,
+            riesgo=matriz_valorriesgo,
+            materializo=matriz_nivelriesgo,
         )
-        
-        #return redirect('././project/riesgos')
+
+        # Ejemplo de contexto
+        context = {
+            'mensaje': 'La matriz de riesgo se ha creado exitosamente.'
+        }
+
+        # Devolver la respuesta renderizando la plantilla con el contexto
     
-    
-    # Si el método de la solicitud no es POST, renderiza el formulario
-    
-    return render(request, '././project/riesgos.html', {'form': form})
+    return render(request, '././user/riesgos.html',);
 
 
-def Matriz_riesgo(request , ):
-    
-    
-    return render(request, '././user/Matriz_riesgo.html')
+
+
+
+def Matriz_riesgo(request):
+    info =  MatrizRiesgo.objects.all()
+    return render(request, '././user/Matriz_riesgo.html',{'tablita': info})
