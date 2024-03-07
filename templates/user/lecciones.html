@@ -1,3 +1,15 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+{% block id_project %}proyecto.id{% endblock %}
+
+{% block title %} gestion de proyecto  - {{proyecto.name}} {% endblock %}
+{% block name %} 
+    {{proyecto.name}}
+{% endblock %}
+
+
+{% block conten %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,12 +18,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="/static/css/lecciones.css">
-
+    <link rel="stylesheet" href="{% static './css/lecciones.css' %} " />
+    <link rel="stylesheet" href="{% static './css/theme-taiga.css' %} " />
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css" />
 </head>
 
 <body>
+    <h1  class="titulo">Lecciones aprendidas</h1>
     <div class="contentable">
         <table id="tablalecciones" class="display" style="width: 100%">
             <thead>
@@ -62,3 +75,5 @@
 </body>
 
 </html>
+
+{% endblock %}
