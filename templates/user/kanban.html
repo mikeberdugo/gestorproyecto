@@ -1,0 +1,230 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+
+{% block title %} Gestión de Proyecto - {{ proyecto.name }} {% endblock %}
+{% block name %}
+    {{ proyecto.name }}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static './css/bootstrap.min.css' %}" />
+    <link href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block conten %}
+<style>
+    .kanban-container {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .kanban-column {
+        width: 30%;
+        margin-right: 20px;
+        border-radius: 5px;
+        padding: 10px;
+        min-height: 200px;
+        background-color: #f8f9fa; /* Fondo gris claro */
+        border: 1px solid #dee2e6;
+    }
+
+    .kanban-column-header {
+        color: #fff;
+        padding: 10px;
+        border-radius: 5px 5px 0 0;
+        text-align: center;
+    }
+
+    .kanban-column-body {
+        padding: 10px;
+    }
+
+    .kanban-card {
+        background-color: #fff; /* Fondo blanco para las tareas */
+        border: 1px solid #dee2e6;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+
+    /* Estilos para diferentes estados de las columnas */
+    .kanban-container > .kanban-column:nth-child(1) .kanban-column-header { background-color: #007bff; }
+    .kanban-container > .kanban-column:nth-child(2) .kanban-column-header { background-color: #ffc107; }
+    .kanban-container > .kanban-column:nth-child(3) .kanban-column-header { background-color: #28a745; }
+    .kanban-container > .kanban-column:nth-child(4) .kanban-column-header { background-color: #dc3545; }
+
+    
+  .detail {
+    padding: 12px;
+  }
+
+  .panel-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navbar {
+    background-color: #d8dee9;
+    display: flex;
+    height: 48px;
+    position: relative;
+    justify-content: inherit;
+  }
+
+  .navbar [tg-dropdown-user] {
+    position: absolute;
+    right: 8px;
+  }
+
+  .panel {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+  }
+  .contColor {
+    width: 100px;
+    height: 100px;
+    margin: 10px;
+  }
+
+  *{
+    margin: 0px;
+    padding: 0px;
+}
+
+.card_cont{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    width: 100%;
+    height: 100px;
+    border-radius: 4px;
+    margin-top: 12px;
+}
+
+.titulo{
+    display: flex;
+    width: 100%;
+    padding: 10px;
+    height: 35px;
+    justify-content: space-between;
+}
+
+.numerito{
+    color: #008aa8 ;
+    margin-right: 8px;
+}
+
+
+/*card*/
+.panel-body {
+    padding: 0px;
+}
+
+.titleCard {
+    color: #6b6969;
+    transition: all 0.8s;
+}
+.titleCard:hover {
+    color: #008aa8;
+}
+
+.imguser {
+    width: 100%;
+    display: flex;
+}
+
+.imguser-user {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    border: solid 1px;
+    margin: 2px;
+    border-radius: 50%;
+    height: 36px;
+    width: 36px;
+}
+
+.glyphicon {
+    display: block;
+}
+</style>
+
+<div class="main detail">
+    <h1 tg-main-title="" i18n-section-name="Kanban"><span>Kanban</span></h1>
+    <div class="row mt-10">
+        <br>
+        {% for columna in tablero.columnas.all %}
+            <div class="col-md-3" id="contKanban">
+                <div class="panel panel-default" style="min-height: 400px;" >
+                    <div class="panel-heading kanban-column-header">
+                        <h3 class="panel-title">
+                            <div class="contColor" style="width: 12px; height: 22px;" data-idcolor="{{ columna.id }}"></div>
+                            {{ columna.titulo }}
+                            <a href="#" class="pull-right"><span class="glyphicon glyphicon-plus" aria-hidden="true" data-id="{{ columna.id }}"></span></a>
+                        </h3>
+                    </div>
+                    <div class="panel-body column" data-id="{{ columna.id }}">
+                        <div class="card_cont">
+                            <div class="general">
+                                <div class="titulo">
+                                    <div class="numerito">
+                                        <p>#</p>
+                                    </div>
+                                    <p class="titleCard">Titulo De proyecto</p>
+                                    <div class="punticos">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </div>
+                                </div>
+                                <div class="imguser">
+                                    <div class="imguser-user"><i class="fas fa-user"></i></div>
+                                    <div class="imguser-user"><i class="far fa-user"></i></div>
+                                    <div class="imguser-user"><i class="fas fa-user-tie"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card_cont">
+                            <div class="general">
+                                <div class="titulo">
+                                    <div class="numerito">
+                                        <p>#</p>
+                                    </div>
+                                    <p>Titulo De proyecto</p>
+                                    <div class="punticos">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </div>
+                                </div>
+                                <div class="imguser">
+                    
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="modal fade" id="tarjeta-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static './js/scripts.js' %}"></script>
+{% endblock %}
