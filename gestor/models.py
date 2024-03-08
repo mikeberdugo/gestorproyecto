@@ -115,10 +115,6 @@ class Tarea(models.Model):
     estado = models.CharField(max_length=100)  # Lista desplegable: SIN iniciar, En Proceso, Finalizada 
     dependencias = models.ManyToManyField('self', symmetrical=False, blank=True)
 
-
-
-
-
 #* leciones aprendidas 
 class ComentarioTarea(models.Model):
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
@@ -213,7 +209,7 @@ class Costos(models.Model):
 
 class Tablero(models.Model):
     titulo = models.CharField(max_length=200)
-    proyect =  models.OneToOneField(Proyecto, on_delete=models.CASCADE, related_name='tablero')
+    proyect = models.ForeignKey(Proyecto, on_delete=models.CASCADE, related_name='tableros')
 
     def __str__(self):
         return self.titulo

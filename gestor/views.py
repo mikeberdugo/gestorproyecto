@@ -106,7 +106,6 @@ def inicio_gerente(request, id_gerente):
 
 def nuevoproyecto(request , codigo):
     proyecto = Proyecto.objects.filter(codigo=codigo).first()
-    proyecto 
     
     context = {
         'codigo': proyecto.codigo,
@@ -133,14 +132,7 @@ def nuevoproyecto(request , codigo):
             proyecto.save()
             
         
-        # Crea un tablero asociado al proyecto
-        tablero = Tablero(titulo= proyecto.codigo , proyect=proyecto)
-        tablero.save()
         
-        # Crea las columnas por defecto
-        nombres_columnas = ['Por hacer', 'En progreso', 'En revisión', 'Hecho']
-        for nombre in nombres_columnas:
-            Columna.objects.create(tablero=tablero, titulo=nombre)
         
         return redirect('inicio_manager', proyecto.user.id )
     
@@ -179,6 +171,33 @@ def asignar(request):
             estado='abierto'  # Añadido el estado del proyecto
         )
         proyecto1.save()
+        ## 
+        
+        """ 
+        ('inicio', 'Inicio'),
+        ('planeacion', 'Planeación'),
+        ('ejecucion', 'Ejecución'),
+        ('monitoreo_control', 'Monitoreo y Control'),
+        ('cierre', 'Cierre'),
+        """
+        kanban = ['Inicio','Planeación','Ejecución','Monitoreo y Control','Cierre']
+        
+        
+        for kan in kanban:
+            titulo =  kan + proyecto1.codigo 
+            tablero = Tablero.objects.create(titulo= titulo , proyect=proyecto1)
+            tablero.save()
+            nombres_columnas = ['Por hacer', 'En progreso', 'En revisión', 'Hecho']
+            for nombre in nombres_columnas:
+                Columna.objects.create(tablero=tablero, titulo=nombre)
+            
+        
+        # Crea las columnas por defecto
+        
+        
+        
+        
+        
         
         # Llamar a la función para enviar el correo electrónico
         enviar_correo_post(usuario.id, proyecto1.codigo, 'tipo1')
@@ -224,6 +243,10 @@ def gestion(request):
 
 def proyecto(request , id_proyect):
     proyecto = Proyecto.objects.filter(id=id_proyect).first()
+    
+    tableros = Tablero.objects.filter(proyect=proyecto)[:5]
+    
+    
     context = {
         'email': 'user.email',
         'first_name': 'user.first_name',
@@ -232,22 +255,19 @@ def proyecto(request , id_proyect):
         
     }
     
-    return render(request , './user/proyecto.html' ,{'context': context , 'proyecto' : proyecto })
+    return render(request , './user/proyecto.html' ,{'context': context , 'proyecto' : proyecto , 'tableros':tableros})
 
 
 ### proceso kanban : 
-def kanban(request , id_project):
+def kanban(request , id_tablero ):
     
-    proyecto = Proyecto.objects.filter(id=id_project).first()
-    if proyecto:
-        tablero = proyecto.tablero
-    
+    tablero = Tablero.object.filter(id=id_tablero) 
     context = {
         'email': 'user.email',
         'first_name': 'user.first_name',
     }    
     
-    return render(request , './user/kanban.html', {'context':context , 'tablero':tablero , 'proyecto' : proyecto } )
+    return render(request , './user/kanban.html', {'context':context , 'tablero':tablero , } )
 
 
 def mover_tarjeta(request, tarjeta_id, columna_id):
