@@ -9,7 +9,7 @@ __pycache__/
 *.pyd
 
 # Archivos de configuración local de Django
-*.sqlite3
+
 *.db
 *.log
 
