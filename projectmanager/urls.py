@@ -16,8 +16,9 @@ urlpatterns = [
     path('project/12',diagrama,name='diagramas'),
 
     #oscar
-    path('tareas/taiga/',crear_comentario),
-    path('lecciones/tabla',lecciones),
+    path('formulario/lecciones',formulario_lecciones,name='formulario_lecciones'),
+    path('tabla/lecciones1',tabla_lecciones_1,name='tabla_lecciones_1'),
+    path('tabla/lecciones2',tabla_lecciones_2,name='tabla_lecciones_2'),
 
     #brayan
     path('project/riesgos/',riesgos,name='riesgos'),

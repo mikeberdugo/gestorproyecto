@@ -1,0 +1,75 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+{% block id_project %}proyecto.id{% endblock %}
+
+{% block title %} gestion de proyecto  - {{proyecto.name}} {% endblock %}
+{% block name %} 
+    {{proyecto.name}}
+{% endblock %}
+
+
+{% block conten %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static './css/tabla_lecciones.css' %} " />
+    <link rel="stylesheet" href="{% static './css/theme-taiga.css' %} " />
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css" />
+</head>
+
+<body>
+    <h1  class="titulo">Lecciones aprendidas</h1>
+    <div class="contentable">
+        <table id="tablalecciones" class="display" style="width: 100%">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Identificacion el problema</th>
+                    <th>Planes de mejora aplicados</th>
+                    <th>Resultados de los planes de mejora</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ComentarioTarea in ComentarioTareas %}
+                <tr>
+                    <td></td>
+                    <td>{{ComentarioTarea.identificando_problema}}</td>
+                    <td>{{ComentarioTarea.planes_mejora_aplicados}}</td>
+                    <td>Aprendisaje: {{ComentarioTarea.resultados_planes_mejora}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+    
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.1/js/dataTables.tailwindcss.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        //función para mostrar los datos en la tabla de colaboradores
+        $(document).ready(function () {
+            var table = $("#tablalecciones").DataTable({
+                searching: true,
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
+                },
+                autoWidth: true,
+                processing: true,
+            });
+        });
+    </script>
+</body>
+
+</html>
+
+{% endblock %}

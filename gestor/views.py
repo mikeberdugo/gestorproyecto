@@ -329,7 +329,7 @@ def Matriz_riesgo(request):
 
 
 #post lecciones aprendidas
-def crear_comentario(request):
+def formulario_lecciones(request):
     if request.method == 'POST':
         nuevo_comentario = ComentarioTarea(
             identificando_problema=request.POST['identificando_problema'],
@@ -341,9 +341,13 @@ def crear_comentario(request):
         nuevo_comentario.save()
         return HttpResponse('¡Comentario guardado correctamente!')
     else:
-        return render(request, '././user/tareas.html')
+        return render(request, '././user/formulario_lecciones.html')
     
 #get lecciones aprendidas  
-def lecciones(request):
+def tabla_lecciones_1(request):
     info = ComentarioTarea.objects.all()
-    return render(request, "././user/lecciones.html",{'ComentarioTareas': info})
+    return render(request, "././user/tabla_lecciones_1.html",{'ComentarioTareas': info})
+
+def tabla_lecciones_2(request):
+    info = ComentarioTarea.objects.all()
+    return render(request, "././user/tabla_lecciones_2.html",{'ComentarioTareas': info})
