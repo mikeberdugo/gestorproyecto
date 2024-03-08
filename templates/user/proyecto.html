@@ -7,60 +7,89 @@
     {{proyecto.name}}
 {% endblock %}
 
+{% block css %}
+<link rel="stylesheet" href="{% static './css/tablas.css' %} ">
 
-{% block conten %}
-    <div style="background-color: blue; height: 350px;">
-
-    </div>
-    <div class="container">
-        <h1>LISTA</h1><br>
-        <table>
-            <tr>
-                <th>FASE</th>
-                <th>TAREAS</th>
-                <th>PORCENTAJE</th>
-            </tr>
-            {% for fase in tableros %}
-                <tr>
-                    <th><a href="">{{ fase.titulo }}</th></a>
-                    <th>2</th>
-                    <div class="porcentaje">
-                        <th><progress id="file" max="100" value=''></progress></th>
-                    </div>
-                </tr>
-            {% endfor %}
-                
-            
-            <tr>
-                <th>Planeacion</th>
-                <th>3</th>
-                <div class="porcentaje">
-                    <th><progress id="file" max="100" value="20">70%</progress></th>
-                </div>
-            </tr>
-            <tr>
-                <th>Ejecucion</th>
-                <th>41</th>
-                <div class="porcentaje">
-                    <th><progress id="file" max="100" value="100">70%</progress></th>
-                </div>
-            </tr>
-            <tr>
-                <th>Monitoreo y Control</th>
-                <th>2</th>
-                <div class="porcentaje">
-                    <th><progress id="file" max="100" value="43  ">70%</progress></th>
-                </div>
-            </tr>
-            <tr>
-                <th>Cierre</th>
-                <th>4</th>
-                <div class="porcentaje">
-                    <th><progress id="file" max="100" value="70">70%</progress></th>
-                </div>
-            </tr>
-        </table>
-    </div>
 {% endblock %}
 
+{% block conten %}
+<br>
+<div class="container">
+    <table>
+        <tr>
+            <th class="proyecto">Nombre del proyecto</th>
+            <th class="descripcion">
+                <p>{{proyecto.name}}</p>
+            </th>
+            <th class="proyecto">Fecha de creación</th>
+            <th class="descripcion">
+                <p>{{proyecto.fecha_creacion}}</p>
+            </th>
+        </tr>
+        <tr>
+            <th class="proyecto">Descripción del proyecto</th>
+            <th class="descripcion">
+                <p>{{proyecto.description}}</p>
+            </th>
+            <th class="proyecto">Fecha de inicio planeada</th>
+            <th class="descripcion">
+                <p>{{proyecto.fecha_inicio_planeada}}</p>
+            </th>
+        </tr>
+        <tr>
+            <th class="proyecto">Fecha de finalización planeada</th>
+            <th class="descripcion">
+                <p>{{proyecto.fecha_finalizacion_planeada}}</p>
+            </th>
+            <th class="proyecto">Alcance</th>
+            <th class="descripcion">
+                <p>{{proyecto.alcance}}</p>
+            </th>
+        </tr>
+        <tr>
+            <th class="proyecto">Estado</th>
+            <th class="descripcion">
+                <p>{{proyecto.estado}}</p>
+            </th>
+            <th class="proyecto">Tipo</th>
+            <th class="descripcion">
+                <p>{{proyecto.tipo}}</p>
+            </th>
+        </tr>
+        <tr>
+            <th class="proyecto">Cluster</th>
+            <th class="descripcion">
+                <p>{{proyecto.lider}}</p>
+            </th>
+            <th class="proyecto">Grupo</th>
+            <th class="descripcion">
+                <p>{{proyecto.grupo.Grupo}}</p>
+            </th>
+        </tr>
+        <tr>
+            <th class="proyecto">Categoría</th>
+            <th class="descripcion">
+                <p>{{proyecto.categoria}}</p>
+            </th>
+            <th class="proyecto">Contrato Antecedentes</th>
+            <th class="descripcion">
+                <p>{{proyecto.antecedentes}}</p>
+            </th>
+        </tr>
+        <tr>
+            <th class="proyecto">Fase Actual</th>
+            <th class="descripcion">
+                <p>{{proyecto.fase}}</p>
+            </th>
+            <th class="proyecto">Comentarios</th>
+            <th class="descripcion">
+                <p>{{proyecto.comentarios}}</p>
+            </th>
+        </tr>
+    </table>
+</div>
 
+
+
+
+{% endblock %}

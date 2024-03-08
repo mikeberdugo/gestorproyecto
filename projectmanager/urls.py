@@ -1,29 +1,24 @@
-from django.contrib import admin
-from django.urls import path
-from gestor.views import *
-from gestor.pruebas import * 
+"""
+URL configuration for projectmanager project.
 
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/5.0/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
+from django.contrib import admin
+from django.urls import path ,include
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',Login, name='login'),
-    path('project/administrator',inicio_administrador,name='inicio_administrator'),
-    path('project/manager/<str:id_gerente>/', inicio_gerente, name='inicio_manager'),
-    path('project/new/<str:codigo>',nuevoproyecto,name='nuevoproyecto'),
-    path('project/create',crearprojecto,name='crearprojecto'),
-    path('project/asignar/new',asignar,name='asignar'),
-    path('project/12',diagrama,name='diagrama'),
-    ## gestor de kanban 
-    path('prueba',gestion,name='gesstion'),
-    path('project/project/<str:id_proyect>/',proyecto,name='project'), 
-    path('project/project/<str:id_project>/kanba/new/<str:id_columna>/', nuevaactividad ,name = 'nuevaactividad'),
-    path('project/project/<str:id_project>/kanban', kanban, name='kanban'),
-    path('tarjeta/<int:tarjeta_id>/mover/<int:columna_id>/', mover_tarjeta, name='mover_tarjeta'),
-    
-    
-    
+    path('', include(('gestor.urls', 'main'))),
 ]
-
-
-### administrador , inicio_gerete  

@@ -81,7 +81,7 @@
                                 <p class="dropdown-project-list-desc">Aún no tienes ningún proyecto. Crea uno ahora,
                                     invita a tu equipo y comienza a usar Colvapro al máximo.</p>
                                 <div class="create-options">
-                                    <a href="{% url 'crearprojecto' %}" title="Nuevo proyecto"
+                                    <a href="{% url 'main:asignar' %}" title="Nuevo proyecto"
                                         class="create-project-btn button-primary"><span>Nuevo proyecto</span></a>
                                 </div>
                             </div>
@@ -92,7 +92,7 @@
             <div tg-dropdown-user="tg-dropdown-user">
                 <div class="dropdown-user-inner">
                     <div class="dropdown-user-navbar"><a tg-nav="profile" title="mike" class="user-avatar"
-                            href="http://localhost:9000/profile"><img tg-avatar="vm.user" alt="mike"
+                            href=""><img tg-avatar="vm.user" alt="mike"
                                 src="{% static './media/user-avatar-05.png' %}" title="mike"
                                 style="background: rgb(183, 203, 131);"></a>
                         <button class="chevron">
@@ -116,7 +116,7 @@
                                     cuenta</a>
                             </li>
                             <li class="user-profile-option">
-                                <a href="#" title="Cerrar sesión"> Cerrar sesión</a>
+                                <a href="{% url 'main:logout' %}" title="Cerrar sesión"> Cerrar sesión</a>
                             </li>
                         </ul>
                     </div>
@@ -165,46 +165,9 @@
                                     
                                     
                                 </div>
-                                <div class="empty-ticket">
-                                    <div class="avatar"></div>
-                                    <div class="data">
-                                        <div class="line"></div>
-                                        <div class="line"></div>
-                                    </div>
-                                </div>
-                                <div class="empty-ticket">
-                                    <div class="avatar"></div>
-                                    <div class="data">
-                                        <div class="line"></div>
-                                        <div class="line"></div>
-                                    </div>
-                                </div>
                             </div>
                         </section>
-                        <section class="watching-container">
-                            <header>
-                                <h2 class="title-bar watching-title">Siguiendo</h2>
-                            </header>
-                            <div ng-if="vm.watching != undefined &amp;&amp; vm.watching.size === 0"
-                                class="watching-empty">
-                                <p><strong>Sigue</strong> historias de usuario, tareas, problemas en tus proyectos y
-                                    recibe notificaciones sobre sus cambios :)</p>
-                                <div class="empty-ticket">
-                                    <div class="avatar"></div>
-                                    <div class="data">
-                                        <div class="line"></div>
-                                        <div class="line"></div>
-                                    </div>
-                                </div>
-                                <div class="empty-ticket">
-                                    <div class="avatar"></div>
-                                    <div class="data">
-                                        <div class="line"></div>
-                                        <div class="line"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
+
                     </tg-working-on>
                 </div>
                 <aside tg-home-project-list="" class="project-list">
@@ -212,7 +175,7 @@
                         <tg-svg svg-icon="icon-project">
                         </tg-svg>
                         <p>Todavía no tienes ningún proyecto</p>
-                        <a variant="primary" href="{% url 'asignar' %}" title="Crear proyecto"
+                        <a variant="primary" href="{% url 'main:asignar' %}" title="Crear proyecto"
                             class="btn-small create-project-button">Nuevo proyecto</a>
                     </section>
                 </aside>

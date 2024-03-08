@@ -1,0 +1,133 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+{% block id_project %}proyecto.id{% endblock %}
+
+{% block title %} gestion de proyecto  - {{proyecto.name}} {% endblock %}
+{% block name %} 
+    {{proyecto.name}}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css">
+
+    <style>
+        .custom-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        }
+    
+        .custom-table th, .custom-table td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+        }
+    
+        .custom-table th {
+        background-color: #f2f2f2;
+        }
+    
+        .custom-table td:last-child {
+        text-align: center;
+        }
+    
+        .custom-button {
+        display: inline-block;
+        padding: 6px 12px;
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        color: #333;
+        border-radius: 4px;
+        transition: background-color 0.3s, color 0.3s;
+        }
+    
+        .custom-button:hover {
+        background-color: #e6e6e6;
+        color: #222;
+        }
+    </style>
+
+{% endblock %}
+
+{% block conten %}
+<div class="content-lecciones">
+    <div class="tui-table-wrapper">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Fase de proyecto</th>
+              <th>Número de tareas en la fase</th>
+              <th>Kanban</th>
+              <th>Diagrama de Gantt</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Inicio</td>
+              <td></td>
+              <td>
+                <a href="{% url 'main:kanban' codigo=proyecto.codigo titulo=inicio.titulo %}" class="custom-button">Kanban</a>
+              </td>
+              <td>
+                <a href="#" class="custom-button">Diagrama de Gantt</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Planeación</td>
+              <td></td>
+              <td>
+                <a href="{% url 'main:kanban' codigo=proyecto.codigo titulo=planeacion.titulo %}" class="custom-button">Kanban</a>
+              </td>
+              <td>
+                <a href="#" class="custom-button">Diagrama de Gantt</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Ejecución</td>
+              <td></td>
+              <td>
+                <a href="{% url 'main:kanban' codigo=proyecto.codigo titulo=ejecucion.titulo %}" class="custom-button">Kanban</a>
+              </td>
+              <td>
+                <a href="#" class="custom-button">Diagrama de Gantt</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Monitoreo y Control</td>
+              <td></td>
+              <td>
+                <a href="{% url 'main:kanban' codigo=proyecto.codigo titulo=monitoreo.titulo %}" class="custom-button">Kanban</a>
+              </td>
+              <td>
+                <a href="#" class="custom-button">Diagrama de Gantt</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Cierre</td>
+              <td></td>
+              <td>                                         
+                <a href="{% url 'main:kanban' codigo=proyecto.codigo titulo=cierre.titulo %}" class="custom-button">Kanban</a>
+              </td>
+              <td>
+                <a href="#" class="custom-button">Diagrama de Gantt</a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+</div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}
+
+

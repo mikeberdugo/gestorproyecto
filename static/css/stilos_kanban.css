@@ -1,3 +1,46 @@
+/* Tabla vista costos */
+.content-costos {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    margin-top: 16px;
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 500px;
+    padding: 12px;
+    width: 96%;
+}
+
+/* Tabla vista Matriz */
+.content-matriz {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    margin-top: 16px;
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 500px;
+    padding: 12px;
+    width: 96%;
+}
+
+/* Tabla vista lecciones project */
+.content-lecciones {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    margin-top: 16px;
+    overflow-x: auto;
+    overflow-y: auto;
+    height: 500px;
+    padding: 12px;
+    width: 96%;
+}
+
+
+.scrolin {
+    width: 300px; /* Ancho del div */
+    height: 200px; /* Altura del div */
+    overflow: auto; /* Agrega scroll cuando el contenido es más grande que el contenedor */
+    border: 1px solid #ccc; /* Borde para visualización */
+    padding: 10px; /* Espaciado interno */
+}
+
+
 .kanban-container {
     display: flex;
     justify-content: space-between;
