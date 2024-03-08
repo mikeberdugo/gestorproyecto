@@ -233,7 +233,7 @@ class Tarjeta(models.Model):
     titulo = models.CharField(max_length=200)
     columna = models.ForeignKey(Columna, related_name='tarjetas', on_delete=models.CASCADE)  
     actividad = models.ForeignKey(Hito, on_delete=models.CASCADE)
-    descripcion = MarkupField(markup_type='markdown')
+    descripcion = MarkupField(markup_type='html')
     participantes = models.ManyToManyField(authmodels.User,blank=True )
 
     
