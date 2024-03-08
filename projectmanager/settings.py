@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import os
+import os 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-yscl(pubsx(*zx(8)w_1f4pq76bvb=(-3gwy%60rj8ds*0_c!)'
+SECRET_KEY = 'django-insecure-*etj&#(&xvyng6=d9+r3z@f5wq5$ad9ikz6&ti!&^)b+iubiex'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,9 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'markupfield',
-    'bootstrap3',
-    'gestor'
+    'gestor',
 ]
 
 MIDDLEWARE = [
@@ -125,15 +124,32 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-## correo electronico
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.office365.com'  # Servidor SMTP de Outlook
-EMAIL_PORT = 587  # Puerto SMTP de Outlook (generalmente 587)
+EMAIL_HOST = 'smtp.office365.com'
+EMAIL_PORT = 587  # Puerto SMTP
 EMAIL_USE_TLS = True  # Usar TLS para la conexión segura
-EMAIL_HOST_USER = 'notificaciones_colvacor@colvatel.com.co'  # Tu dirección de correo electrónico de Outlook
-EMAIL_HOST_PASSWORD = 'Berdugo13_'  # Tu contraseña de correo electrónico de Outlook
+EMAIL_HOST_USER = 'notificaciones_colvacor@colvatel.com.co'
+EMAIL_HOST_PASSWORD = 'Berdugo13_'
+
+
+## sesion 
+# Configuración para que las sesiones 
+#SESSION_COOKIE_AGE = 180  # 30 minutos en segundos
+
+# Configuración para que la sesión expire cuando el navegador se cierra
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+# Configuración para marcar la cookie de sesión como segura (solo para HTTPS)
+SESSION_COOKIE_SECURE = True
+
+# Configuración para marcar la cookie de sesión como solo de lectura para JavaScript
+SESSION_COOKIE_HTTPONLY = True
+
+LOGIN_URL = 'main:login'
 

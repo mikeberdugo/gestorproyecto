@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from markupfield.fields import MarkupField
 from django.contrib.auth import models as authmodels
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class Usuario(models.Model):
@@ -75,7 +77,7 @@ class Proyecto(models.Model):
     categoria = models.CharField(max_length=100 , choices = CATEGORIA) # desplegable  lista desplegable - brayan 
     antecedentes = models.TextField() ### 
     fase = models.CharField(max_length=100 ,choices = FASES) ### lista , brayan los tiene 
-    programas = models.ManyToManyField('Programa', related_name='proyectos', blank=False ) # lista falta llegar 
+    programas =  models.CharField(max_length=100) # lista falta llegar 
     comentarios = models.TextField(null=True, blank=True) ## 
     spi = models.FloatField(default=0) ## indicador 
     es = models.FloatField(default=0) ## formualdo 
@@ -83,15 +85,28 @@ class Proyecto(models.Model):
     columna = models.BooleanField(default=False) ##  asignado 
 
 
-#! falta 
 class Grupo(models.Model):
-    nombre = models.CharField(max_length=100)
-    asociados = models.TextField()
-    cluster = models.TextField()
-    
-#! no lo tenemos 
-class Programa(models.Model):
-    nombre = models.CharField(max_length=100)
+    grupo = models.CharField(max_length=100)
+    cluster = models.CharField(max_length=100)
+
+    @classmethod
+    def generate_initial_data(cls):
+        data = [
+            {'grupo': 'Grupo-1', 'cluster': 'Daniel Camargo'},
+            {'grupo': 'Grupo-2', 'cluster': 'Javier Alejandro Sanchez Sanabria'},
+            {'grupo': 'Grupo-3', 'cluster': 'Jhon Fredy Arroyave Martínez'},
+            {'grupo': 'Grupo-4', 'cluster': 'José Manuel Cáceres García'},
+            {'grupo': 'Grupo-5', 'cluster': 'Milton Andres Pineda Ochoa'},
+            {'grupo': 'Grupo-6', 'cluster': 'Yorfan Mauricio Colmenares Padilla'},
+        ]
+        for item in data:
+            Grupo.objects.get_or_create(grupo=item['grupo'], cluster=item['cluster'])
+
+# Este receptor de señal se ejecutará después de que se guarde un objeto Grupo
+@receiver(post_save, sender=Grupo)
+def create_initial_data(sender, instance, created, **kwargs):
+    if created:
+        Grupo.generate_initial_data()
 
 
 class Hito(models.Model):
@@ -104,7 +119,7 @@ class Hito(models.Model):
     porcentaje = models.FloatField(null=True, blank=True ,default = 0.0)
 
 
-#! validar hitos donde se encuentran 
+
 class Tarea(models.Model):
     nombre = models.CharField(max_length=100)
     descripcion = models.TextField()
@@ -127,16 +142,13 @@ class ComentarioTarea(models.Model):
     solucion = models.TextField()
     planes_mejora_aplicados = models.TextField()
     resultados_planes_mejora = models.TextField()
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
     
     def str(self):
         return f"Comentario para {self.tarea.nombre}"
 
 class MatrizRiesgo(models.Model):
-    # muy grave -- rojo 
-    # importante -- naraja
-    # apreciable -- amarillo 
-    # marginal -- verde 
-    
+    # Definir opciones para RIESGOS y GAVEDAD
     RIESGOS = (
         ('grave', 'Muy grave'),
         ('importante', 'Importante'),
@@ -144,49 +156,31 @@ class MatrizRiesgo(models.Model):
         ('marginal', 'Marginal'),
     )
     
+    GAVEDAD = (
+        (1, 'Muy Bajo'),
+        (2, 'Bajo'),
+        (3, 'Medio'),
+        (4, 'Alto'),
+        (5, 'Muy Alto'),
+    )
     
-        
-    GAVEDAD = {
-        ('Bajo2', 'Muy Bajo'),
-        ('bajo1', 'Bajo'),
-        ('medio', 'Medio'),
-        ('alto1', 'Alto'),
-        ('alto2', 'Muy Alto'),
-    }
-    
-    
-    #*Nombre Del Riesgo identificado	
-    #*Descripción del riesgo	
-    #* Causas del Riesgo	
-    #* Plan de mitigacion	
-    #*Descripcion del impacto en alcance	
-    #* Descripcion del impacto en Tiempo	
-    #* Descripcion del Impacto costo	
-    #* Probabilidad (Ocurrencia)	
-    #* Gravedad Impacto	
-    #* Valor de riesgo	
-    #* Nivel de Riesgo
-	#* Riesgo se materializo
-
-    
-    
-    nombre = models.CharField(max_length=200 )
+    # Definir campos del modelo
+    nombre = models.CharField(max_length=200)
     descripcion = models.TextField()
-    Causas = models.CharField(max_length=200 )
-    Plan = models.CharField(max_length=200 )
-    Descripcion_tiempo = models.CharField(max_length=200 )
-    Descripcion_alcance = models.CharField(max_length=200 )
-    Descripcion_costo = models.CharField(max_length=200 )
-    probavilidad = models.CharField(max_length=20, choices=GAVEDAD)
-    gravedad = models.CharField(max_length=20, choices=GAVEDAD)
+    causas = models.TextField()
+    plan = models.TextField()
+    descripcion_tiempo = models.TextField()
+    descripcion_alcance = models.TextField()
+    descripcion_costo = models.TextField()
+    probavilidad = models.IntegerField(choices=GAVEDAD)
+    gravedad = models.IntegerField(choices=GAVEDAD)  # Cambiado a IntegerField
     riesgo = models.CharField(max_length=20, choices=RIESGOS)
-    materializo = models.CharField(max_length=200 ) 
+    materializo = models.TextField()
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
     acciones_mitigacion = models.TextField()
-
-    def str(self):
-        return f"Matriz de Riesgo para {self.proyecto.name}"
-
+    
+    
+    
 
 class Documentos(models.Model):
     titulo = models.CharField(max_length = 100)
@@ -213,7 +207,7 @@ class Costos(models.Model):
 
 class Tablero(models.Model):
     titulo = models.CharField(max_length=200)
-    proyect =  models.OneToOneField(Proyecto, on_delete=models.CASCADE, related_name='tablero')
+    proyect =  models.ForeignKey(Proyecto, on_delete=models.CASCADE, related_name='tablero')
 
     def __str__(self):
         return self.titulo

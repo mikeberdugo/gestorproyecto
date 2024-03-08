@@ -3,156 +3,70 @@ from django.contrib.auth.hashers import make_password, check_password
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login , logout
-from .decorador import * 
-from .pruebas import * 
+#from .decorador import * 
 from .models import * 
 from collections import defaultdict
 from django.http import HttpResponse
+from django.contrib import messages
+
 ## funciones propias 
-from .mail import *
+#from .mail import *
 import random
 import json
 
 
-
 def Login(request):
     # if request.user.is_authenticated:
-    #     return redirect('inicio_administrator')
+    #     return redirect_to_appropriate_page(request, request.user)
     
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
-        
         if user is not None:
             login(request, user)
-            usuario = Usuario.objects.get(usuario=user)
-            
-            if usuario.rol == 'administrador':
-                return redirect('inicio_administrator')
-            
-            elif usuario.rol == 'gerente':
-                
-                return redirect('inicio_manager', usuario.id )
-            
-            elif usuario.rol == 'miembro':
-                return redirect('pagina_miembro')
-            else:
-                return render(request, 'error.html', {'mensaje': 'Rol no reconocido'})
-            
-            
-            
+            return redirect_to_appropriate_page(request, user)
         else:
-            return render(request, './user/login.html', {'error_message': 'Credenciales inválidas. Por favor, inténtalo de nuevo.'})
-    else:
-        return render(request, "./user/login.html")
+            messages.error(request, 'Credenciales inválidas. Por favor, inténtalo de nuevo.')
+    return render(request, './user/login.html')
+
 
 def Logout(request):
     logout(request)
     return redirect('main:login')
 
+# def redirect_to_appropriate_page(user):
+#     try:
+#         usuario = Usuario.objects.get(usuario=user)
+#         if usuario.rol == 'administrador':
+#             return redirect('main:inicio_administrator')
+#         elif usuario.rol == 'gerente':
+#             return redirect('main:inicio_manager', usuario.id)
+#         elif usuario.rol == 'miembro':
+#             return redirect('main:pagina_miembro')
+#         else:
+#             messages.error('Rol no reconocido')
+#     except Usuario.DoesNotExist:
+#         messages.error(request, 'Usuario no encontrado')
+#     return redirect('main:login')
 
+def redirect_to_appropriate_page(request, user):  # Asegúrate de que 'request' sea un parámetro de la función
+    try:
+        usuario = Usuario.objects.get(usuario=user)
+        if usuario.rol == 'administrador':
+            return redirect('main:inicio_administrator')
+        elif usuario.rol == 'gerente':
+            return redirect('main:inicio_manager', usuario.id)
+        elif usuario.rol == 'miembro':
+            return redirect('main:pagina_miembro')
+    except Usuario.DoesNotExist:
+        messages.error(request, 'Usuario no encontrado')  # Asegúrate de usar 'request' aquí
+    return redirect('main:login')
 
-# def inicio_administrador(request):
-#     #usurios = 
-#     usuarios = Usuario.objects.select_related('usuario').all()
-    
-#     # user = request.user()
-#     # context = {
-#     #     'email': user.email,
-#     #     'first_name': user.first_name,
-#     # }
-#     # context = {
-#     #     'email': 'user.email',
-#     #     'first_name': 'user.first_name',
-#     # }
-#     print(usuarios)
-#     return render(request, "./user/inicio_administrador.html", usuarios)
-
+## admin 
 
 def inicio_administrador(request):
-    usuarios = Usuario.objects.select_related('usuario').filter(rol='gerente')
-    tipos_proyecto = ['Tipo I', 'Tipo II', 'Tipo III', 'Tipo IV']  # Lista de tipos de proyecto
-
-    # Simular datos aleatorios para cada usuario y tipo de proyecto
-    proyectos_por_usuario = {}
-    for usuario in usuarios:
-        proyectos_por_usuario[usuario] = {
-            'tipo1': random.randint(0, 10),
-            'tipo2': random.randint(0, 10),
-            'tipo3': random.randint(0, 10),
-            'tipo4': random.randint(0, 10),
-        }
-
-    context = {
-        'proyectos_por_usuario': proyectos_por_usuario,
-        'tipos_proyecto': tipos_proyecto,
-    }
-    return render(request, './user/inicio_administrador.html', context)
-
-
-def inicio_gerente(request, id_gerente):
-    usuario = Usuario.objects.get(id=id_gerente)
-    proyectos = Proyecto.objects.filter(user=usuario)
-    
-    context = {
-        'email': 'user.email',
-        'first_name': 'user.first_name',
-        'proyectos': proyectos,
-    }
-    return render(request, "./user/inicio_gerente.html", context)
-
-
-
-def nuevoproyecto(request , codigo):
-    proyecto = Proyecto.objects.filter(codigo=codigo).first()
-    proyecto 
-    
-    context = {
-        'codigo': proyecto.codigo,
-        'name': proyecto.name ,
-        'descr': proyecto.description,
-    }
-    print(context)
-    if request.method == 'POST':
-        if proyecto:
-            # Actualizar los campos del proyecto que no se asignaron en asignar
-            proyecto.fecha_inicio_real = request.POST.get('project-start-date-real')
-            proyecto.fecha_finalizacion_real = request.POST.get('project-end-date-real')
-            proyecto.alcance_proyecto = request.POST.get('project-scope')
-            proyecto.estado_proyecto = request.POST.get('project-status')
-            proyecto.porcentaje_completado = request.POST.get('project-completion-percentage')
-            proyecto.tipo_proyecto = request.POST.get('project-type')
-            proyecto.lider_proyecto = request.POST.get('project-leader')
-            proyecto.grupo_proyecto = request.POST.get('project-group')
-            proyecto.categoria_proyecto = request.POST.get('project-category')
-            proyecto.antecedentes_proyecto = request.POST.get('project-background')
-            proyecto.fase_proyecto = request.POST.get('project-phase')
-            proyecto.comentarios_proyecto = request.POST.get('project-comments')
-            proyecto.porcentaje_completado = 0 
-            proyecto.save()
-            
-        
-        # Crea un tablero asociado al proyecto
-        tablero = Tablero(titulo= proyecto.codigo , proyect=proyecto)
-        tablero.save()
-        
-        # Crea las columnas por defecto
-        nombres_columnas = ['Por hacer', 'En progreso', 'En revisión', 'Hecho']
-        for nombre in nombres_columnas:
-            Columna.objects.create(tablero=tablero, titulo=nombre)
-        
-        return redirect('inicio_manager', proyecto.user.id )
-    
-        
-    
-    return render(request, "./user/nuevoproyecto.html" , {'context':context , 'gerente': proyecto.user} ) 
-
-
-def crearprojecto(request , codigo):        
-    return render(request, './user/createproject.html')
-
-
+    return render(request, "./user/inicio_administrador.html")
 
 def asignar(request):
     gerentes = Usuario.objects.filter(rol='gerente')
@@ -163,11 +77,8 @@ def asignar(request):
         project_managers = request.POST.get('project-managers')
         usuario = get_object_or_404(Usuario, id=project_managers)
         
-        # Generar un código aleatorio único para el proyecto
         while True:
-            # Generar un código aleatorio
             codigo = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=6))
-            # Verificar si el código generado ya existe en la base de datos
             if not Proyecto.objects.filter(codigo=codigo).exists():
                 break
         
@@ -176,72 +87,254 @@ def asignar(request):
             codigo=codigo, 
             description=project_descrip, 
             user=usuario, 
-            estado='abierto'  # Añadido el estado del proyecto
+            estado='abierto'  
         )
         proyecto1.save()
         
         # Llamar a la función para enviar el correo electrónico
-        enviar_correo_post(usuario.id, proyecto1.codigo, 'tipo1')
-        return redirect('inicio_administrator')
+        #enviar_correo_post(usuario.id, proyecto1.codigo, 'tipo1')
+        return redirect('main:inicio_administrator')
     
     return render(request, './user/asignar.html', {'gerentes': gerentes})
 
-
-## pruebas 
-def diagrama(request):
-    todas_las_tareas = Tarea.objects.all()
-
-    # Estructurar las tareas en el formato adecuado para el diagrama de Gantt
-    actividades = []
-    for tarea in todas_las_tareas:
-        dependencias = [dep.id for dep in tarea.dependencias.all()]
-        actividad = {
-            "id": tarea.id,
-            "name": tarea.nombre,
-            "start": tarea.fecha_inicio.strftime('%Y-%m-%d'),
-            "end": tarea.fecha_fin.strftime('%Y-%m-%d'),
-            "progress": calcular_progreso(tarea),  # Calcular el progreso de la tarea
-            "dependencies": dependencias, 
-        }
-        
-        actividades.append(actividad)
+## gerente 
+def inicio_gerente(request, id_gerente):
+    gerente = Usuario.objects.get(id=id_gerente)
+    proyectos = Proyecto.objects.filter(user=gerente)
     
-    # Convertir las actividades a formato JSON
-    actividades_json = json.dumps(actividades)
-    return render(request, './datos.html',{'actividades': actividades_json})
-
-def calcular_progreso(tarea):
-    return 70
-
-
-def corre(request):
-    enviar_correo_post('pueba','valor')
-    return 0 
-
-def gestion(request):
-    return render(request, './user/barra_lateral.html')
-
-
-def proyecto(request , id_proyect):
-    proyecto = Proyecto.objects.filter(id=id_proyect).first()
     context = {
         'email': 'user.email',
         'first_name': 'user.first_name',
-        'proyecto_name': proyecto.name ,
-        'proyecto_id' : proyecto.id ,
+        
+    }
+    return render(request, "./user/inicio_gerente.html", {'context':context , 'gerente':gerente , 'proyectos':proyectos} )
+
+
+
+
+
+
+def nuevoproyecto(request, codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    
+    context = {
+        'codigo': proyecto.codigo,
+        'name': proyecto.name ,
+        'descr': proyecto.description,
+    }
+    
+    if request.method == 'POST':
+        if proyecto:
+            proyecto.fecha_creacion = request.POST.get('project-start-date-planned')#*
+            proyecto.fecha_inicio_planeada = request.POST.get('project-start-date-planned')#*
+            proyecto.fecha_finalizacion_planeada = request.POST.get('project-end-date-planned')
+            proyecto.alcance = request.POST.get('project-scope')
+            proyecto.estado = request.POST.get('project-status')
+            proyecto.tipo = request.POST.get('project-type')
+            proyecto.lider = request.POST.get('project-leader')
+            proyecto.grupo_project = request.POST.get('project-group')
+            proyecto.categoria = request.POST.get('project-category')
+            proyecto.antecedentes = 'antecedentes'
+            proyecto.fase = request.POST.get('project-phase')
+            proyecto.comentarios = request.POST.get('project-comments')
+            proyecto.porcentaje_completado = 0 
+            proyecto.columna = True
+            proyecto.save()
+            
+        
+        # Crea un tablero asociado al proyecto
+        etapas = ['inicio','planeacion','ejecucion','monitoreo_control','cierre']
+        
+        for e in etapas :
+            titulo = e + proyecto.codigo 
+            tablero = Tablero(titulo=titulo  , proyect=proyecto)
+            tablero.save()
+            nombres_columnas = ['Por hacer', 'En progreso', 'En revisión', 'Hecho']
+            for nombre in nombres_columnas:
+                Columna.objects.create(tablero=tablero, titulo=nombre)
+        
+        
+        
+        return redirect('main:inicio_manager', proyecto.user.id )
+    return render(request, "./user/nuevoproyecto.html" , {'context':context , 'gerente': proyecto.user} ) 
+
+
+#* proyecto 
+
+def proyecto(request , codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    context = {
+        'email': 'user.email',
+        'first_name': 'user.first_name',
         
     }
     
     return render(request , './user/proyecto.html' ,{'context': context , 'proyecto' : proyecto })
 
+##! parte oscar
 
-### proceso kanban : 
-def kanban(request , id_project):
+def riesgos(request , codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    riesgo = MatrizRiesgo.objects.all()
+    context = {
+        'email': 'user.email',
+        'first_name': 'user.first_name',
+        
+    }
     
-    proyecto = Proyecto.objects.filter(id=id_project).first()
-    if proyecto:
-        tablero = proyecto.tablero
+    return render(request , './user/riesgo.html' ,{'context': context , 'proyecto' : proyecto ,'riesgos':riesgo})
+
+def nuevomatriz(request , codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    context = {
+        'email': 'user.email',
+        'first_name': 'user.first_name',
+        
+    }
     
+    if request.method == 'POST':
+        # Obtener los datos del formulario
+        nombre_riesgo = request.POST.get('matriz-name')
+        descripcion_riesgo = request.POST.get('matriz-descrip')
+        causas_riesgo = request.POST.get('matriz-causas')
+        plan = request.POST.get('matriz-mitigacion')
+        descripcion_tiempo = request.POST.get('matriz-tiempo')
+        descripcion_alcance = request.POST.get('matriz-impact')
+        descripcion_costo = request.POST.get('matriz-costo')
+        probabilidad = request.POST.get('matriz-probabilidad')
+        gravedad = request.POST.get('matriz-gravedad')
+        materializo = request.POST.get('matriz-materializo')
+
+        # Convertir probabilidad y gravedad a enteros
+        probabilidad = int(probabilidad)
+        gravedad = int(gravedad)
+        
+        nuevo_riesgo = MatrizRiesgo(
+            nombre=nombre_riesgo,
+            descripcion=descripcion_riesgo,
+            causas=causas_riesgo,
+            plan=plan,
+            descripcion_tiempo=descripcion_tiempo,
+            descripcion_alcance=descripcion_alcance,
+            descripcion_costo=descripcion_costo,
+            probavilidad=probabilidad,
+            gravedad=gravedad,
+            proyecto_id=proyecto.id,
+            riesgo = 'Muy grave' ,
+            materializo = 'prueba'
+        )
+        # Guardar el nuevo riesgo en la base de datos
+        nuevo_riesgo.save()
+        return redirect('main:riesgos', proyecto.codigo )
+    
+    return render(request , './user/nuevoriesgo.html' ,{'context': context , 'proyecto' : proyecto })
+
+
+
+##! parte brayan 
+
+def leccionesprojec(request,codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    info = ComentarioTarea.objects.all()
+    return render(request, "./user/leccionesproject.html",{'ComentarioTareas': info,'proyecto' : proyecto })
+
+def nuevalencion(request,codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    return render(request, "./user/nuevaLeccion.html",{'proyecto' : proyecto })
+
+def leccionesprojecall(request,id_gerente):
+    gerente = Usuario.objects.get(id=id_gerente)
+    info = ComentarioTarea.objects.all()
+    return render(request, "./user/leccionesall.html",{'ComentarioTareas': info,'gerente':gerente })
+
+##* costos 
+
+def costos(request,codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    costo = Costos.objects.filter(proyecto=proyecto).filter()
+    return render(request, "./user/costos.html",{'costos':costo ,'proyecto' : proyecto })
+
+
+def nuevocosto(request,codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    
+    if request.method == 'POST':
+        contrato = request.POST.get('contrato')
+        objeto = request.POST.get('objeto')
+        tipo = request.POST.get('tipo')
+        aliado = request.POST.get('aliado')
+        contrato_aliado = request.POST.get('contrato_aliado')
+        backlog = request.POST.get('backlog')
+        one_time = request.POST.get('one_time')
+        recurrente = request.POST.get('recurrente')
+        meses = request.POST.get('meses')
+        
+        # Crear el objeto Costos y guardarlo en la base de datos
+        costo = Costos.objects.create(
+            contrato=contrato,
+            objeto=objeto,
+            tipo=tipo,
+            aliado=aliado,
+            contrato_aliado=contrato_aliado,
+            backlog=backlog,
+            one_time=one_time,
+            recurrente=recurrente,
+            meses=meses,
+            proyecto = proyecto
+        )
+        
+        costo.save()
+        return redirect('main:costos', proyecto.codigo )
+    
+    
+    return render(request, "./user/neuvocosto.html",{'proyecto' : proyecto })
+
+def docu(request,codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    docus = Documentos.objects.filter(proyecto=proyecto).filter()
+    if request.method == 'POST':
+        titulo = request.POST.get('titulo')
+        descripcion = request.POST.get('descripcion')
+        link = request.POST.get('url')
+        
+        documento = Documentos(titulo=titulo, 
+                            descriocion=descripcion, 
+                            link=link, 
+                            proyecto=proyecto)
+        documento.save()
+
+        return redirect('main:docu', proyecto.codigo )
+    return render(request, "./user/docu.html",{'docus':docus ,'proyecto' : proyecto })
+
+def nuevodocu(request,codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    costo = Costos.objects.filter(proyecto=proyecto).filter()
+    return render(request, "./user/costos.html",{'costos':costo ,'proyecto' : proyecto })
+
+
+## kanbas
+def des(request,codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    
+    inicio = Tablero.objects.filter(titulo = 'inicio'+codigo).first()
+    planeacion = Tablero.objects.filter(titulo='planeacion'+codigo).first()
+    ejecucion = Tablero.objects.filter(titulo='ejecucion'+codigo).first()
+    monitoreo = Tablero.objects.filter(titulo='monitoreo_control'+codigo).first()
+    cierre = Tablero.objects.filter(titulo='cierre'+codigo).first()
+    
+    
+    return render(request, "./user/des.html",{'proyecto' : proyecto,
+                                            'inicio':inicio, 
+                                            'planeacion':planeacion,
+                                            'ejecucion':ejecucion,
+                                            'monitoreo':monitoreo,
+                                            'cierre':cierre                                            
+                                            })
+
+
+def kanban(request , codigo , titulo ):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    tablero = Tablero.objects.filter(titulo=titulo).first()
     context = {
         'email': 'user.email',
         'first_name': 'user.first_name',
@@ -257,46 +350,7 @@ def mover_tarjeta(request, tarjeta_id, columna_id):
     tarjeta.save()
     return HttpResponse("Ok")
 
-
-def nuevaactividad(request , id_project , id_columna):
-    columna = id_columna and get_object_or_404(Columna, id=id_columna) or None
-    
-    proyecto = Proyecto.objects.filter(id=id_project).first()
-    if proyecto:
-        tablero = proyecto.tablero
-    
-    context = {
-        'email': 'user.email',
-        'first_name': 'user.first_name',
-    }    
-    
-    if request.method == 'POST':
-        nombre_actividad = request.POST.get('actividad-nombre')
-        descripcion_actividad = request.POST.get('actividad-descripcion')
-        fecha_inicio = request.POST.get('actividad-fecha-inicio')
-        fecha_fin = request.POST.get('actividad-fecha-fin')
-        
-        actividad = Hito.objects.create(
-            nombre=nombre_actividad,
-            descripcion=descripcion_actividad,
-            proyecto=proyecto,
-            fecha_inicio=fecha_inicio,
-            fecha_fin=fecha_fin,
-        )
-        
-        actividad.save()
-        
-        tarjeta = Tarjeta.objects.create(
-            actividad=actividad,
-            columna = columna,
-            titulo = nombre_actividad , 
-            descripcion = descripcion_actividad, 
-        )
-        
-        tarjeta.columna = columna
-        
-        tarjeta.save()
-        print(tarjeta)
-        return redirect('kanban', id_project=proyecto.id)
-    
-    return render(request , '././user/nuevaactividad.html', {'context':context , 'tablero':tablero , 'proyecto' : proyecto })
+##*  {% url 'main:nuevoproyecto' codigo=proyecto.codigo %}
+##*  {% url 'main:project' codigo=proyecto.codigo %}
+##*  {% url 'main:riesgos' codigo=proyecto.codigo %}
+##* {% url 'main:nuevomatriz' codigo=proyecto.codigo %}

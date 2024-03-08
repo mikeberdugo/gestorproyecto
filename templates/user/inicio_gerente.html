@@ -125,11 +125,6 @@
                     equipo y comienza a usar Colvapro al máximo.
                   </p>
                   <div class="create-options">
-                    <a
-                      href="{% url 'crearprojecto' %}"
-                      title="Nuevo proyecto"
-                      class="create-project-btn button-primary"
-                      ><span>Nuevo proyecto</span></a
                     >
                   </div>
                 </div>
@@ -206,29 +201,36 @@
                 <header>
                   <h2 class="title-bar working-on-title">Asignados</h2>
                 </header>
-                <div
-                  ng-if="vm.assignedTo != undefined &amp;&amp; vm.assignedTo.size === 0"
-                  class="working-on-empty"
-                >
+                <div class="working-on-empty" >
                   <div class="contable">
-                    
+                    <!-- proyecto desde aqui  -->
+                    {% for proyecto in  proyectos %}
+                    {% if proyecto.columna == False %}
                     <div class="contCard">
                       <div class="imagen">
                         <i class="fas fa-check-double"></i>
                       </div>
+
                       <div class="textos">
-                        <h3>Nombre proyecto</h3>
+                        <h3>{{proyecto.name}}</h3>
+
                         <div class="estadotarea">
                           <span class="tarea">Estado:</span>
-                          <p class="estado">En curso</p>
+                          <p class="estado">{{proyecto.estado}}</p>
                         </div>
+
                         <div class="contAsig">
-                          <p class="datenum">#12</p>
                           <p class="datenumText">Asignación</p>
-                          <p class="asg">(correo)</p>
+                          <a  href="{% url 'main:nuevoproyecto' codigo=proyecto.codigo %}" class="asg">Ingrese aqui</a>
                         </div>
+
                       </div>
                     </div>
+                    {% endif %}
+                    {% endfor %}
+
+
+                    <!-- hasta aqui  -->
                   </div>
                   <div class="empty-ticket">
                     <div class="avatar"></div>
@@ -244,31 +246,31 @@
                   <h2 class="title-bar watching-title">Aceptado</h2>
                 </header>
                 <div class="watching-empty" >
-                
                   <!--  desde aqui  proyectos  -->
                   {% for proyecto in  proyectos %}
+                    {% if proyecto.columna %}
                     <div class="contCard">
-                        <div class="imagen">
-                          <i class="fas fa-check-double"></i>
-                        </div>
-
-                        <div class="textos">
-                          <h3>{{proyecto.name}}</h3>
-
-                          <div class="estadotarea">
-                            <span class="tarea">Estado:</span>
-                            <p class="estado">{{proyecto.estado}}</p>
-                          </div>
-
-                          <div class="contAsig">
-                            <p class="datenumText">Asignación</p>
-                            <a  href="{% url 'project' id_proyect=proyecto.id %}" class="asg">Ingrese aqui</a>
-                          </div>
-
-                        </div>
+                      <div class="imagen">
+                        <i class="fas fa-check-double"></i>
                       </div>
-                
-                      {% endfor %}
+
+                      <div class="textos">
+                        <h3>{{proyecto.name}}</h3>
+
+                        <div class="estadotarea">
+                          <span class="tarea">Estado:</span>
+                          <p class="estado">{{proyecto.estado}}</p>
+                        </div>
+
+                        <div class="contAsig">
+                          <p class="datenumText">Asignación</p>
+                          <a  href="{% url 'main:project' codigo=proyecto.codigo %}" class="asg" >Ingrese aqui</a>
+                        </div>
+
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
 
 
                   <!--  hasta aqui proyectos  -->
@@ -282,23 +284,20 @@
                   </div>
                 </div>
               </section>
+
             </tg-working-on>
           </div>
           <aside tg-home-project-list="" class="project-list">
-            <section
-              ng-if="vm.projects != undefined &amp;&amp; vm.projects.size === 0"
-              class="projects-empty"
-            >
+            <section class="projects-empty" >
               <tg-svg svg-icon="icon-project"> </tg-svg>
-              <p>Todavía no tienes ningún proyecto</p>
               <a
                 variant="primary"
-                href="{% url 'crearprojecto' %}"
-                title="Crear proyecto"
+                href="{% url 'main:leccionesprojecall' id_gerente=gerente.id %}"
+                title="Historico de Lecciones"
                 class="btn-small create-project-button"
-                >Nuevo proyecto</a
+                >Historico de Lecciones</a
               >
-            </section>
+            </section=>
           </aside>
         </div>
       </div>

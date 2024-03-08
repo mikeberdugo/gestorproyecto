@@ -94,27 +94,18 @@
                             <label  for="project-description">Descripción del Proyecto</label>
                             <textarea   id="project-description" name="project-description" placeholder="Descripción del Proyecto (Requerido)" required> {{ context.descr }} </textarea>
                         </fieldset>
+                        
                         <fieldset>
-                            <label for="project-creation-date">Fecha de Creación</label>
-                            <input type="date" id="project-creation-date" name="project-creation-date">
-                        </fieldset>
-                        <fieldset>
-                            <label for="project-start-date-planned">Fecha de Inicio Planeada</label>
+                            <label for="project-start-date-planned">Fecha de Inicio</label>
                             <input type="date" id="project-start-date-planned" name="project-start-date-planned">
                         </fieldset> 
-                        <!-- <fieldset>
-                            <label for="project-start-date-real">Fecha de Inicio Real</label>
-                            <input type="date" id="project-start-date-real" name="project-start-date-real">
-                        </fieldset>  -->
-
+                        
                         <fieldset>
-                            <label for="project-end-date-planned">Fecha de Finalización Planeada</label>
+                            <label for="project-end-date-planned">Fecha de Fin Linea base </label>
                             <input type="date" id="project-end-date-planned" name="project-end-date-planned">
                         </fieldset> 
-                        <!-- <fieldset>
-                            <label for="project-end-date-real">Fecha de Finalización Real</label>
-                            <input type="date" id="project-end-date-real" name="project-end-date-real">
-                        </fieldset> -->
+
+
                         <fieldset>
                             <label  for="project-scope">Alcance</label>
                             <textarea id="project-scope" name="project-scope"></textarea>
@@ -144,7 +135,11 @@
 
                         <fieldset>
                             <label for="project-leader">Líder</label>
-                            <input value="{{ project.usuario.first_name }} {{ project.usuario.last_name }}" type="text" id="project-leader" name="project-leader">
+                            <select id="project-leader" name="project-leader">
+                                <option value="Líder1">Líder 1</option>
+                                <option value="Líder2">Líder 2</option>
+                                <option value="Líder3">Líder 3</option>
+                            </select>
                         </fieldset>
 
                         <fieldset>
@@ -164,10 +159,7 @@
                                 <option value="IV">Tipo IV</option>
                             </select>
                         </fieldset>
-                        <fieldset>
-                            <label  for="project-background">Antecedentes</label>
-                            <textarea id="project-background" name="project-background"></textarea>
-                        </fieldset>
+
                         <fieldset>
                             <label for="project-phase">Fase</label>
                             <select id="project-phase" name="project-phase">

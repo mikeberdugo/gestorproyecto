@@ -25,7 +25,7 @@ def enviar_correo_post(id_user, codigo_proyecto, tipo_correo):
     contenido_correo = render_to_string(plantilla_seleccionada, {'contexto': context })
     
     send_mail(
-        'Asunto del Correo',
+        'Notificacion Colvaproject',
         contenido_correo,
         'notificaciones_colvacor@colvatel.com.co',  # Dirección de correo electrónico del remitente
         [correo_destino],  # Lista de direcciones de correo electrónico de los destinatarios
