@@ -1,0 +1,130 @@
+:root {
+    --color-principal: #2E3440;
+    --color-secundario: #3B4252;
+    --gris: #f1f1f4;
+    --azul-uno: #216fbc;
+    --azul-dos: #0b3d93;
+    --azul-tres: #4f70af;
+    --azul-cuatro: #122754;
+    --azul-cinco: #080d28;
+}
+
+body{
+    background: #F2F2F2;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Para centrar verticalmente */
+  }
+
+.navbar{
+    background: white;
+}
+  
+.tarjeta {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center; /* Centro el contenido */
+    bottom: 10px;
+}
+
+.titulo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+h1{
+    padding-top: 10px;
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+.contenido {
+    font-size: 16px;
+    color: #666;
+}
+
+h3{
+    padding-top: 10px;
+    font-size: 14px;
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+input[type=text]{
+    width: 90%;
+}
+
+.create-project label{
+    padding-left: 40px;
+}
+
+textarea{
+    width: 90%;
+}
+
+select{
+    width: 90%;
+}
+
+.create-project-action{
+    padding-left: 35px;
+    padding-right: 35px;
+    padding-bottom: 20px;
+}
+
+.create-project-action{
+    margin: 0rem 0 0;
+}
+
+.create-project-description {
+    margin-bottom: 0rem;
+}
+
+.create-project fieldset{
+    margin-bottom: 0.5rem;
+}
+
+/* modificaciones del css taiga*/
+
+.btn-small{
+    background: var(--azul-uno);
+    color: white;
+    margin-top: 10px;
+}
+
+.btn-small:hover{
+    background: var(--azul-cuatro);
+}
+
+.btn-small[variant="secondary"]{
+    margin-top: 10px;
+}
+
+.btn-small[variant="secondary"]:hover{
+    background-color: var(--azul-cuatro);
+    color: white;
+}
+
+.navbar .user-avatar img{
+    border: 2px solid var(--azul-uno);
+}
+
+
+.navbar .user-avatar img:hover{
+    border: 2px solid var(--azul-cuatro);
+}

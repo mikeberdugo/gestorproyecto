@@ -11,53 +11,110 @@
 {% endblock %}
 
 {% block conten %}
-<div class="main detail"> 
+<div class="main detail" style=" width: auto;  height: 600px; overflow-y: auto; padding: 10px; ">
     <h1 tg-main-title="" i18n-section-name="Nueva Actividad" title="Nueva Actividad" ><span> Nueva Actividad </span></h1>
     <div class="col-md-8 main detail">
         <form name="actividadForm" class="ng-pristine ng-invalid ng-invalid-required" method="POST">
             {% csrf_token %}
-            <div>
-                <fieldset >
-                    <label for="actividad-nombre">Nombre de la Actividad</label>
-                    <input type="text" placeholder="Nombre de la Actividad (Requerido)" name="actividad-nombre" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
-                </fieldset>
-            </div>
-            <div>
-                <fieldset  >
-                    <label for="actividad-descripcion">Descripción de la Actividad</label>
-                    <textarea placeholder="Descripción de la Actividad (Requerido)" name="actividad-descripcion" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
-                </fieldset>
-            </div>
-           <!-- <fieldset  >
-                <label for="actividad-proyecto">Proyecto</label>
-                <select id="actividad-proyecto" name="actividad-proyecto">
-                    {% for proyecto in proyectos %}
-                    <option value="{{ proyecto.id }}"> {{ proyecto.name }} </option>
-                    {% endfor %}
+
+            <fieldset>
+                <label for="actividad-fase">Fase</label>
+                <select id="actividad-fase" name="actividad-fase">
+                    <option value="inicio"> Inicio </option>
+                    <option value="planeacion"> Planeación </option>
+                    <option value="ejecucion"> Ejecución </option>
+                    <option value="monitoreo"> Monitoreo y Control </option>
+                    <option value="cierre"> Cierre </option>
                 </select>
-            </fieldset>  -->
-            <fieldset  >
+            </fieldset>
+
+            <fieldset>
+                <label for="subfase">Sub-Fase</label>
+                <select id="subfase" name="subfase">
+                    <option value="subfase1">Sub-Fase 1</option>
+                    <option value="subfase2">Sub-Fase 2</option>
+                    <option value="subfase3">Sub-Fase 3</option>
+                    <option value="subfase4">Sub-Fase 4</option>
+                    <option value="subfase5">Sub-Fase 5</option>
+                    <option value="subfase6">Sub-Fase 6</option>
+                    <option value="subfase7">Sub-Fase 7</option>
+                </select>
+            </fieldset>
+            <div>
+                <fieldset>
+                    <label for="actividad-nombre">Tarea</label>
+                    <select id="actividad-nombre" name="actividad-nombre">
+                        <option value="Name1">Name 1</option>
+                        <option value="Name2">Name 2</option>
+                        <option value="Name3">Name 3</option>
+                        <option value="Name4">Name 4</option>
+                        <option value="Name5">Name 5</option>
+                        <option value="Name6">Name 6</option>
+                        <option value="Name7">Name 7</option>
+                    </select>
+                </fieldset>
+            </div>
+
+            <div>
+                <fieldset>
+                    <label for="actividad-descripcion">Descripción</label>
+                    <textarea id="actividad-descripcion" placeholder="Descripción de la Actividad (Requerido)" name="actividad-descripcion" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+                </fieldset>
+            </div>
+
+
+
+            <fieldset>
                 <label for="actividad-fecha-inicio">Fecha de Inicio</label>
-                <input type="date" name="actividad-fecha-inicio" required="required">
+                <input type="date" id="actividad-fecha-inicio" name="actividad-fecha-inicio" required="required">
             </fieldset>
-            <fieldset  >
+            <fieldset>
                 <label for="actividad-fecha-fin">Fecha de Fin</label>
-                <input type="date" name="actividad-fecha-fin" required="required">
+                <input type="date" id="actividad-fecha-fin" name="actividad-fecha-fin" required="required">
             </fieldset>
-            <!-- <fieldset  >
-                <label for="actividad-asignado">Asignado</label>
-                <select id="actividad-asignado" name="actividad-asignado">
-                    {% for usuario in usuarios %}
-                    <option value="{{ usuario.id }}"> {{ usuario.usuario.username }} </option>
+
+            <fieldset>
+                <label for="horas-estimadas">Horas Estimadas</label>
+                <input type="number" id="horas-estimadas" name="horas-estimadas" required>
+            </fieldset>
+
+            <div class="container">
+                <fieldset>
+                    <legend>Observaciones</legend>
+                    <textarea id="observaciones" name="observaciones" rows="4" cols="50"></textarea>
+                </fieldset>
+
+                <fieldset>
+                    <label for="porcentaje">Porcentaje:</label>
+                    <input type="number" id="porcentaje" name="porcentaje" min="0" max="100" step="1" required>
+                </fieldset>
+            </div>
+            <fieldset>
+                <label for="dependencia">Dependencia</label>
+                <select id="dependencia" name="dependencia">
+                    <option value=""> default</option>
+                    {% for de in des %}
+                        <option value="{{ de.titulo }}"> {{de.titulo}} </option>
                     {% endfor %}
                 </select>
-            </fieldset> -->
+            </fieldset>
+            <fieldset>
+                <label for="actividad-complejidad">Complejidad</label>
+                <select id="actividad-complejidad" name="actividad-complejidad">
+                    <option value="4">Critico</option>
+                    <option value="3">Alto</option>
+                    <option value="2">Medio</option>
+                    <option value="1">Bajo</option>
+                    <option value="5" disabled selected>Selecciona una opción</option>
+                </select>
+            </fieldset>
+
             <div>
                 <br>
                 <br>
                 <fieldset>
-                    <button variant="secondary" type="button" title="Volver" class="btn-small create-actividad-action-cancel">Volver</button>
-                    <button type="submit" class="btn-small  create-actividad-action-submit" title="Crear Actividad">Crear Actividad</button>
+                    <a href="{% url 'main:des' codigo=proyecto.codigo %} " variant="secondary" type="button" title="Volver" class="btn-small create-project-action-cancel" >Volver</a>
+                    <button type="submit" class="btn-small create-actividad-action-submit" title="Crear Actividad">Crear Actividad</button>
                 </fieldset>
             </div>
         </form>

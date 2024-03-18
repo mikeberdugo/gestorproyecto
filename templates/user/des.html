@@ -3,13 +3,15 @@
 {% block id_project %}proyecto.id{% endblock %}
 
 {% block title %} gestion de proyecto  - {{proyecto.name}} {% endblock %}
-{% block name %} 
+{% block name %}
     {{proyecto.name}}
 {% endblock %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css">
+    <link rel="stylesheet" href="{% static './css/acordeon.css' %}">
+    <link rel="stylesheet" href="{% static './css/docu.css' %} ">
 
     <style>
         .custom-table {
@@ -17,21 +19,21 @@
         border-collapse: collapse;
         border: 1px solid #ddd;
         }
-    
+
         .custom-table th, .custom-table td {
         padding: 8px;
         text-align: left;
         border-bottom: 1px solid #ddd;
         }
-    
+
         .custom-table th {
         background-color: #f2f2f2;
         }
-    
+
         .custom-table td:last-child {
         text-align: center;
         }
-    
+
         .custom-button {
         display: inline-block;
         padding: 6px 12px;
@@ -44,7 +46,7 @@
         border-radius: 4px;
         transition: background-color 0.3s, color 0.3s;
         }
-    
+
         .custom-button:hover {
         background-color: #e6e6e6;
         color: #222;
@@ -54,80 +56,296 @@
 {% endblock %}
 
 {% block conten %}
+
 <div class="content-lecciones">
-    <div class="tui-table-wrapper">
-        <table class="custom-table">
-          <thead>
-            <tr>
-              <th>Fase de proyecto</th>
-              <th>Número de tareas en la fase</th>
-              <th>Kanban</th>
-              <th>Diagrama de Gantt</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Inicio</td>
-              <td></td>
-              <td>
-                <a href="{% url 'main:kanban' codigo=proyecto.codigo titulo=inicio.titulo %}" class="custom-button">Kanban</a>
-              </td>
-              <td>
-                <a href="#" class="custom-button">Diagrama de Gantt</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Planeación</td>
-              <td></td>
-              <td>
-                <a href="{% url 'main:kanban' codigo=proyecto.codigo titulo=planeacion.titulo %}" class="custom-button">Kanban</a>
-              </td>
-              <td>
-                <a href="#" class="custom-button">Diagrama de Gantt</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Ejecución</td>
-              <td></td>
-              <td>
-                <a href="{% url 'main:kanban' codigo=proyecto.codigo titulo=ejecucion.titulo %}" class="custom-button">Kanban</a>
-              </td>
-              <td>
-                <a href="#" class="custom-button">Diagrama de Gantt</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Monitoreo y Control</td>
-              <td></td>
-              <td>
-                <a href="{% url 'main:kanban' codigo=proyecto.codigo titulo=monitoreo.titulo %}" class="custom-button">Kanban</a>
-              </td>
-              <td>
-                <a href="#" class="custom-button">Diagrama de Gantt</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Cierre</td>
-              <td></td>
-              <td>                                         
-                <a href="{% url 'main:kanban' codigo=proyecto.codigo titulo=cierre.titulo %}" class="custom-button">Kanban</a>
-              </td>
-              <td>
-                <a href="#" class="custom-button">Diagrama de Gantt</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+
+  <div class="containerUp-headertable">
+     <a href="{% url 'main:gantt' codigo=proyecto.codigo %}"  class="containerUp-headertable__a" id="btnnewDoc" >
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAqFJREFUSEu11UvIVWUUxvGfhooZhU4aCBUoipkZlFFkTZRSB0kqDRKUUEHoKhVohVBKUpiQNxR0EImmGIkoOhDB+0ANL3gNEwcR2EDEEm9h7/pYR/a3Oee7DL53cs7ee+33/661nvXsXnp49erh/XUG6IMpmIjn8FQe6DJ+w278inutDtoRYDzWYEgnWZ7HXOxrFtcK8AUW5wsH8Q0ewZa89xFezuz64j7m4Yc6pBngSyzCXXyYWfTH6cxmOQIQ67ESF4f5lLZyv49VVUgd8EbWNU70JnZk8FJ8goul5qNxq3bSafg5IS/haON5FdAbZzEcZ/BMBsWGJ7qhtsN4pRkg1PJLZaO3UyHH8Ww3ABEagAC1k+nWUuep2I/X8Ac2YwF+L/BR5f/tCihUE3Er8UHe/wzfZbM/rgOu4AkMK2XahOcrm43FoVoWjVI+lDNyMvsT5YysX6gD/i30h4skQ3bxsC1FrMZ7LUoUagvVRVNfxKNFrteLyq5hUB1wI7Ueeg/YNkzG9ynDZowoX8xIrNmppH+K4mKvgLXrQUxkpP00zmWp4jdsYET2pAp5HJcwIG/+jbcQgxlqHFkH/Fg2mZF6X5YvRQOjPNszmypgHWblrITEJ+FPDMb6zKhdBhGws5tyvJPZxdRfQEx8rHFFYXvrGcT1qZRjVznflqmen8Ebipyn41g56JjGBnWrCPIe/Id3i/f81ITUGMi/MBQ3i+Jer1jMqxUFNv0eNMwu9o6h+TyBcd0vS/Fk9iu86us0uXgeAxd9e7Ba2fXCorCvMiqUFP+PFLN7p0CW4GpR2UbMLFM7MO06HHZFPeOOPjgTsDanu6OeRHPnlMYeaBbU2SczShL+FAoLw4vShJWH/sMOdqWEo2dNV2eArqqpZVyPA/4HQWiAGcQhphkAAAAASUVORK5CYII="/>
+    </a>
+
+    <a href="{% url 'main:nuevoitems' codigo=proyecto.codigo %}"  class="containerUp-headertable__a" id="btnnewDoc" >
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAFZJREFUSEtjZKAxYKSx+QyjFhAMYVKD6D/URKL1Ea0QavCoBQTjbOgEEcylBL2EpgAj0eBKRTS3AJfLh04cjPoAHgKDriwiNV+M1miEQ4zUSCZsIpoKAFy0DhnDOA3uAAAAAElFTkSuQmCC"/>
+    </a>
+  </div>
+
+  <div class="accordion">
+    <div class="accordion-item">
+      <button class="accordion-header">Fase de Inicio</button>
+      <div class="accordion-content">
+
+        <table id="des-table-inicio" class="display">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha de Fin</th>
+                        <th>Subfase</th>
+                        <th>Porcentaje</th>
+                        <th>Dependencias</th>
+                        <th>Observaciones</th>
+                        <th>Tiempo Estimado (horas)</th>
+                        <th>Estado</th>
+                        <th>Complejidad</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for des_instance in inicio %}
+                    <tr>
+                        <td>{{ des_instance.titulo }}</td>
+                        <td>{{ des_instance.descripcion }}</td>
+                        <td>{{ des_instance.fecha_inicio }}</td>
+                        <td>{{ des_instance.fecha_fin }}</td>
+                        <td>{{ des_instance.subfase }}</td>
+                        <td>{{ des_instance.procentaje|floatformat:"0" }}%</td>
+                        <td>{{ des_instance.dependencias }}</td>
+                        <td>{{ des_instance.observaciones }}</td>
+                        <td>{{ des_instance.tiempo_estimado }}</td>
+                        <td>{{ des_instance.peso }}</td>
+                        <td>{{ des_instance.estado }}</td>
+                        <td>
+                            <a href="{% url 'main:edititems' codigo=proyecto.codigo id_items=des_instance.id %}" variant="secondary" type="button" title="Editar" class="btn-small create-project-action-cancel" >
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPJJREFUSEvFk7EOAUEQhr97AgqRaKm9gMYL0VHRiFCg9EYSb6CSaFUSegk3yRXr7O7s3d7ltt3d75v9Zzah5pXUzCdWsAbewMpVaIxgD8wy8Bw42CRlBR3gAnQN6BLY5CVlBG3gCQyAE9DLoAtgGyuYpJlLpSPgBvSBcxZPdESSt+Qu6w6MgSvQAl6xTZYm7nIQkQyBh2/UQ3pgVm6yjil8qv0jTRAFF7lP4IJLMyWyoOUSVAJ3vaAyuEvwsby9UCzmfVtEeUFpeMgLouDaFAVNiXZI+wfafXW/EYFtitRKjQM/RYdMURH4X18biahoxd7zXwouJhn8uXp/AAAAAElFTkSuQmCC"/>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
       </div>
-    
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-header">Fase de Planeación </button>
+      <div class="accordion-content">
+        <table id="des-table-planeacion" class="display">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha de Fin</th>
+                        <th>Subfase</th>
+                        <th>Porcentaje</th>
+                        <th>Dependencias</th>
+                        <th>Observaciones</th>
+                        <th>Tiempo Estimado (horas)</th>
+                        <th>Estado</th>
+                        <th>Complejidad</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for des_instance in planeacion %}
+                    <tr>
+                        <td>{{ des_instance.titulo }}</td>
+                        <td>{{ des_instance.descripcion }}</td>
+                        <td>{{ des_instance.fecha_inicio }}</td>
+                        <td>{{ des_instance.fecha_fin }}</td>
+                        <td>{{ des_instance.subfase }}</td>
+                        <td>{{ des_instance.procentaje|floatformat:"0" }}%</td>
+                        <td>{{ des_instance.dependencias }}</td>
+                        <td>{{ des_instance.observaciones }}</td>
+                        <td>{{ des_instance.tiempo_estimado }}</td>
+                        <td>{{ des_instance.peso }}</td>
+                        <td>{{ des_instance.estado }}</td>
+                        <td>
+                            <a href="{% url 'main:edititems' codigo=proyecto.codigo id_items=des_instance.id %}" variant="secondary" type="button" title="Editar" class="btn-small create-project-action-cancel" >
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPJJREFUSEvFk7EOAUEQhr97AgqRaKm9gMYL0VHRiFCg9EYSb6CSaFUSegk3yRXr7O7s3d7ltt3d75v9Zzah5pXUzCdWsAbewMpVaIxgD8wy8Bw42CRlBR3gAnQN6BLY5CVlBG3gCQyAE9DLoAtgGyuYpJlLpSPgBvSBcxZPdESSt+Qu6w6MgSvQAl6xTZYm7nIQkQyBh2/UQ3pgVm6yjil8qv0jTRAFF7lP4IJLMyWyoOUSVAJ3vaAyuEvwsby9UCzmfVtEeUFpeMgLouDaFAVNiXZI+wfafXW/EYFtitRKjQM/RYdMURH4X18biahoxd7zXwouJhn8uXp/AAAAAElFTkSuQmCC"/>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-header">Fase de Ejecución</button>
+      <div class="accordion-content">
+
+          <table id="des-table-ejecucion" class="display">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha de Fin</th>
+                        <th>Subfase</th>
+                        <th>Porcentaje</th>
+                        <th>Dependencias</th>
+                        <th>Observaciones</th>
+                        <th>Tiempo Estimado (horas)</th>
+                        <th>Estado</th>
+                        <th>Complejidad</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for des_instance in ejecucion %}
+                    <tr>
+                        <td>{{ des_instance.titulo }}</td>
+                        <td>{{ des_instance.descripcion }}</td>
+                        <td>{{ des_instance.fecha_inicio }}</td>
+                        <td>{{ des_instance.fecha_fin }}</td>
+                        <td>{{ des_instance.subfase }}</td>
+                        <td>{{ des_instance.procentaje|floatformat:"0" }}%</td>
+                        <td>{{ des_instance.dependencias }}</td>
+                        <td>{{ des_instance.observaciones }}</td>
+                        <td>{{ des_instance.tiempo_estimado }}</td>
+                        <td>{{ des_instance.peso }}</td>
+                        <td>{{ des_instance.estado }}</td>
+                        <td>
+                            <a href="{% url 'main:edititems' codigo=proyecto.codigo id_items=des_instance.id %}" variant="secondary" type="button" title="Editar" class="btn-small create-project-action-cancel" >
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPJJREFUSEvFk7EOAUEQhr97AgqRaKm9gMYL0VHRiFCg9EYSb6CSaFUSegk3yRXr7O7s3d7ltt3d75v9Zzah5pXUzCdWsAbewMpVaIxgD8wy8Bw42CRlBR3gAnQN6BLY5CVlBG3gCQyAE9DLoAtgGyuYpJlLpSPgBvSBcxZPdESSt+Qu6w6MgSvQAl6xTZYm7nIQkQyBh2/UQ3pgVm6yjil8qv0jTRAFF7lP4IJLMyWyoOUSVAJ3vaAyuEvwsby9UCzmfVtEeUFpeMgLouDaFAVNiXZI+wfafXW/EYFtitRKjQM/RYdMURH4X18biahoxd7zXwouJhn8uXp/AAAAAElFTkSuQmCC"/>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-header">Fase de Monitoreo y Control </button>
+      <div class="accordion-content">
+        <table id="des-table-monitoreo" class="display">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha de Fin</th>
+                        <th>Subfase</th>
+                        <th>Porcentaje</th>
+                        <th>Dependencias</th>
+                        <th>Observaciones</th>
+                        <th>Tiempo Estimado (horas)</th>
+                        <th>Estado</th>
+                        <th>Complejidad</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for des_instance in monitoreo %}
+                    <tr>
+                        <td>{{ des_instance.titulo }}</td>
+                        <td>{{ des_instance.descripcion }}</td>
+                        <td>{{ des_instance.fecha_inicio }}</td>
+                        <td>{{ des_instance.fecha_fin }}</td>
+                        <td>{{ des_instance.subfase }}</td>
+                        <td>{{ des_instance.procentaje|floatformat:"0" }}%</td>
+                        <td>{{ des_instance.dependencias }}</td>
+                        <td>{{ des_instance.observaciones }}</td>
+                        <td>{{ des_instance.tiempo_estimado }}</td>
+                        <td>{{ des_instance.peso }}</td>
+                        <td>{{ des_instance.estado }}</td>
+                        <td>
+                            <a href="{% url 'main:edititems' codigo=proyecto.codigo id_items=des_instance.id %}" variant="secondary" type="button" title="Editar" class="btn-small create-project-action-cancel" >
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPJJREFUSEvFk7EOAUEQhr97AgqRaKm9gMYL0VHRiFCg9EYSb6CSaFUSegk3yRXr7O7s3d7ltt3d75v9Zzah5pXUzCdWsAbewMpVaIxgD8wy8Bw42CRlBR3gAnQN6BLY5CVlBG3gCQyAE9DLoAtgGyuYpJlLpSPgBvSBcxZPdESSt+Qu6w6MgSvQAl6xTZYm7nIQkQyBh2/UQ3pgVm6yjil8qv0jTRAFF7lP4IJLMyWyoOUSVAJ3vaAyuEvwsby9UCzmfVtEeUFpeMgLouDaFAVNiXZI+wfafXW/EYFtitRKjQM/RYdMURH4X18biahoxd7zXwouJhn8uXp/AAAAAElFTkSuQmCC"/>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <button class="accordion-header">Fase de Cierre</button>
+      <div class="accordion-content">
+        <table id="des-table-cierre" class="display">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha de Fin</th>
+                        <th>Subfase</th>
+                        <th>Porcentaje</th>
+                        <th>Dependencias</th>
+                        <th>Observaciones</th>
+                        <th>Tiempo Estimado (horas)</th>
+                        <th>Estado</th>
+                        <th>Complejidad</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for des_instance in cierre %}
+                    <tr>
+                        <td>{{ des_instance.titulo }}</td>
+                        <td>{{ des_instance.descripcion }}</td>
+                        <td>{{ des_instance.fecha_inicio }}</td>
+                        <td>{{ des_instance.fecha_fin }}</td>
+                        <td>{{ des_instance.subfase }}</td>
+                        <td>{{ des_instance.procentaje|floatformat:"0" }}%</td>
+                        <td>{{ des_instance.dependencias }}</td>
+                        <td>{{ des_instance.observaciones }}</td>
+                        <td>{{ des_instance.tiempo_estimado }}</td>
+                        <td>{{ des_instance.peso }}</td>
+                        <td>{{ des_instance.estado }}</td>
+                        <td>
+                            <a href="{% url 'main:edititems' codigo=proyecto.codigo id_items=des_instance.id %}" variant="secondary" type="button" title="Editar" class="btn-small create-project-action-cancel" >
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAPJJREFUSEvFk7EOAUEQhr97AgqRaKm9gMYL0VHRiFCg9EYSb6CSaFUSegk3yRXr7O7s3d7ltt3d75v9Zzah5pXUzCdWsAbewMpVaIxgD8wy8Bw42CRlBR3gAnQN6BLY5CVlBG3gCQyAE9DLoAtgGyuYpJlLpSPgBvSBcxZPdESSt+Qu6w6MgSvQAl6xTZYm7nIQkQyBh2/UQ3pgVm6yjil8qv0jTRAFF7lP4IJLMyWyoOUSVAJ3vaAyuEvwsby9UCzmfVtEeUFpeMgLouDaFAVNiXZI+wfafXW/EYFtitRKjQM/RYdMURH4X18biahoxd7zXwouJhn8uXp/AAAAAElFTkSuQmCC"/>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+      </div>
+    </div>
+
+  </div>
+
 </div>
+
 
 
 {% endblock %}
 
 
 {% block scripts %}
+<script src="{% static './js/acordeon.js' %}" defer></script>
+<script src="{% static './js/documodal.js' %}" defer></script>
+<script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.0.1/js/dataTables.tailwindcss.js"></script>
 
+<script>
+    $(document).ready( function () {
+        $('#des-table-inicio').DataTable({
+            scrollX: true,
+            info: false,
+            lengthChange:false,
+        });
+        // des-table-planeacion
+        $('#des-table-planeacion').DataTable({
+            scrollX: true,
+            info: false,
+            lengthChange:false,
+        });
+        $('#des-table-ejecucion').DataTable({
+            scrollX: true,
+            info: false,
+            lengthChange:false,
+        });
+        $('#des-table-monitoreo').DataTable({
+            scrollX: true,
+            info: false,
+            lengthChange:false,
+        });
+        $('#des-table-cierre').DataTable({
+            scrollX: true,
+            info: false,
+            lengthChange:false,
+        });
+
+    } );
+</script>
 {% endblock %}
+
 
 

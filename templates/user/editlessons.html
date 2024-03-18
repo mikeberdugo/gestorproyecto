@@ -1,0 +1,57 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+{% block id_project %}proyecto.id{% endblock %}
+
+{% block title %} gestion de proyecto  - {{proyecto.name}} {% endblock %}
+{% block name %}
+    {{proyecto.name}}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
+{% endblock %}
+
+{% block conten %}
+<br>
+<div style=" width: auto;  height: 600px; overflow-y: auto; padding: 10px; " >
+    <form method="post" name="costoForm" novalidate="novalidate" class="ng-pristine ng-invalid ng-invalid-required">
+        {% csrf_token %}
+            <div >
+                <fieldset>
+                    <label for="solucion">Solución</label>
+                    <textarea id="solucion" name="solucion"  placeholder="Solución del problema (Requerido)" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+                </fieldset>
+            </div>
+            <div >
+                <fieldset>
+                    <label for="planes_mejora_aplicados">Planes de mejora aplicados</label>
+                    <textarea id="planes_mejora_aplicados" name="planes_mejora_aplicados"   placeholder="Plan de mejora (Requerido)" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+                </fieldset>
+            </div>
+            <div >
+                <fieldset>
+                    <label for="resultados_planes_mejora">Resultados de los planes de mejora</label>
+                    <textarea id="resultados_planes_mejora" name="resultados_planes_mejora"   placeholder="Resultado del plan (Requerido)" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+                </fieldset>
+            </div>
+        <br>
+        <div>
+            <fieldset>
+                <a href="{% url 'main:leccionesprojec' codigo=proyecto.codigo %}" variant="secondary" type="button" title="Volver" class="btn-small create-project-action-cancel" >Volver</a>
+                <button type="submit" class="btn-small create-project-action-submit" title="Asignar Proyecto">Guardar</button>
+            </fieldset>
+        </div>
+        <br>
+    </form>
+
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}
+
+

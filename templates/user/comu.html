@@ -1,0 +1,89 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+
+{% block title %} Gestión de Proyecto - {{ proyecto.name }} {% endblock %}
+{% block name %}
+    {{ proyecto.name }}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static './css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css">
+
+{% endblock %}
+
+{% block conten %}
+
+ <div style=" width: auto;  height: 600px; overflow-y: auto; padding: 10px; " >
+     <div class="content-lecciones">
+         <div class="container">
+            <a href="{% url 'main:nuevacomu' codigo=proyecto.codigo %}" class="btn btn-info">Agregar Más</a>
+        </div>
+
+        <table id="tabla_riesgos" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rol</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombre</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Celular</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Correo</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Aspectos A Comunicar</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Responsable De La Comunicación</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cuando Lo Comunica</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Importancia</font></font></th>
+                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Estrategias Y Medios </font></font></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comunicacio in comunicacion %}
+                <tr>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.rol}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.nombre}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.celular}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.correo}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.aspectos_a_comunicar}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.responsable_de_la_comunicacion}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.cuando_lo_comunica}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.importancia}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.estrategias_y_medios}}</font></font></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+</div>
+
+
+ </div>
+
+
+
+
+{% endblock %}
+
+{% block scripts %}
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.0.1/js/dataTables.tailwindcss.js"></script>
+        <script src="https://cdn.tailwindcss.com"></script>
+
+
+        <script>//función para mostrar los datos en la tabla de colaboradores
+            $(document).ready(function () {
+                var table = $("#tabla_riesgos").DataTable({
+                    searching: true,
+                    language: {
+                        url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
+                    },
+                    autoWidth: true,
+                    processing: true,
+                    info: false,
+                    lengthChange:false,
+                    scrollX: false,
+                    });
+                });
+        </script>
+
+{% endblock %}

@@ -1,92 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="utf-8">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="fragment" content="!">
-    <title>asignat Project</title>
+{% extends 'plantilla2.html' %}
+{% load static %}
+{% block id_project %}proyecto.id{% endblock %}
+
+{% block title %} gestion de proyecto  - {{proyecto.name}} {% endblock %}
+{% block name %}
+    {{proyecto.name}}
+{% endblock %}
+
+
+{% block css %}
+
     <meta name="description" content="">
     <meta name="keywords" content="agile, scrum, taiga, management, project, developer, designer, user experience">
     <link rel="stylesheet" href="{% static './css/theme-taiga.css' %}">
+    <link rel="stylesheet" href="{% static './css/asignar.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-HA8aIQXlN7sUkuqzGZK8r+4LntXBzPwONCzqOUiD54/1xbS49rI/12py9U3WlRj9WcmWlvqzB8lyqbqE2tzBxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <link rel="icon" type="image/png" href="http://localhost:9000/v-1708598134890/images/favicon.png">
-</head>
-<body tg-main="" ng-class="{'rtl': isRTL}" class="">
+
+{% endblock %}
+
+{% block conten %}
+
     <tg-legacy ng-version="10.0.14"></tg-legacy>
     <div tg-navigation-bar="" ng-if="!errorHandling.showingError">
-        <nav ng-if="vm.isEnabledHeader" class="navbar">
-            <div class="nav-left">
-                <div ng-if="vm.isAuthenticated" tg-dropdown-project-list="tg-dropdown-project-list" active="vm.active == 'projects' || vm.active == 'project'" class="topnav-dropdown-wrapper">
-                    <div ng-class="{'active': active}" class="dropdown-project-list">
-                        <a href="http://localhost:9000/projects" title="Proyectos" tg-nav="projects" class="dropdown-project-list-projects">Tus Proyectos</a>
-                        <div class="navbar-dropdown">
-                            <div ng-if="!vm.projects.size">
-                                <h2>Crea tu primer proyecto</h2>
-                                <p class="dropdown-project-list-desc">Aún no tienes ningún proyecto. Crea uno ahora, invita a tu equipo y comienza a usar Colvapro al máximo.</p>
-                                <div class="create-options">
-                                    <a href="#" tg-nav="create-project" title="Nuevo proyecto" class="create-project-btn button-primary"><span>Nuevo proyecto</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div tg-dropdown-user="tg-dropdown-user">
-                <div class="dropdown-user-inner">
-                    <div class="dropdown-user-navbar">
-                        <a tg-nav="profile" title="mike" class="user-avatar" href="">
-                            <img tg-avatar="vm.user" alt="mike" src="" title="mike" style="background: rgb(183, 203, 131);">
-                        </a>
-                        <button class="chevron">
-                            <tg-svg svg-icon="icon-chevron-down"></tg-svg>
-                        </button>
-                    </div>
-                    <div class="navbar-dropdown dropdown-user">
-                        <div class="dropdown-user-profile">
-                            <a tg-nav="profile" href="#" class="profile-link avatar">
-                                <img tg-avatar="vm.user" alt="mike" src="" title="mike" style="background: rgb(183, 203, 131);">
-                            </a>
-                            <div class="dropdown-user-data">
-                                <a tg-nav="profile" href="#" class="profile-link full-name">mike</a>
-                                <div class="profile-link email">manuel.david.13.b@gmail.com</div>
-                                <p>
-                                    <a href="#" tg-nav="user-settings-user-profile" title="Editar perfil" translate="PROJECT.NAVIGATION.EDIT_PROFILE" class="edit-profile">Editar perfil</a>
-                                </p>
-                            </div>
-                        </div>
-                        <ul>
-                            <li class="user-profile-option">
-                                <a href="#" tg-nav="user-settings-user-change-password" title="Configuración de la cuenta" translate="PROJECT.NAVIGATION.ACCOUNT_SETTINGS" class="secondary">Configuración de la cuenta</a>
-                            </li>
-                            <li class="user-profile-option">
-                                <a href="#" tg-nav="user-settings-mail-notifications" title="Editar tus configuraciones de notificación" translate="PROJECT.NAVIGATION.NOTIFICATIONS" class="secondary">Notificaciones</a>
-                            </li>
-                            <li class="user-profile-option">
-                                <a href="#" ng-click="vm.logout()" title="Cerrar sesión" translate="COMMON.LOGOUT">Cerrar sesión</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
+
     </div>
     <div ng-if="!errorHandling.showingError">
-        <div ng-view="" class="master" style="">
+        <div ng-view="" class="master">
             <tg-create-project-form type="kanban">
                 <div class="create-project">
-                    <div ng-if="vm.type == 'kanban'" class="create-project-title-wrapper">
-                        <tg-svg svg-icon="icon-kanban">
-                            <svg class="icon icon-kanban" >
-                                <use xlink:href="#icon-kanban" href="#icon-kanban"></use>
-                            </svg>
-                        </tg-svg>
+                    <div class="tarjeta">
+                        <div class="titulo">
                         <h1  class="create-project-title">Proyecto</h1>
                     </div>
-                    <h3 class="create-project-description">Administra tus proyectos de forma ágil y eficiente con nuestro gestor de proyectos personalizado. Mantén un flujo constante en tus tareas independientes y optimiza la colaboración en equipo</h3>
-                    
+
                     <form name="projectForm"  class="ng-pristine ng-invalid ng-invalid-required" method="POST" >
                         {% csrf_token %}
-                        <div ng-include="'projects/create/import-project-form-common/name.html'">
+                        <div >
                             <fieldset>
                                 <label for="project-name">Nombre del Proyecto</label>
                                 <input type="text" placeholder="Nombre del Proyecto (Requerido)" name="project-name" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
@@ -94,10 +43,31 @@
                         </div>
                         <div>
                             <fieldset>
-                                <label for="project-description">Descripción del Proyecto</label>
+                                <label for="project-description">Descripción</label>
                                 <textarea placeholder="Descripción del Proyecto (Requerido)"  name="project-descrip"  data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
                             </fieldset>
                         </div>
+
+                        <fieldset>
+                            <label for="project-type">Programa</label>
+                            <select id="project-type" name="project-type">
+                                <option value="Proyectos Integración">Proyectos Integración</option>
+                                <option value="Necesidades entrega operación">Necesidades entrega operación</option>
+                                <option value="Proyectos Producto Propio">Proyectos Producto Propio</option>
+                                <option value="Necesidades">Necesidades</option>
+                            </select>
+                        </fieldset>
+
+                        <fieldset>
+                            <label for="project-category">Categoría</label>
+                            <select id="project-category" name="project-category">
+                                <option value="Tipo I">Tipo I - Complejidad Superior </option>
+                                <option value="Tipo II">Tipo II - Alta Complejidad</option>
+                                <option value="Tipo III">Tipo III - Media Complejidad</option>
+                                <option value="Tipo IV">Tipo IV - Baja Complejidad</option>
+                            </select>
+                        </fieldset>
+
                         <fieldset>
                             <label for="project-priority">Gerentes</label>
                             <select id="project-managers" name="project-managers">
@@ -106,19 +76,24 @@
                                 {% endfor %}
                             </select>
                         </fieldset>
-                        <div ng-include="'projects/create/import-project-form-common/actions.html'">
+
+                        <div >
                             <div class="create-project-action">
-                                <button variant="secondary" type="button" title="Volver" class="btn-small create-project-action-cancel">Volver</button>
+                                <a href="{% url 'main:inicio_administrator'  %}"  variant="secondary" type="button" title="Volver" class="btn-small create-project-action-cancel">Volver</a>
                                 <button type="submit" class="btn-small create-project-action-submit" title="Asignar Proyecto">Asignar Proyecto</button>
                             </div>
                         </div>
-                    </form>
-                    
-                    
+                        </div>
+                      </div>
+
+
+
+
+
                 </div>
             </tg-create-project-form>
         </div>
     </div>
-</body>
-</html>
+
+{% endblock %}
 

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
-import os 
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -105,9 +105,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-ES'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Bogota'
 
 USE_I18N = True
 
@@ -138,8 +138,8 @@ EMAIL_HOST_USER = 'notificaciones_colvacor@colvatel.com.co'
 EMAIL_HOST_PASSWORD = 'Berdugo13_'
 
 
-## sesion 
-# Configuración para que las sesiones 
+## sesion
+# Configuración para que las sesiones
 #SESSION_COOKIE_AGE = 180  # 30 minutos en segundos
 
 # Configuración para que la sesión expire cuando el navegador se cierra

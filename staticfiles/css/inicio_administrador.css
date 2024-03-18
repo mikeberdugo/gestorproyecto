@@ -1,0 +1,214 @@
+:root {
+    --color-principal: #2E3440;
+    --color-secundario: #3B4252;
+    --gris: #f1f1f4;
+    --azul-uno: #216fbc;
+    --azul-dos: #0b3d93;
+    --azul-tres: #4f70af;
+    --azul-cuatro: #122754;
+    --azul-cinco: #080d28;
+}
+
+.contenedor{
+    height: 100vh;
+}
+
+h1{
+    color: black;
+    font-weight: bold;
+}
+.home-wrapper .dashboard-container {
+    display: block;
+}
+
+.centered {
+    max-width: none;
+}
+
+.card-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap; 
+}
+
+.card {
+    width: 100%; 
+    margin-bottom: 20px; 
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    margin: auto;
+}
+
+.dt-search {
+    margin-bottom: 12px;
+}
+
+.select-container {
+    display: flex;
+    align-items: center;
+}
+
+select#filterSelect {
+    flex: 1; 
+    padding: 8px;
+}
+
+.table-container {
+    width: 100%; 
+}
+
+.tableType {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.tableType th,
+.tableType td {
+    border: 1px solid #83eede;
+    padding: 5px;
+}
+
+.tableType th {
+    background: #f1f1f4;
+}
+
+td.conAdd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tableType-btn {
+    background-color: var(--azul-uno);
+    color: white;
+    border-radius: 2px;
+    border: 1px solid var(--azul-uno);
+    height: 26px;
+    transition: all 0.4s ease;
+    width: 26px;
+}
+
+.tableType-btn:hover {
+    background-color: var(--azul-cuatro);
+    color: white;
+}
+
+select#filterSelect {
+    margin: 20px 0.5em 12px; 
+    padding: 8px;
+    vertical-align: middle; 
+}
+
+.pagination-link.is-current {
+    background-color: #83eede;
+    border-color: #485fc7;
+    color: #fff;
+}
+
+.projects-empty .create-project-button {
+    display: block;
+    margin-top: 30px;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.encabezadonombre{
+    vertical-align: middle; /* Texto centrado verticalmente */
+}
+
+.encabezadoinfo{
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center; /* Texto centrado horizontalmente */
+    vertical-align: middle; /* Texto centrado verticalmente */
+    transition-duration: 1s;
+}
+
+.infotable{
+    text-align: center; /* Texto centrado horizontalmente */
+    vertical-align: middle; /* Texto centrado verticalmente */
+}
+
+.home-wrapper .title-bar{
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.working-on-empty{
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.tableType th {
+    background: white;
+}
+
+.tableType th{
+    border: solid 1px var(--gris);
+}
+
+.tableType td{
+    border: solid 1px var(--gris);
+}
+
+.contable{
+    padding: 4px;
+}
+
+.btn-small[variant=primary]{
+    background-color: var(--azul-uno);
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 2px;
+    height: 35px;
+    padding: 10px;
+    border: 1px solid var(--azul-uno);
+}
+
+.btn-small[variant=primary]:hover{
+    background-color: var(--azul-cuatro);
+    color: white;
+    text-decoration: none;
+    opacity: 100%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    transition: all 1s ease;
+}
+
+.navbar .user-avatar img{
+    border: 2px solid var(--azul-uno);
+}
+
+.navbar-dropdown.dropdown-user{
+    top: 2.5rem;
+    left: -230px;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    width: 280px;
+}
+
+a, a:visited{
+    color: var(--azul-uno);
+}
+
+a:hover, a:visited:hover{
+    text-decoration: none;
+    border-radius: 2px;
+    background: var(--gris);
+}
+
+.navbar{
+    background-color: white;
+}
+
+.bx-collapse-horizontal{
+    height: 10px;
+    width: 10px;
+    color: #080d28;
+}
+

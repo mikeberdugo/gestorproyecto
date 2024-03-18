@@ -1,0 +1,45 @@
+/* Estilos básicos para el acordeón */
+
+.accordion {
+    max-width: 800px;
+    margin: 20px auto;
+  }
+
+  .accordion-item {
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .accordion-header {
+    width: 100%;
+    text-align: left;
+    background-color: #f0f0f0;
+    border: none;
+    padding: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  .accordion-content {
+    display: none;
+    padding: 20px;
+    background-color: #fff;
+    font-size: 16px;
+    transition: max-height 0.4s ease-out, padding 0.2s ease-out;
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  /* Estilo cuando el panel está activo (abierto) */
+  .accordion-item.active .accordion-header {
+    background-color: #ddd;
+  }
+
+  .accordion-item.active .accordion-content {
+    display: block;
+    max-height: 1000px;
+    padding: 20px;
+  }

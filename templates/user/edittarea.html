@@ -1,0 +1,39 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+
+{% block title %} Gestión de Proyecto - {{ proyecto.name }} {% endblock %}
+{% block name %}
+    {{ proyecto.name }}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static './css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css">
+
+{% endblock %}
+
+{% block conten %}
+<div style=" width: auto;  height: 600px; overflow-y: auto; padding: 10px; " >
+<form name="communicationForm" method="POST">
+    {% csrf_token %}
+    <fieldset>
+        <label for="porcentaje">Porcentaje:</label>
+        <input type="number" id="porcentaje" name="porcentaje" min="0" max="100" step="1" required>
+    </fieldset>
+    <fieldset>
+        <legend>Observaciones</legend>
+        <textarea id="observaciones" name="observaciones" rows="4" cols="50"></textarea>
+    </fieldset>
+
+    <div>
+        <div class="communication-action">
+            <a href="{% url 'main:comunicaciones' %}" variant="secondary" title="Volver" class="btn-small communication-action-cancel">Volver</a>
+            <button type="submit" class="btn-small communication-action-submit" title="Guardar Comunicación">Actualizar</button>
+        </div>
+    </div>
+    <br>
+</form>
+</div>
+{% endblock  %}
+

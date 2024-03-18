@@ -10,5 +10,4 @@ __pycache__/
 
 # Archivos de configuración local de Django
 
-*.db
 *.log

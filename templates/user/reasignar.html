@@ -1,0 +1,72 @@
+{% extends 'plantilla2.html' %}
+{% load static %}
+{% block id_project %}proyecto.id{% endblock %}
+
+{% block title %} gestion de proyecto  - {{proyecto.name}} {% endblock %}
+{% block name %}
+    {{proyecto.name}}
+{% endblock %}
+
+
+{% block css %}
+
+    <meta name="description" content="">
+    <meta name="keywords" content="agile, scrum, taiga, management, project, developer, designer, user experience">
+    <link rel="stylesheet" href="{% static './css/theme-taiga.css' %}">
+    <link rel="stylesheet" href="{% static './css/asignar.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-HA8aIQXlN7sUkuqzGZK8r+4LntXBzPwONCzqOUiD54/1xbS49rI/12py9U3WlRj9WcmWlvqzB8lyqbqE2tzBxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />    <link rel="icon" type="image/png" href="http://localhost:9000/v-1708598134890/images/favicon.png">
+
+{% endblock %}
+
+{% block conten %}
+
+    <tg-legacy ng-version="10.0.14"></tg-legacy>
+    <div tg-navigation-bar="" ng-if="!errorHandling.showingError">
+
+    </div>
+    <div ng-if="!errorHandling.showingError">
+        <div ng-view="" class="master">
+            <tg-create-project-form type="kanban">
+                <div class="create-project">
+                    <div class="tarjeta">
+                        <div class="titulo">
+                        <h1  class="create-project-title">Proyecto - {{ proyecto.name }}</h1>
+                    </div>
+
+                    <form name="projectForm"  class="ng-pristine ng-invalid ng-invalid-required" method="POST" >
+                        {% csrf_token %}
+                        <div >
+                            <fieldset>
+                                <label for="project-name">Nombre del Proyecto</label>
+                                <input type="text" placeholder="Nombre del Proyecto (Requerido)" name="project-name"  class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true" value = '{{ proyecto.name }}' readonly >
+                            </fieldset>
+                        </div>
+                        <fieldset>
+                            <label for="project-priority">Gerentes</label>
+                            <select id="project-managers" name="project-managers">
+                                {% for usuario in gerentes %}
+                                <option value="{{ usuario.id }}"> {{ usuario.usuario.first_name }} {{ usuario.usuario.last_name }} </option>
+                                {% endfor %}
+                            </select>
+                        </fieldset>
+
+                        <div >
+                            <div class="create-project-action">
+                                <a href="{% url 'main:inicio_administrator'  %}"  variant="secondary" type="button" title="Volver" class="btn-small create-project-action-cancel">Volver</a>
+                                <button type="submit" class="btn-small create-project-action-submit" title="Asignar Proyecto">Asignar Proyecto</button>
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+
+
+
+
+
+                </div>
+            </tg-create-project-form>
+        </div>
+    </div>
+
+{% endblock %}
+

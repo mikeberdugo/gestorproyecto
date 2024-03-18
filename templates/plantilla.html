@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!--libreria de iconos-->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 
@@ -21,7 +21,7 @@
     <!--contenedor general-->
     <div class="contenedor-principal" >
         <!--contenedor barra lateral-->
-        <div class="menu-dashboard">
+        <div class="menu-dashboard open">
             <div class="top-menu">
                 <a  class="enlace logo" href="{% url 'main:project' codigo=proyecto.codigo %}">
                     <i class='bx bx-line-chart'></i>
@@ -43,12 +43,12 @@
 
                 <a  class="enlace" href="{% url 'main:costos' codigo=proyecto.codigo %}">
                     <i class='bx bxs-bar-chart-alt-2'></i>
-                    <span>Costos</span>
+                    <span>Estado Financiero</span>
                 </a>
 
                 <a  class="enlace" href="{% url 'main:riesgos' codigo=proyecto.codigo %}">
                     <i class='bx bxl-slack'></i>
-                    <span>Matriz</span>
+                    <span>Riesgos</span>
                 </a>
 
 
@@ -61,15 +61,10 @@
                     <i class='bx bx-file-blank'></i>
                     <span>Documentos</span>
                 </a>
-                
-                <a  class="enlace" href="">
+
+                <a  class="enlace" href="{% url 'main:comu' codigo=proyecto.codigo %}">
                     <i class='bx bx-carousel'></i>
                     <span>Comunicaciones </span>
-                </a>
-
-                <a  class="enlace" href="">
-                    <i class='bx bx-user'></i>
-                    <span>Equipo</span>
                 </a>
 
                 <a  class="enlace" href="">
@@ -77,7 +72,7 @@
                     <span>Dashboard</span>
                 </a>
             </div>
-            
+
             <span class="boton-desplegable">
                 <div class="toggle">
                     <i class='bx bx-chevrons-left rotated'></i>
@@ -150,13 +145,13 @@
         </div>
         <!--contendor principal-->
         <div class="contdatos">
-            {% block conten %} 
+            {% block conten %}
                 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quam animi, eaque sapiente iste repellat ullam reiciendis voluptatibus est deleniti debitis incidunt quas aliquam, mollitia dignissimos accusantium eligendi similique vel molestias!
             {% endblock  %}
         </div>
-    </div> 
-    
-    
+    </div>
+
+
     <script src="{% static './js/barra_lateral.js' %}" defer></script>
     <script src="{% static './js/jquery.js' %}"></script>
     <script src="{% static './js/jquery-ui.min.js' %}"></script>

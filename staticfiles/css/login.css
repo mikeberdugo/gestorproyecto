@@ -1,0 +1,116 @@
+:root {
+  --color-principal: #2E3440;
+  --color-secundario: #3B4252;
+  --gris: #f1f1f4;
+  --azul-uno: #216fbc;
+  --azul-dos: #0b3d93;
+  --azul-tres: #4f70af;
+  --azul-cuatro: #122754;
+  --azul-cinco: #080d28;
+}
+
+.auth{
+    background: #F2F2F2;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Para centrar verticalmente */
+  }
+
+  .tarjeta {
+    width: 300px;
+    background-color: #fff;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center; /* Centro el contenido */
+  }
+
+  .titulo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .logo{
+    margin-top: 20px;
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .contenido {
+    font-size: 16px;
+    color: #666;
+  }
+
+  svg{
+    height: 80px;
+    width: 80px;
+  }
+
+  .btn-small{
+    margin-top: 30px;
+    width: 100%;
+    border-radius: 30px;
+    margin-bottom: 20px;
+  }
+
+  input[type=text]{
+    margin-top: 30px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+    color: black;
+  }
+
+  input[type=text]:focus{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  input[type=password]{
+    margin-top: 30px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+    color: black;
+  }
+
+  input[type=password]:focus{
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  h6{
+    margin-top: 50px;
+    font-size: 12px;
+  }
+
+  .logocolvatel{
+    height: 120px;
+    width: 120px;
+  }
+
+  .btn-small[variant="primary"] {
+    background-color: var(--azul-uno);
+    color: white;
+  }
+
+  .btn-small[variant="primary"]:hover{
+    background-color: var(--azul-cuatro);
+    color: white;
+  }

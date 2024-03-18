@@ -1,0 +1,56 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+{% block id_project %}proyecto.id{% endblock %}
+
+{% block title %} gestion de proyecto  - {{proyecto.name}} {% endblock %}
+{% block name %}
+    {{proyecto.name}}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
+{% endblock %}
+
+{% block conten %}
+<br>
+<div style=" width: auto;  height: 600px; overflow-y: auto; padding: 10px; " >
+    <form method="post" name="costoForm" novalidate="novalidate" class="ng-pristine ng-invalid ng-invalid-required">
+    {% csrf_token %}
+        <div>
+            <fieldset>
+                <label for="materializo">Materializó</label>
+                <textarea id="materializo" name="materializo" placeholder="Materializó el riesgo (Requerido)" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+            </fieldset>
+        </div>
+        <div>
+            <fieldset>
+                <label for="acciones_mitigacion">Acciones de Mitigación</label>
+                <textarea id="acciones_mitigacion" name="acciones_mitigacion" placeholder="Acciones de mitigación (Requerido)" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+            </fieldset>
+        </div>
+        <div>
+            <fieldset>
+                <label for="consecuencias">Consecuencias</label>
+                <textarea id="consecuencias" name="consecuencias" placeholder="Consecuencias del riesgo (Requerido)" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
+            </fieldset>
+        </div>
+        <br>
+        <div>
+            <fieldset>
+                <a href="{% url 'main:leccionesprojec' codigo=proyecto.codigo %}" variant="secondary" type="button" title="Volver" class="btn-small create-project-action-cancel">Volver</a>
+                <button type="submit" class="btn-small create-project-action-submit" title="Asignar Proyecto">Guardar</button>
+            </fieldset>
+        </div>
+        <br>
+    </form>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}
+
+

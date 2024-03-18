@@ -4,12 +4,27 @@
     box-sizing: border-box;
 }
 
+.contdatos {
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+}
+
 .container {
     margin-top: 46px;
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
+
+.twocontainer {
+    max-width: 1536px;
+}
+
 
 h1 {
     text-align: center;
@@ -43,4 +58,8 @@ td {
     font-weight: 600;
     width: 20%; /* Ancho igual para todas las columnas */
     background-color: #eeeae2a8; /* Color de fondo para la columna de proyecto */
+}
+
+.tablas2{
+    margin-left: 10px;
 }

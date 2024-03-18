@@ -15,3 +15,11 @@ admin.site.register(Tablero)
 admin.site.register(Columna)
 admin.site.register(Tarjeta)
 admin.site.register(Recurso)
+
+## nuevos modelos
+admin.site.register(Des)
+admin.site.register(FaseDes)
+admin.site.register(SubFaseDes)
+admin.site.register(Comunicacion)
+admin.site.register(Acti)
+
