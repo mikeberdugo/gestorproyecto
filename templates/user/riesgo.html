@@ -8,7 +8,6 @@
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static './css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css">
     <link
@@ -20,27 +19,18 @@
       href="https://cdn.datatables.net/2.0.2/css/dataTables.semanticui.css"
     />
     <link rel="stylesheet" href="{% static './css/colores.css' %}">
-
-    <style>
-        #tabla_riesgos2 tbody td {
-        max-width: 100px; /* Establece el ancho máximo deseado */
-        white-space: nowrap; /* Evita que el texto se envuelva */
-        overflow: hidden; /* Oculta el contenido que excede el ancho máximo */
-        text-overflow: ellipsis; /* Agrega puntos suspensivos (...) al final del texto que excede el ancho máximo */
-
-    }
-    </style>
-
-
-
 {% endblock %}
 
 {% block conten %}
-<br>
+
 <div class="content-matriz">
 
+        <div class="titulo">
+        <h1  class="create-project-title">Riesgos</h1>
+    </div>
+
     <div class="container">
-        <a href="{% url 'main:nuevomatriz' codigo=proyecto.codigo %}" class="btn btn-info">Agregar Más</a>
+        <button class="btnAgregar"><a href="{% url 'main:nuevomatriz' codigo=proyecto.codigo %}" style="color: white;" >Agregar Más</a></button>
     </div>
 
     <table id="tabla_riesgos" class="table table-striped table-bordered table-hover">
@@ -128,7 +118,7 @@
     <script>
         $(document).ready(function () {
             var table = $("#tabla_riesgos2").DataTable({
-                searching: true,
+                 searching: true,
                 language: {
                     url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
                 },
@@ -139,8 +129,13 @@
                 scrollX: false,
             });
 
+
+
         });
     </script>
+
+
+
 
     <script>
     // Calcula el producto de probavilidad y gravedad para cada riesgo y muestra el resultado en la tabla

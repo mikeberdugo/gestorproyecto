@@ -6,11 +6,9 @@
 
 .contdatos {
     overflow: auto;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 400px;
+
 }
 
 .container {
@@ -33,7 +31,7 @@ h1 {
 }
 
 table {
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     width: 90%; /* Aumenté el ancho para ajustar los campos más delgados */
     text-align: left;
 }

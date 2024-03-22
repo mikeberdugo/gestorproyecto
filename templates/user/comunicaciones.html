@@ -1,86 +1,77 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        {% load static %}
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Tabla de comunicación</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css">
-    </head>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tabla de comunicación</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css">
+</head>
+<style>
+    h1 {
+        text-align: center;
+        color: black;
+    }
 
-    <style>
+    div#tabla_riesgos_wrapper {
+        overflow-x: auto;
+        overflow-y: auto;
+        margin: 34px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        padding: 10px;
+    }
+</style>
+<body>
+    <h1>Tabla De Comunicaciones</h1>
+    <table id="tabla_riesgos" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Rol</th>
+                <th>Nombre</th>
+                <th>Celular</th>
+                <th>Correo</th>
+                <th>Aspectos A Comunicar</th>
+                <th>Responsable De La Comunicación</th>
+                <th>Cuando Lo Comunica</th>
+                <th>Importancia</th>
+                <th>Estrategias Y Medios</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
 
-        h1{
-            text-align: center;
-            color: black;
-        }
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.1/js/dataTables.tailwindcss.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-        div#tabla_riesgos_wrapper {
-            overflow-x: auto;
-            overflow-y: auto;
-            margin: 34px;
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-            padding: 10px;
-        }
-
-    </style>
-
-    <body>
-        <h1>Tabla De Comunicaciones </h1>
-        <table id="tabla_riesgos" class="display" style="width:100%">
-            <thead>
-                <tr>
-                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Rol</font></font></th>
-                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nombre</font></font></th>
-                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Celular</font></font></th>
-                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Correo</font></font></th>
-                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Aspectos A Comunicar</font></font></th>
-                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Responsable De La Comunicación</font></font></th>
-                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cuando Lo Comunica</font></font></th>
-                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Importancia</font></font></th>
-                    <th><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Estrategias Y Medios </font></font></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"></font></font></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
-        <script src="https://cdn.datatables.net/2.0.1/js/dataTables.tailwindcss.js"></script>
-        <script src="https://cdn.tailwindcss.com"></script>
-
-
-
-
-
-
-        <script>//función para mostrar los datos en la tabla de colaboradores
-            $(document).ready(function () {
-                var table = $("#tabla_riesgos").DataTable({
-                    searching: true,
-                    language: {
-                        url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
-                    },
-                    autoWidth: true,
-                    processing: true,
-                });
+    <script>
+        //función para mostrar los datos en la tabla de colaboradores
+        $(document).ready(function () {
+            var table = $("#tabla_riesgos").DataTable({
+                searching: true,
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
+                },
+                autoWidth: true,
+                processing: true,
             });
-        </script>
-
-    </body>
+        });
+    </script>
+</body>
 </html>

@@ -29,7 +29,6 @@ body {
     background-color: #fff;
     border-radius: 4px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    padding: 20px;
     box-sizing: border-box;
     text-align: center; /* Centro el contenido */
   }
@@ -46,11 +45,14 @@ body {
     color: black;
     font-size: 24px;
     font-weight: bold;
+    border-bottom: 2px solid var(--azul-dos);
+    padding:10px;
   }
 
   .contenido {
     font-size: 16px;
     color: #666;
+    padding:20px;
   }
 
   svg{
@@ -101,8 +103,8 @@ body {
   }
 
   .logocolvatel{
-    height: 120px;
-    width: 120px;
+    height: 40px;
+    width: 214px;
   }
 
   .btn-small[variant="primary"] {
@@ -113,4 +115,30 @@ body {
   .btn-small[variant="primary"]:hover{
     background-color: var(--azul-cuatro);
     color: white;
+  }
+
+  .posicionboton{
+    position: absolute;
+    top: 0%;
+    right: 0%;
+  }
+
+  .boton-redondo {
+    display: inline-block;
+    background-color: var(--gris); /* Cambia esto al color que desees */
+    color: #fff;
+    border: none;
+    border-radius: 50%; /* Esta propiedad hace que el botón sea redondo */
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    height: 20px;
+    width: 20px;
+  }
+
+  /* Estilo cuando el cursor está encima del botón */
+  .boton-redondo:hover {
+    border: 2px solid var(--azul-cuatro);
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }

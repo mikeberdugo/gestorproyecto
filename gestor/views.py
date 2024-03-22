@@ -14,7 +14,8 @@ from django.utils import timezone
 #from .mail import *
 import random
 import json
-from datetime import datetime
+from django.http import JsonResponse
+from datetime import datetime, timedelta
 
 
 def Login(request):
@@ -102,9 +103,9 @@ def inicio_administrador(request):
 
 
 def dobleasignar(request,codigo):
-    gerentes = Usuario.objects.filter(rol='gerente')
     proyecto = Proyecto.objects.filter(codigo=codigo).first()
-    print("protecto dir ", dir(proyecto))
+    gerentesAsignados = proyecto.user.all()
+    gerentes = Usuario.objects.filter(rol='gerente').exclude(pk__in=[gerentes.pk for gerentes in gerentesAsignados])
 
     if request.method == 'POST':
         project_managers = request.POST.get('project-managers')
@@ -124,15 +125,33 @@ def asignar(request):
     gerentes = Usuario.objects.filter(rol='gerente')
     if request.method == 'POST':
         project_name = request.POST.get('project-name')
+        project_contrato = request.POST.get('project-contrato')
+        project_objeto = request.POST.get('project-objeto')
+        project_cliente = request.POST.get('project-cliente')
+        project_valor = request.POST.get('project-valor',0.0)
         project_descrip = request.POST.get('project-descrip')
         project_type = request.POST.get('project-type')
         project_category = request.POST.get('project-category')
         project_managers = request.POST.get('project-managers')
+        project_name_contractor = request.POST.get('project-name-contractor')
         manager = get_object_or_404(Usuario, id=project_managers)
         while True:
             codigo = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=6))
             if not Proyecto.objects.filter(codigo=codigo).exists():
                 break
+
+        project_valor = request.POST.get('project-valor')
+        if not project_valor:  # Si el campo está vacío
+            # Establecer el valor a cero
+            project_valor = 0
+        """
+        project_contrato
+        project_objeto
+        project_cliente
+        project_valor
+        fecha_inicio #
+        fecha_finalizacion #
+        """
 
         proyecto1 = Proyecto.objects.create(
             name=project_name,
@@ -140,8 +159,14 @@ def asignar(request):
             description=project_descrip,
             tipo=project_type,
             categoria=project_category,
-            estado='abierto'
+            estado='abierto',
+            contrato = project_contrato,
+            objeto = project_objeto,
+            cliente = project_cliente,
+            valor = project_valor ,
+            name_contractor = project_name_contractor
         )
+
         proyecto1.user.add(manager)
         proyecto1.save()
         # Llamar a la función para enviar el correo electrónico
@@ -149,6 +174,8 @@ def asignar(request):
         return redirect('main:inicio_administrator')
 
     return render(request, './user/asignar.html', {'gerentes': gerentes})
+
+
 ## gerente
 def inicio_gerente(request, id_gerente):
     gerente = Usuario.objects.get(id=id_gerente)
@@ -160,9 +187,6 @@ def inicio_gerente(request, id_gerente):
 
     }
     return render(request, "./user/inicio_gerente.html", {'context':context , 'gerente':gerente , 'proyectos':proyectos} )
-
-
-
 
 
 
@@ -181,10 +205,10 @@ def nuevoproyecto(request, codigo , id_gerente):
 
     if request.method == 'POST':
         if proyecto:
-            proyecto.fecha_creacion =  timezone.now().strftime('%Y-%m-%d')
-            proyecto.fecha_inicio_planeada = request.POST.get('project-start-date-planned')#*
-            proyecto.fecha_finalizacion_planeada = request.POST.get('project-end-date-planned')
-            proyecto.alcance = request.POST.get('project-scope')
+            proyecto.fecha_creacion = timezone.now().strftime('%Y-%m-%d')
+            proyecto.fecha_inicio_planeada = request.POST.get('fecha-inicio')
+            proyecto.fecha_finalizacion_planeada = request.POST.get('fecha-finalizacion')
+            proyecto.alcance = request.POST.get('project-description')
             proyecto.estado = "abierto"
             proyecto.lider = request.POST.get('project-leader')
             proyecto.grupo = request.POST.get('project-group')
@@ -193,13 +217,19 @@ def nuevoproyecto(request, codigo , id_gerente):
             proyecto.comentarios = request.POST.get('project-comments')
             proyecto.porcentaje_completado = 0
             proyecto.columna = True
+            proyecto.contrato = request.POST.get('project-contract-number')
+            proyecto.objeto = request.POST.get('project-contract-object')
+            proyecto.cliente = request.POST.get('project-client')
+            proyecto.valor = request.POST.get('project-value')
+            proyecto.name_contractor = request.POST.get('project-contractor-manager')
             proyecto.save()
 
 
 
-        return redirect('main:inicio_manager', proyecto.user.id )
+
+        return redirect('main:inicio_manager', id_gerente )
     # CLUSTER gluster
-    return render(request, "./user/nuevoproyecto.html" , {'context':context , 'gerente': proyecto.user , 'gluster':gluster , 're':gerente} )
+    return render(request, "./user/nuevoproyecto.html" , {'context':context , 'gerente': proyecto.user , 'gluster':gluster , 're':gerente , 'proyecto':proyecto } )
 
 
 #* proyecto
@@ -268,7 +298,7 @@ def nuevomatriz(request , codigo):
         elif riesgo_basico >= 9 and riesgo_basico <= 14:
             nivel = 'Importante'
         elif riesgo_basico >= 15 and riesgo_basico <= 25:
-            nivel = 'Muy Grabe'
+            nivel = 'Muy Grave'
         else:
             nivel = 'Error'
 
@@ -392,8 +422,90 @@ def leccionesprojecall(request,id_gerente):
 
 def costos(request,codigo):
     proyecto = Proyecto.objects.filter(codigo=codigo).first()
-    costo = Costos.objects.filter(proyecto=proyecto).filter()
+    costo = Costos.objects.filter(codigo=codigo).first
+    if request.method == 'POST':
+        contrato = request.POST.get('contrato')
+        cliente = request.POST.get('cliente')
+        valor_total_ingreso = request.POST.get('valor_total_ingreso')
+        costo_presupuestado = request.POST.get('costo_presupuestado')
+
+        nuevo = Costos.objects.create(
+            codigo = codigo,
+            contrato = contrato,
+            cliente = cliente,
+            valor_total_ingreso = int(valor_total_ingreso) ,
+            costo_presupuestado = int(costo_presupuestado),
+            bloqueo = True
+            )
+
+        nuevo.save()
+
     return render(request, "./user/costos.html",{'costos':costo ,'proyecto' : proyecto })
+
+
+def ingresobutton (request,codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    ingreso = Costosingresos.objects.filter(codigo=codigo)
+
+    return render(request, "./user/ingresobutton.html",{'proyecto' : proyecto , 'ingreso':ingreso})
+
+
+def ingreso(request,codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    if request.method == 'POST':
+        tipo_ingreso = request.POST.get('tipo-ingreso')
+        fecha_planeada = request.POST.get('fecha-planeada')
+        valor_planeado = request.POST.get('valor-planeado')
+
+        # Convertir la cadena de fecha en un objeto datetime
+        fecha_planeada = datetime.strptime(fecha_planeada, '%Y-%m-%d').date()
+
+        if tipo_ingreso == 'One Time':
+            ingreso = Costosingresos.objects.create(
+                codigo=codigo,
+                tipo=tipo_ingreso,
+                fecha_planeada=fecha_planeada,
+                valor_planeado=valor_planeado
+            )
+            ingreso.save()
+            return redirect('main:ingresobutton', proyecto.codigo)
+
+
+        if tipo_ingreso == 'Recurrente1':
+            n = int(request.POST.get('recurrencia-fija'))  # Convertir a entero
+            valor_aux = float(valor_planeado) / n  # Convertir a flotante
+            for _ in range(n):
+                fecha_planeada += timedelta(days=30)
+                ingreso = Costosingresos.objects.create(
+                    codigo=codigo,
+                    tipo=tipo_ingreso,
+                    fecha_planeada=fecha_planeada,
+                    valor_planeado=valor_aux
+                )
+                ingreso.save()
+            return redirect('main:ingresobutton', proyecto.codigo)
+
+
+
+        if tipo_ingreso == 'Recurrente2':
+            costos = request.POST.getlist('costo-recurrencia-no-fija')
+            fechas_planeadas = request.POST.getlist('fecha-planeada-recurrencia-no-fija')
+            for costo, fecha_planeada_str in zip(costos, fechas_planeadas):
+                fecha_planeada = datetime.strptime(fecha_planeada_str, '%Y-%m-%d').date()
+                ingreso = Costosingresos.objects.create(
+                    codigo=codigo,
+                    tipo=tipo_ingreso,
+                    fecha_planeada=fecha_planeada,
+                    valor_planeado=float(costo)
+                )
+                ingreso.save()
+            return redirect('main:ingresobutton', proyecto.codigo)
+
+
+
+    return render(request, "./user/nuevoingreso.html",{'proyecto' : proyecto })
+
+
 
 
 def nuevocosto(request,codigo):
@@ -430,22 +542,114 @@ def nuevocosto(request,codigo):
 
     return render(request, "./user/neuvocosto.html",{'proyecto' : proyecto })
 
+
+def costobutton (request,codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+
+    return render(request, "./user/costobutton.html",{'proyecto' : proyecto })
+
+def resumenbutton (request,codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+
+    return render(request, "./user/resumenbutton.html",{'proyecto' : proyecto })
+
+
+ # documentos
 def docu(request,codigo):
     proyecto = Proyecto.objects.filter(codigo=codigo).first()
-    docus = Documentos.objects.filter(proyecto=proyecto)
-    if request.method == 'POST':
-        titulo = request.POST.get('titulo')
-        descripcion = request.POST.get('descripcion')
-        link = request.POST.get('url')
+    docus = Documentos.objects.filter(proyecto=proyecto).first()
 
-        documento = Documentos(titulo=titulo,
-                            descriocion=descripcion,
-                            link=link,
-                            proyecto=proyecto)
-        documento.save()
+    if request.method == 'POST':
+        contrato_cliente = is_checkbox_checked(request.POST, 'contrato_cliente')
+        acta_inicio = is_checkbox_checked(request.POST, 'acta_inicio')
+        constitucion_proyecto = is_checkbox_checked(request.POST, 'constitucion_proyecto')
+        kickoff_cliente_interno = is_checkbox_checked(request.POST, 'kickoff_cliente_interno')
+        obligaciones_contractuales = is_checkbox_checked(request.POST, 'obligaciones_contractuales')
+        oferta_entregada_cliente = is_checkbox_checked(request.POST, 'oferta_entregada_cliente')
+        plan_gestion_proyecto = is_checkbox_checked(request.POST, 'plan_gestion_proyecto')
+        cronograma = is_checkbox_checked(request.POST, 'cronograma')
+        contrato_aliado = is_checkbox_checked(request.POST, 'contrato_aliado')
+        acta_inicio_aliado = is_checkbox_checked(request.POST, 'acta_inicio_aliado')
+        resumen_oc = is_checkbox_checked(request.POST, 'resumen_oc')
+        conciliaciones_proveedor = is_checkbox_checked(request.POST, 'conciliaciones_proveedor')
+        backlog_oc = is_checkbox_checked(request.POST, 'backlog_oc')
+        matriz_riesgos = is_checkbox_checked(request.POST, 'matriz_riesgos')
+        matriz_interesados = is_checkbox_checked(request.POST, 'matriz_interesados')
+        correos_clientes_proveedor = is_checkbox_checked(request.POST, 'correos_clientes_proveedor')
+        ficha_presentacion_proyecto = is_checkbox_checked(request.POST, 'ficha_presentacion_proyecto')
+        solicitud_control_cambio = is_checkbox_checked(request.POST, 'solicitud_control_cambio')
+        actas_reuniones_tecnicas = is_checkbox_checked(request.POST, 'actas_reuniones_tecnicas')
+        acta_entrega_cliente = is_checkbox_checked(request.POST, 'acta_entrega_cliente')
+        acta_recibido_aliado = is_checkbox_checked(request.POST, 'acta_recibido_aliado')
+        ficha_cierre = is_checkbox_checked(request.POST, 'ficha_cierre')
+        entrega_aseguramiento = is_checkbox_checked(request.POST, 'entrega_aseguramiento')
+        entregas_obligaciones_contractura = is_checkbox_checked(request.POST, 'entregas_obligaciones_contractura')
+
+
+
+        if docus is not None:
+            docus.contrato_cliente = contrato_cliente
+            docus.acta_inicio = acta_inicio
+            docus.constitucion_proyecto = constitucion_proyecto
+            docus.kickoff_cliente_interno = kickoff_cliente_interno
+            docus.obligaciones_contractuales = obligaciones_contractuales
+            docus.oferta_entregada_cliente = oferta_entregada_cliente
+            docus.plan_gestion_proyecto = plan_gestion_proyecto
+            docus.cronograma = cronograma
+            docus.contrato_aliado = contrato_aliado
+            docus.acta_inicio_aliado = acta_inicio_aliado
+            docus.resumen_oc = resumen_oc
+            docus.conciliaciones_proveedor = conciliaciones_proveedor
+            docus.backlog_oc = backlog_oc
+            docus.matriz_riesgos = matriz_riesgos
+            docus.matriz_interesados = matriz_interesados
+            docus.correos_clientes_proveedor = correos_clientes_proveedor
+            docus.ficha_presentacion_proyecto = ficha_presentacion_proyecto
+            docus.solicitud_control_cambio = solicitud_control_cambio
+            docus.actas_reuniones_tecnicas = actas_reuniones_tecnicas
+            docus.acta_entrega_cliente = acta_entrega_cliente
+            docus.acta_recibido_aliado = acta_recibido_aliado
+            docus.ficha_cierre = ficha_cierre
+            docus.entrega_aseguramiento = entrega_aseguramiento
+            docus.entregas_obligaciones_contractura = entregas_obligaciones_contractura
+            docus.save()
+
+
+        else:
+            docus = Documentos.objects.create(
+                proyecto=proyecto,
+                contrato_cliente=contrato_cliente,
+                acta_inicio=acta_inicio,
+                constitucion_proyecto=constitucion_proyecto,
+                kickoff_cliente_interno=kickoff_cliente_interno,
+                obligaciones_contractuales=obligaciones_contractuales,
+                oferta_entregada_cliente=oferta_entregada_cliente,
+                plan_gestion_proyecto=plan_gestion_proyecto,
+                cronograma=cronograma,
+                contrato_aliado=contrato_aliado,
+                acta_inicio_aliado=acta_inicio_aliado,
+                resumen_oc=resumen_oc,
+                conciliaciones_proveedor=conciliaciones_proveedor,
+                backlog_oc=backlog_oc,
+                matriz_riesgos=matriz_riesgos,
+                matriz_interesados=matriz_interesados,
+                correos_clientes_proveedor=correos_clientes_proveedor,
+                ficha_presentacion_proyecto=ficha_presentacion_proyecto,
+                solicitud_control_cambio=solicitud_control_cambio,
+                actas_reuniones_tecnicas=actas_reuniones_tecnicas,
+                acta_entrega_cliente=acta_entrega_cliente,
+                acta_recibido_aliado=acta_recibido_aliado,
+                ficha_cierre=ficha_cierre,
+                entrega_aseguramiento=entrega_aseguramiento,
+                entregas_obligaciones_contractura=entregas_obligaciones_contractura
+            )
+            docus.save()
 
         return redirect('main:docu', proyecto.codigo )
     return render(request, "./user/docu.html",{'docus':docus ,'proyecto' : proyecto })
+
+def is_checkbox_checked(post_data, checkbox_name):
+    return True if checkbox_name in post_data else False
 
 def nuevodocu(request,codigo):
     proyecto = Proyecto.objects.filter(codigo=codigo).first()
@@ -455,17 +659,41 @@ def nuevodocu(request,codigo):
 ## comunicaciones
 def comu(request,codigo):
     proyecto = Proyecto.objects.filter(codigo=codigo).first()
-    return render(request, "./user/comu.html",{'proyecto' : proyecto })
+    comunis = Comunicacion.objects.filter(codigo=codigo)
+    return render(request, "./user/comu.html",{'proyecto' : proyecto, 'comunis':comunis })
 
-def nuevacomu(request,codigo):
-    proyecto = Proyecto.objects.filter(codigo=codigo).first()
-    return render(request, "./user/comunicaciones.html",{'proyecto' : proyecto })
-
-def comunicacion(request):
-    return render(request, "./user/comunicaciones.html")
 
 def formatocomunica(request,codigo):
     proyecto = Proyecto.objects.filter(codigo=codigo).first()
+
+    if request.method == 'POST':
+        rol = request.POST.get('communication-role')
+        nombre = request.POST.get('nombre')
+        celular = request.POST.get('celular')
+        correo = request.POST.get('correo')
+        aspectos_comunicar = request.POST.get('aspectos_a_comunicar')
+        responsable_comunicar = request.POST.get('responsable_de_la_comunicacion')
+        cuando_comunica = request.POST.get('cuando_lo_comunica')
+        importancia = request.POST.get('importancia')
+        estrategias_medios = request.POST.get('estrategias_y_medios')
+
+
+        comunicaciones = Comunicacion.objects.create(
+            codigo = codigo, #
+            rol=rol, #
+            nombre=nombre,#
+            celular=celular,#
+            correo=correo,
+            aspectos_a_comunicar=aspectos_comunicar,
+            responsable_de_la_comunicacion=responsable_comunicar,
+            cuando_lo_comunica=cuando_comunica,
+            importancia=importancia,
+            estrategias_y_medios=estrategias_medios,
+            )
+
+        comunicaciones.save()
+        return redirect('main:comu', proyecto.codigo )
+
     return render(request, "./user/formatocomunica.html",{'proyecto' : proyecto })
 
 #nueva gestion
@@ -504,6 +732,27 @@ def estado_porcentaje(porcentaje):
 def nuevoitems(request,codigo):
     proyecto = Proyecto.objects.filter(codigo=codigo).first()
     des = Des.objects.filter(codigo=codigo)
+    acti_objects = Acti.objects.all()
+
+
+
+    data = {}
+    for acti_object in acti_objects:
+        fase = acti_object.fasedes
+        subfase = acti_object.subfasedes
+        tarea = acti_object.tarea
+
+        if fase not in data:
+            data[fase] = {"subfases": [], "tareas": []}
+
+        if subfase not in data[fase]["subfases"]:
+            data[fase]["subfases"].append(subfase)
+
+        if tarea not in data[fase]["tareas"]:
+            data[fase]["tareas"].append(tarea)
+
+
+
 
     if request.method == 'POST':
         nombre = request.POST.get('actividad-nombre')
@@ -541,11 +790,20 @@ def nuevoitems(request,codigo):
         return redirect('main:des', proyecto.codigo )
 
 
-    return render(request, "./user/nuevaactividad.html",{'proyecto' : proyecto, 'des':des})
+    return render(request, "./user/nuevaactividad.html",{'proyecto' : proyecto, 'des':des , 'data': data})
 
 def edititems(request,codigo,id_items):
     proyecto = Proyecto.objects.filter(codigo=codigo).first()
-    item = get_object_or_404(Des, pk=id_items)
+    item = Des.objects.filter(pk=id_items).first()
+    if request.method == 'POST':
+        procentaje = request.POST.get('porcentaje')
+        observaciones = request.POST.get('observaciones')
+
+        item.procentaje = procentaje
+        item.observaciones = observaciones
+        item.estado = estado_porcentaje(int(procentaje))
+        item.save()
+        return redirect('main:des', proyecto.codigo )
 
     return render(request, "./user/edittarea.html",{'proyecto' : proyecto, 'item':item})
 
@@ -562,11 +820,11 @@ def edititems(request,codigo,id_items):
 
 def des(request,codigo):
     proyecto = Proyecto.objects.filter(codigo=codigo).first()
-    inicio = Des.objects.filter(codigo=codigo,fase='inicio')
-    planeacion = Des.objects.filter(codigo=codigo,fase='planeacion')
-    ejecucion = Des.objects.filter(codigo=codigo,fase='ejecucion')
-    monitoreo = Des.objects.filter(codigo=codigo,fase='monitoreo')
-    cierre = Des.objects.filter(codigo=codigo,fase='cierre')
+    inicio = Des.objects.filter(codigo=codigo,fase='Inicio')
+    planeacion = Des.objects.filter(codigo=codigo,fase='Planeacion')
+    ejecucion = Des.objects.filter(codigo=codigo,fase='Ejecucion')
+    monitoreo = Des.objects.filter(codigo=codigo,fase='Monitoreo')
+    cierre = Des.objects.filter(codigo=codigo,fase='Cierre')
 
     return render(request, "./user/des.html",{'proyecto' : proyecto,
                                                 'inicio':inicio,
@@ -595,6 +853,190 @@ def mover_tarjeta(request, tarjeta_id, columna_id):
     tarjeta.columna = columna
     tarjeta.save()
     return HttpResponse("Ok")
+
+
+## grafica rapida :
+
+def apicarga(request):
+    gerentes = Usuario.objects.filter(rol='gerente')
+    # Inicializar un diccionario para almacenar los conteos de proyectos por tipo para cada gerente
+    project = Proyecto.objects.all()
+    proyectos_por_gerente = []
+
+    # Iterar sobre cada gerente
+    for gerente in gerentes:
+        tip1 = 0
+        tip2 = 0
+        tip3 = 0
+        tip4 = 0
+
+        proyectos = Proyecto.objects.filter(user=gerente)
+
+
+        for proyecto in proyectos:
+            if proyecto.tipo == 'Necesidades entrega operación':
+                tip1 += 1
+            elif proyecto.tipo == 'Necesidades':
+                tip2 += 1
+            elif proyecto.tipo == 'Proyectos Integración':
+                tip3 += 1
+            elif proyecto.tipo == 'Proyectos Producto Propio':
+                tip4 += 1
+            else:
+                print("Error: Tipo de proyecto desconocido.")
+
+
+        sumato = tip1 + tip2+ tip3 + tip4
+
+
+        nombre_completo = f"{gerente.usuario.first_name} {gerente.usuario.last_name} "
+
+        # Agregar los conteos al diccionario bajo la clave del gerente actual
+        proyectos_por_gerente.append({
+            'gerente': nombre_completo,
+            'tip1': tip1,
+            'tip2': tip2,
+            'tip3': tip3,
+            'tip4': tip4,
+            'total': sumato
+        })
+
+
+    return JsonResponse(proyectos_por_gerente, safe=False)
+
+
+
+### apis
+
+
+
+def apiproyecto(request):
+    proyecto = Proyecto.objects.all()
+    des = Des.objects.all()
+    data1 =[]
+    cont = []
+    for pro in proyecto:
+
+
+        record = {
+            'id': pro.id,
+            'name': pro.name,
+            'description': pro.description,
+            'alcance': pro.alcance,
+            'categoria':pro.categoria,
+            'estado' : pro.estado,
+            'fecha_creacion' : pro.fecha_creacion,
+            'fecha_inicio_planeada' : pro.fecha_creacion,
+            'fecha_inicio_real' : pro.fecha_creacion,
+            'fecha_finalizacion_planeada' : pro.fecha_creacion,
+            'fecha_finalizacion_real' : pro.fecha_creacion,
+            'porcentaje_completado': pro.porcentaje_completado ,
+            'tipo': pro.tipo,
+            'lider': pro.lider,
+            'grupo': pro.grupo,
+            'programas': pro.programas ,
+            'comentarios':pro.comentarios,
+            'spi': pro.spi,
+            'es':pro.es
+
+
+        }
+
+        data1.append(record)
+
+    return JsonResponse(data1, safe=False)
+
+
+def apitareas(request):
+    des = Des.objects.all()
+    data1 =[]
+    for pro in des:
+        record = {
+            'id': pro.id,
+            'titulo': pro.titulo ,
+            'descripcion' : pro.descripcion,
+            'fecha_inicio' : pro.fecha_inicio,
+            'fecha_fin' : pro.fecha_inicio,
+            'fase' : pro.fase,
+            'subfase' : pro.subfase,
+            'procentaje' :int( pro.procentaje),
+            'dependencias' : pro.dependencias,
+            'observaciones' : pro.observaciones,
+            'tiempo_estimado' : pro.tiempo_estimado,
+            'tiempo_real' : pro.tiempo_real,
+            'estado' : pro.estado,
+            'completada' : pro.completada,
+            'peso' : pro.peso,
+        }
+        data1.append(record)
+    return JsonResponse(data1, safe=False)
+
+
+
+def apiriesgo(request):
+    matriz = MatrizRiesgo.objects.all()
+    data1 =[]
+    for pro in matriz:
+
+        record = {
+            'id': pro.id,
+            'name': pro.nombre,
+            'description': pro.descripcion,
+            'causas': pro.causas,
+            'plan' : pro.plan,
+            'consecuencias': pro.consecuencias ,
+            'descripcion_tiempo': pro.descripcion_tiempo,
+            'descripcion_alcance': pro.descripcion_alcance,
+            'descripcion_costo': pro.descripcion_costo,
+            'probavilidad': pro.probavilidad ,
+            'gravedad':pro.gravedad,
+            'riesgo': pro.riesgo,
+            'materializo':pro.materializo,
+            'proyecto': pro.proyecto.name,
+            'acciones_mitigacion':pro.acciones_mitigacion
+        }
+
+        data1.append(record)
+
+    return JsonResponse(data1, safe=False)
+
+
+def apicostos(request):
+    proyecto = Proyecto.objects.all()
+    des = Des.objects.all()
+    data1 =[]
+    for pro in proyecto:
+
+        record = {
+            'id': pro.id,
+            'name': pro.name,
+            'description': pro.description,
+            'alcance': pro.alcance,
+            'estado' : pro.estado,
+            'porcentaje_completado': pro.porcentaje_completado ,
+            'tipo': pro.tipo,
+            'lider': pro.lider,
+            'grupo': pro.grupo,
+            'programas': pro.programas ,
+            'comentarios':pro.comentarios,
+            'spi': pro.spi,
+            'es':pro.es
+        }
+
+        data1.append(record)
+
+    return JsonResponse(data1, safe=False)
+
+
+def word(request):
+    return render(request, "./WORKFLOW/index.html")
+
+
+def informe(request,codigo):
+    proyecto = Proyecto.objects.filter(codigo=codigo).first()
+    return render(request, "./user/informe.html",{ 'proyecto' : proyecto })
+
+
 
 ##*  {% url 'main:nuevoproyecto' codigo=proyecto.codigo %}
 ##*  {% url 'main:project' codigo=proyecto.codigo %}

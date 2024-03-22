@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static './css/bootstrap.min.css' %}" />
+
     <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css">
     <style>
@@ -25,21 +25,26 @@
 {% endblock %}
 
 {% block conten %}
-<br>
+
 <div class="content-lecciones">
+
+    <div class="titulo">
+        <h1  class="create-project-title">Lecciones</h1>
+    </div>
+
     <div class="container">
-        <a href="{% url 'main:nuevalencion' codigo=proyecto.codigo %}" class="btn btn-info">Agregar Más</a>
+        <button class="btnAgregar"><a href="{% url 'main:nuevalencion' codigo=proyecto.codigo %}" style="color: white;">Agregar Más</a></button>
     </div>
     <table id="tablalecciones" class="display" style="width: 100%">
         <thead>
             <tr>
                 <th>Fecha</th>
-                <th>Identificación el problema</th>
+                <th>Identificación del problema</th>
                 <th>Causa</th>
                 <th>Solución</th>
                 <th>Planes de mejora aplicados</th>
                 <th>Resultados de los planes de mejora</th>
-                <th>Edit</th>
+                <th>Editar</th>
             </tr>
         </thead>
         <tbody>
@@ -71,7 +76,6 @@
     <script src="https://cdn.datatables.net/2.0.1/js/dataTables.js"></script>
     <script src="https://cdn.datatables.net/2.0.1/js/dataTables.tailwindcss.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-tablalecciones2
 
     <script>
         $(document).ready(function () {

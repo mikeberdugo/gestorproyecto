@@ -1,0 +1,62 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */ /* Eliminamos la alineación vertical */
+}
+
+.tarjeta {
+
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center; /* Centro el contenido */
+  margin: auto; /* Centro horizontalmente */
+}
+
+h1 {
+  padding-top: 10px;
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.titulo {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.contenido {
+  font-size: 16px;
+  color: #666;
+}
+
+/* estilos botones */
+
+.btn-small{
+  background: var(--azul-uno);
+  color: white;
+  margin-top: 10px;
+  border-radius: 2px;
+}
+
+.btn-small:hover{
+  background: var(--azul-cuatro);
+}
+
+.btn-small[variant="secondary"]{
+  margin-top: 10px;
+  border-radius: 2px;
+}
+
+.btn-small[variant="secondary"]:hover{
+  background-color: var(--azul-cuatro);
+  color: white;
+}

@@ -25,8 +25,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css">
     <link rel="stylesheet" href="{% static 'frappe-gantt/dist/frappe-gantt.css' %}">
     <script src="{% static 'frappe-gantt/dist/frappe-gantt.min.js' %}"></script>
-    
-    
+
+
 </head>
 <body>
     <div class="content-costos">
@@ -37,11 +37,11 @@
             <a href="{% url 'main:des' codigo=proyecto.codigo %} " variant="secondary" type="button" title="Volver" class="btn-small create-project-action-cancel" >Volver</a>
         </fieldset>
     </div>
-	
+
 	<script>
 
 		var datos_tareas = {{ datos_tareas | safe }};
-		
+
 		var gantt_chart = new Gantt(".gantt-target", datos_tareas, {
 			on_click: task => {
 				console.log(task);

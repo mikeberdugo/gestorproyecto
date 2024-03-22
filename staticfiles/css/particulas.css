@@ -1,0 +1,26 @@
+:root {
+    --color-principal: #2E3440;
+    --color-secundario: #3B4252;
+    --gris: #f1f1f4;
+    --azul-uno: #216fbc;
+    --azul-dos: #0b3d93;
+    --azul-tres: #4f70af;
+    --azul-cuatro: #122754;
+    --azul-cinco: #080d28;
+}
+
+* {
+		padding: 0;
+		margin: 0;
+	}
+	svg {
+        z-index: -1;
+		position: absolute;
+		top: 0;
+		left: 0;
+    width: 100%;
+    height: 100%;
+		box-sizing: border-box;
+		display: block;
+		background-color: var(--gris) ;
+	}

@@ -20,17 +20,21 @@
         display: none;
     }
 
-     tbody td {
-        max-width: 150px; /* Establece el ancho máximo deseado */
-        white-space: nowrap; /* Evita que el texto se envuelva */
-        overflow: hidden; /* Oculta el contenido que excede el ancho máximo */
-        text-overflow: ellipsis; /* Agrega puntos suspensivos (...) al final del texto que excede el ancho máximo */
+    h1{
+    padding-top: 10px;
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
 
     }
+
+
+
 </style>
 
 <br>
-<div class="contenedortablas" style="height: 600px; overflow: auto; padding: 10px;">
+<div class="contenedortablas">
+<h1>Información del proyecto</h1>
 <div class="tabla">
     <div class="container">
         <table>
@@ -103,8 +107,9 @@
     </div>
 </div><br>
 
+<h1>Matriz de riesgos</h1>
 <div class="twocontainer" style="overflow-x: auto;">
-    <div class="chiquitico" style="max-width: 1008px; margin-left: 60px;">
+    <div class="chiquitico" style="max-width: 1008px; margin-left: 60px; overflow-x: auto;">
         <table id="tabla_riesgo" class="table table-striped table-bordered table-hover">
 <thead>
             <tr>
@@ -142,14 +147,15 @@
         </table>
     </div>
 
-    <div class="chiquitico1"style="max-width: 1008px; margin-left: 60px;">
+    <h1>Lecciones aprendidas</h1>
+    <div class="chiquitico1" style="max-width: 1008px; margin-left: 60px;">
         <div class="content-lecciones">
 
             <table id="tabla_lecciones" class="display" style="width: 100%">
                 <thead>
                     <tr>
                         <th>Fecha</th>
-                        <th>Identificacion el problema</th>
+                        <th>Identificación del problema</th>
                         <th>Causa</th>
                         <th>Solución</th>
                         <th>Planes de mejora aplicados</th>
@@ -165,43 +171,6 @@
                         <td title="{{ComentarioTarea.solucion}}" >{{ComentarioTarea.solucion}}</td>
                         <td title="{{ComentarioTarea.planes_mejora_aplicados}}" >{{ComentarioTarea.planes_mejora_aplicados}}</td>
                         <td title="{{ComentarioTarea.resultados_planes_mejora}}" >{{ComentarioTarea.resultados_planes_mejora}}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-
-    <div class="chiquitico2"style="max-width: 25000px; margin-left: 60px;">
-        <div class="content-costos">
-
-            <table id="tabla_costos" id="tabla3" class="table table-striped table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th style="width:100px">Contrato</th>
-                        <th style="width:100px">Objeto</th>
-                        <th style="width:100px">Tipo</th>
-                        <th style="width:100px">Aliado</th>
-                        <th style="width:150px">Contrato Aliado</th>
-                        <th style="width:100px">Backlog</th>
-                        <th style="width:150px">One Time</th>
-                        <th style="width:150px">Recurrente</th>
-                        <th style="width:120px">Meses</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for costo in costos %}
-                    <tr>
-                        <td>{{ costo.contrato }}</td>
-                        <td>{{ costo.objeto }}</td>
-                        <td>{{ costo.tipo }}</td>
-                        <td>{{ costo.aliado }}</td>
-                        <td>{{ costo.contrato_aliado }}</td>
-                        <td>{{ costo.backlog }}</td>
-                        <td>{{ costo.one_time }}</td>
-                        <td>{{ costo.recurrente }}</td>
-                        <td>{{ costo.meses }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -228,12 +197,91 @@
 
 <script>
     $(document).ready(function () {
-        $('#tabla_riesgo').DataTable();
-        $('#tabla_lecciones').DataTable();
-        $('#tabla3').DataTable();
-        $('#tabla3').DataTable();
+        // Inicializar la primera tabla
+        var table1 = $('#tabla_riesgo').DataTable({
+            searching: true,
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
+            },
+            autoWidth: true,
+            processing: true,
+            info: false,
+            lengthChange: false,
+            scrollX: true,
+
+        });
+
+        // Ajustar el tamaño de las columnas en la primera tabla
+        table1.columns().eq(0).each(function(index) {
+            // Aquí puedes ajustar los porcentajes para cada columna según lo necesites
+            // Por ejemplo, para la primera tabla:
+            if (index === 0) {
+                this.width('5%');
+            } else if (index === 1) {
+                this.width('10%');
+            } else if (index === 2) {
+                this.width('10%');
+            } else if (index === 3) {
+                this.width('10%');
+            } else if (index === 4) {
+                this.width('10%');
+            } else if (index === 5) {
+                this.width('10%');
+            } else if (index === 6) {
+                this.width('10%');
+            } else if (index === 7) {
+                this.width('10%');
+            } else if (index === 8) {
+                this.width('10%');
+            } else if (index === 9) {
+                this.width('10%');
+            } else if (index === 10) {
+                this.width('5%');
+            }
+            // Agrega más condiciones según sea necesario para ajustar otras columnas
+        });
+
+
+
+    });
+   $(document).ready(function () {
+
+          // Inicializar la segunda tabla
+        var table2 = $('#tabla_lecciones').DataTable({
+            searching: true,
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
+            },
+            autoWidth: true,
+            processing: true,
+            info: false,
+            lengthChange: false,
+            scrollX: false,
+        });
+
+
+        // Ajustar el tamaño de las columnas en la segunda tabla
+        table2.columns().eq(0).each(function(index) {
+            // Aquí puedes ajustar los porcentajes para cada columna según lo necesites
+            // Por ejemplo, para la segunda tabla:
+            if (index === 0) {
+                this.width('5%');
+            } else if (index === 1) {
+                this.width('18%');
+            } else if (index === 2) {
+                this.width('18%');
+            } else if (index === 3) {
+                this.width('18%');
+            } else if (index === 4) {
+                this.width('18%');
+            } else if (index === 5) {
+                this.width('18%');
+            }
+            // Agrega más condiciones según sea necesario para ajustar otras columnas
+        });
     });
 </script>
+
 
 
 

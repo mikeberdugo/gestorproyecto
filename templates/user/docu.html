@@ -1,91 +1,252 @@
 {% extends 'plantilla.html' %}
 {% load static %}
-{% block id_project %}proyecto.id{% endblock %}
 
-{% block title %} gestion de proyecto - {{proyecto.name}} {% endblock %}
+{% block id_project %}{{ proyecto.id }}{% endblock %}
+
+{% block title %} Gestión de proyecto - {{ proyecto.name }} {% endblock %}
+
 {% block name %}
-{{proyecto.name}}
+    {{ proyecto.name }}
 {% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
-<link rel="stylesheet" href="{% static './css/docu.css' %} ">
-<link rel="stylesheet" href="{% static './css/tabla_documentacion.css' %} ">
+    <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css">
+
+    <style>
+    .container {
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    h2 {
+        font-size: 18px;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    .checkbox-container {
+        display: block;
+        position: relative;
+        padding-left: 25px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .checkbox-container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 15px;
+        width: 15px;
+        background-color: #eee;
+        border: 1px solid #ccc;
+    }
+
+    .checkbox-container:hover input ~ .checkmark {
+        background-color: #ddd;
+    }
+
+    .checkbox-container input:checked ~ .checkmark {
+        background-color: #2196F3;
+    }
+
+    .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+    }
+
+    .checkbox-container input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+    .checkbox-container .checkmark:after {
+        left: 5px;
+        top: 1px;
+        width: 4px;
+        height: 8px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+
+    .submit-button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    .submit-button:hover {
+        background-color: #45a049;
+    }
+</style>
+
 {% endblock %}
 
 {% block conten %}
+<tg-legacy ng-version="10.0.14"></tg-legacy>
+<div tg-navigation-bar="" ng-if="!errorHandling.showingError">
 
-</head>
-<body>
-<table>
-    <thead>
-        <tr>
-            <th class="columna1">Documentación</th>
+</div>
+<div ng-if="!errorHandling.showingError">
+    <div ng-view="" class="master">
+        <tg-create-project-form type="kanban">
+            <div class="create-project">
+                <div class="tarjeta">
+                    <div class="titulo">
+                        <h1 class="create-project-title">Documentos</h1>
+                    </div>
+    <form  method="POST" >
+    {% csrf_token %}
+    <div class="container">
+        <h2>CONTRATO CLIENTE:</h2>
 
-            <th class="columna3">Check</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="columna1">Contrato cliente</td>
+        <label class="checkbox-container">Contrato con cliente
+            <input type="checkbox" name="contrato_cliente" {% if docus.contrato_cliente %}checked{% endif %}>
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Acta de inicio
+            <input type="checkbox" name="acta_inicio" {% if docus.acta_inicio %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Constitución proyecto
+            <input type="checkbox" name="constitucion_proyecto"  {% if docus.constitucion_proyecto %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Kickoff con cliente e interno
+            <input type="checkbox" name="kickoff_cliente_interno" {% if docus.kickoff_cliente_interno %}checked{% endif %}>
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Obligaciones contractuales
+            <input type="checkbox" name="obligaciones_contractuales" {% if docus.obligaciones_contractuales %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Oferta entregada al cliente y modificatorios con cliente
+            <input type="checkbox" name="oferta_entregada_cliente" {% if docus.oferta_entregada_cliente %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Plan de gestión del proyecto
+            <input type="checkbox" name="plan_gestion_proyecto" {% if docus.plan_gestion_proyecto %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
 
-            <td class="columna3">
-                <input type="checkbox">
-            </td>
-        </tr>
-        <tr>
-            <td class="columna1">Tiempo</td>
+        <h2>TIEMPO:</h2>
+        <label class="checkbox-container">Cronograma
+            <input type="checkbox" name="cronograma" {% if docus.cronograma %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
 
-            <td class="columna3">
-                <input type="checkbox">
-            </td>
-        </tr>
-        <tr>
-            <td class="columna1">Adquisiciones</td>
-            <td class="columna3">
-                <input type="checkbox">
-            </td>
-        </tr>
-        <tr>
-            <td class="columna1">Costo</td>
-            <td class="columna3">
-                <input type="checkbox">
-            </td>
-        </tr>
-        <tr>
-            <td class="columna1">Riesgo</td>
-            <td class="columna3">
-                <input type="checkbox">
-            </td>
-        </tr>
-        <tr>
-            <td class="columna1">Comunincaciones</td>
-            <td class="columna3">
-                <input type="checkbox">
-            </td>
-        </tr>
-        <tr>
-            <td class="columna1">Control</td>
-            <td class="columna3">
-                <input type="checkbox">
-            </td>
-        </tr>
-        <tr>
-            <td class="columna1">Cierre</td>
-            <td class="columna3">
-                <input type="checkbox">
-            </td>
-        </tr>
-    </tbody>
-</table>
+        <h2>ADQUISICIONES:</h2>
+        <label class="checkbox-container">Contrato con aliado
+            <input type="checkbox" name="contrato_aliado" {% if docus.contrato_aliado %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Acta de inicio con el aliado
+            <input type="checkbox" name="acta_inicio_aliado" {% if docus.acta_inicio_aliado %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Resumen de las Oc's
+            <input type="checkbox" name="resumen_oc" {% if docus.resumen_oc %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Conciliaciones con proveedor (actas de recibido)
+            <input type="checkbox" name="conciliaciones_proveedor" {% if docus.conciliaciones_proveedor %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
 
-<button type="button" class="guardadito">Guardar</button>
+        <h2>COSTO:</h2>
+        <label class="checkbox-container">Backlog (One time y recurrente mensual si aplica) OC'S asignadas
+            <input type="checkbox" name="backlog_oc" {% if docus.backlog_oc %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
 
+        <h2>RIESGOS:</h2>
+        <label class="checkbox-container">Matriz de Riesgos
+            <input type="checkbox" name="matriz_riesgos" {% if docus.matriz_riesgos %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+
+        <h2>COMUNICACIONES:</h2>
+        <label class="checkbox-container">Matriz interesados y plan de Comunicaciones
+            <input type="checkbox" name="matriz_interesados" {% if docus.matriz_interesados %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Correos clientes y proveedor
+            <input type="checkbox" name="correos_clientes_proveedor" {% if docus.correos_clientes_proveedor %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Ficha de presentación del Proyecto
+            <input type="checkbox" name="ficha_presentacion_proyecto" {% if docus.ficha_presentacion_proyecto %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+
+        <h2>CONTROL:</h2>
+        <label class="checkbox-container">Solicitud control de cambio
+            <input type="checkbox" name="solicitud_control_cambio" {% if docus.solicitud_control_cambio %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Actas de reuniones técnicas y con proveedor
+            <input type="checkbox" name="actas_reuniones_tecnicas" {% if docus.actas_reuniones_tecnicas %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+
+        <h2>CIERRE:</h2>
+        <label class="checkbox-container">Acta de entrega al cliente
+            <input type="checkbox" name="acta_entrega_cliente" {% if docus.acta_entrega_cliente %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Acta de recibido al aliado
+            <input type="checkbox" name="acta_recibido_aliado"{% if docus.acta_recibido_aliado %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Ficha cierre
+            <input type="checkbox" name="ficha_cierre" {% if docus.ficha_cierre %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Entrega a aseguramiento
+            <input type="checkbox" name="entrega_aseguramiento" {% if docus.entrega_aseguramiento %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+        <label class="checkbox-container">Entregas de las obligaciones Contractura
+            <input type="checkbox" name="entregas_obligaciones_contractura" {% if docus.entregas_obligaciones_contractura %}checked{% endif %} >
+            <span class="checkmark"></span>
+        </label>
+
+
+        <div class="create-project-action">
+            <button type="submit" class="btn-small create-project-action-submit">Actualizar</button>
+        </div>
+    </div>
+</form>
+
+</div>
+</div>
+
+
+
+
+
+</div>
+</tg-create-project-form>
+</div>
+</div>
 {% endblock %}
 
-
 {% block scripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="{% static './js/documodal.js' %}" defer></script>
-<!-- <script src="script.js"></script> -->
+
 {% endblock %}

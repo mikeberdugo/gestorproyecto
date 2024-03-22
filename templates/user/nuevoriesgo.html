@@ -3,19 +3,30 @@
 {% block id_project %}proyecto.id{% endblock %}
 
 {% block title %} gestion de proyecto  - {{proyecto.name}} {% endblock %}
-{% block name %} 
+{% block name %}
     {{proyecto.name}}
 {% endblock %}
 
 {% block css %}
     <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
-    
+
 {% endblock %}
 
 {% block conten %}
-<br>
-<div  style=" width: auto;  height: 600px; overflow-y: auto; padding: 10px; " >
-    
+
+<tg-legacy ng-version="10.0.14"></tg-legacy>
+<div tg-navigation-bar="" ng-if="!errorHandling.showingError">
+
+</div>
+<div ng-if="!errorHandling.showingError">
+    <div ng-view="" class="master">
+        <tg-create-project-form type="kanban">
+            <div class="create-project">
+                <div class="tarjeta">
+                    <div class="titulo">
+                        <h1 class="create-project-title">Riesgos</h1>
+                    </div>
+
     <form name="projectForm"  class="ng-pristine ng-invalid ng-invalid-required" method="POST" >
         {% csrf_token %}
         <div ng-include="'projects/create/import-project-form-common/name.html'">
@@ -60,9 +71,9 @@
                 <textarea type="text" placeholder="Impacto Costo (Requerido)" name="matriz-costo" data-required="true" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true"></textarea>
             </fieldset>
         </div>
-        
+
         <fieldset>
-            
+
             <label for="project-priority">Probabilidad (Ocurrencia)</label>
             <select id="project-probabilidad" name="matriz-probabilidad">
                 <option value="" disabled selected>Seleccionar...</option>
@@ -73,7 +84,7 @@
                 <option value="5">MUY ALTA</option>
             </select>
         </fieldset>
-        
+
         <fieldset>
             <label for="project-priority">Gravedad Impacto</label>
             <select id="gravedad-impact" name="matriz-gravedad">
@@ -93,7 +104,17 @@
         </div>
         <br>
     </form>
-    
+
+               </div>
+            </div>
+
+
+
+
+
+    </div>
+    </tg-create-project-form>
+</div>
 </div>
 
 {% endblock %}
@@ -105,7 +126,7 @@
         // Obtener los elementos select
         const selectProbabilidad = document.getElementById('project-probabilidad');
         const selectGravedad = document.getElementById('gravedad-impact');
-    
+
         // Función para deshabilitar la opción por defecto
         function deshabilitarOpcionPorDefecto(selectElement) {
             selectElement.addEventListener('change', function() {
@@ -113,7 +134,7 @@
                 this.querySelector('option[value=""]').disabled = true;
             });
         }
-    
+
         // Llamar a la función para ambos select
         deshabilitarOpcionPorDefecto(selectProbabilidad);
         deshabilitarOpcionPorDefecto(selectGravedad);

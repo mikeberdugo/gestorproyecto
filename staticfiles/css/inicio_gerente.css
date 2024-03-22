@@ -117,7 +117,7 @@ h1{
 
 .btn-small[variant="primary"]{
   background-color: var(--azul-uno);
-  color:white;
+  color: white;
 }
 
 .btn-small[variant="primary"]:hover{

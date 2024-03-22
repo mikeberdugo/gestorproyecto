@@ -1579,7 +1579,7 @@ textarea {
   color: #4c566a;
   margin: 0;
   padding: 0.3rem 1rem 0.3rem 0.95rem;
-  width: 100%;
+  width: 90%;
 }
 input[type="date"]::-webkit-input-placeholder,
 input[type="email"]::-webkit-input-placeholder,
@@ -1669,6 +1669,7 @@ textarea.checksley-error:focus {
 input[type="search"] {
   box-sizing: border-box;
   padding-right: 25px;
+  margin-bottom:20px;
 }
 button,
 button:active,

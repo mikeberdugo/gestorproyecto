@@ -12,8 +12,18 @@
 {% endblock %}
 
 {% block conten %}
-<br>
-<div style=" width: auto;  height: 600px; overflow-y: auto; padding: 10px; " >
+<tg-legacy ng-version="10.0.14"></tg-legacy>
+<div tg-navigation-bar="" ng-if="!errorHandling.showingError">
+
+</div>
+<div ng-if="!errorHandling.showingError">
+    <div ng-view="" class="master">
+        <tg-create-project-form type="kanban">
+            <div class="create-project">
+                <div class="tarjeta">
+                    <div class="titulo">
+                        <h1 class="create-project-title">Lecciones</h1>
+                    </div>
     <form method="post" name="projectForm"  novalidate="novalidate" class="ng-pristine ng-invalid ng-invalid-required" onsubmit="return validarFormulario()" >
         {% csrf_token %}
         <div >
@@ -54,9 +64,19 @@
             </div>
         </div>
         <br>
-    </form>
+   </form>
 
 
+</div>
+</div>
+
+
+
+
+
+</div>
+</tg-create-project-form>
+</div>
 </div>
 
 {% endblock %}

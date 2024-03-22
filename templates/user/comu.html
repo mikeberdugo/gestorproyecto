@@ -7,20 +7,20 @@
 {% endblock %}
 
 {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static './css/bootstrap.min.css' %}" />
     <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css">
 
 {% endblock %}
 
 {% block conten %}
+<div class="content-matriz">
 
- <div style=" width: auto;  height: 600px; overflow-y: auto; padding: 10px; " >
-     <div class="content-lecciones">
-         <div class="container">
-            <a href="{% url 'main:nuevacomu' codigo=proyecto.codigo %}" class="btn btn-info">Agregar Más</a>
-        </div>
-
+    <div class="titulo">
+        <h1  class="create-project-title">Comunicaciones</h1>
+    </div>
+            <div class="container">
+                <button class="btnAgregar"><a href="{% url 'main:formatocomunica' codigo=proyecto.codigo %}" style="color: white;" >Agregar Más</a></button>
+            </div>
         <table id="tabla_riesgos" class="display" style="width:100%">
             <thead>
                 <tr>
@@ -36,17 +36,17 @@
                 </tr>
             </thead>
             <tbody>
-                {% for comunicacio in comunicacion %}
+                {% for comunicacion in comunis %}
                 <tr>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.rol}}</font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.nombre}}</font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.celular}}</font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.correo}}</font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.aspectos_a_comunicar}}</font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.responsable_de_la_comunicacion}}</font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.cuando_lo_comunica}}</font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.importancia}}</font></font></td>
-                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacio.estrategias_y_medios}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacion.rol}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacion.nombre}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacion.celular}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacion.correo}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacion.aspectos_a_comunicar}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacion.responsable_de_la_comunicacion}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacion.cuando_lo_comunica}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacion.importancia}}</font></font></td>
+                    <td><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">{{comunicacion.estrategias_y_medios}}</font></font></td>
                 </tr>
                 {% endfor %}
             </tbody>

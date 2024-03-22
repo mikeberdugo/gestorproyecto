@@ -1,3 +1,14 @@
+:root {
+    --color-principal: #2E3440;
+    --color-secundario: #3B4252;
+    --gris: #f1f1f4;
+    --azul-uno: #216fbc;
+    --azul-dos: #0b3d93;
+    --azul-tres: #4f70af;
+    --azul-cuatro: #122754;
+    --azul-cinco: #080d28;
+}
+
 * {
     box-sizing: border-box;
     text-decoration: none;
@@ -21,13 +32,14 @@
 }
 
 .containerUp-headertable {
+    margin-bottom: 10px;
     padding: 6px;
     background-color: #e6e6fa;
     display: flex;
     justify-content: end;
 }
 
-.containerUp-headertable__a {
+.containerUp-headertable__buttom {
     width: 30px;
     height: 30px;
     border-radius: 4px;
@@ -188,13 +200,16 @@ table {
 
 tr,
 th {
+
     gap: 5px;
     text-align: center;
 }
 
 tr,
-th {
-    width: calc(100% / 3);
+
+
+tr{
+      border: 1px solid var(var(--gris));
 }
 
 
@@ -245,6 +260,64 @@ th {
 .alertsucces-texts__icon .fas {
     font-size: 2rem;
     padding: 14px;
+}
+
+.bx-aperture {
+    font-size: 30px;
+    background: var(--azul-uno);
+    color: white;
+    margin: 5px;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.bx-aperture:hover {
+    background: var(--azul-cuatro);
+}
+
+.bx-plus{
+    font-size: 30px;
+    background: var(--azul-uno);
+    color: white;
+    margin: 5px;
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.bx-plus:hover{
+    background: var(--azul-cuatro);
+}
+
+/* prueba de tabs */
+
+.tabs{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 450px;
+    height: 250px;
+}
+
+.tabs .tab-header {
+    background: var(--azul-tres);
+    padding: 10px;
+    display: flex;
+}
+
+/*estilos para la vista de calendario*/
+
+h2{
+    color: var(--azul-dos);
+}
+
+th{
+    border: 1px solid var(--gris);
+}
+
+
+td{
+    border: 1px solid var(--gris);
 }
 
 @media screen and (max-width: 500px) {

@@ -1,144 +1,140 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% load static %}
-    <meta charset="utf-8">
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <meta name="fragment" content="!">
-    <title>Create Project</title>
+{% extends 'plantilla2.html' %}
+{% load static %}
+{% block id_project %}proyecto.id{% endblock %}
+
+{% block title %} gestion de proyecto  - {{proyecto.name}} {% endblock %}
+
+{% block name %}
+    {{proyecto.name}}
+{% endblock %}
+
+
+{% block css %}
     <link rel="stylesheet" href="{% static './css/theme-taiga.css' %}">
+    <link rel="stylesheet" href="{% static './css/nuevoproyecto.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-HA8aIQXlN7sUkuqzGZK8r+4LntXBzPwONCzqOUiD54/1xbS49rI/12py9U3WlRj9WcmWlvqzB8lyqbqE2tzBxw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="icon" type="image/png" href="http://localhost:9000/v-1708598134890/images/favicon.png">
-</head>
-<body>
-    <div>
-        <nav ng-if="vm.isEnabledHeader" class="navbar">
-            <div class="nav-left">
-                <div ng-if="vm.isAuthenticated" tg-dropdown-project-list="tg-dropdown-project-list" class="topnav-dropdown-wrapper">
-                    <div class="dropdown-project-list">
-                        <a href="" title="Proyectos" tg-nav="projects" class="dropdown-project-list-projects">Tus Proyectos</a>
-                        <div class="navbar-dropdown">
-                            <div ng-if="!vm.projects.size">
-                                <h2>Crea tu primer proyecto</h2>
-                                <p class="dropdown-project-list-desc">Aún no tienes ningún proyecto. Crea uno ahora, invita a tu equipo y comienza a usar Colvapro al máximo.</p>
-                                <div class="create-options">
-                                    <a href="#" tg-nav="create-project" title="Nuevo proyecto" class="create-project-btn button-primary"><span>Nuevo proyecto</span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div tg-dropdown-user="tg-dropdown-user">
-                <div class="dropdown-user-inner">
-                    <div class="dropdown-user-navbar">
-                        <a tg-nav="profile" title="mike" class="user-avatar">
-                            <img tg-avatar="vm.user" alt="mike" src="Home%20-%20Colvapro_files/user-avatar-05.png" title="mike" style="background: rgb(183, 203, 131);">
-                        </a>
-                        <button class="chevron">
-                            <tg-svg svg-icon="icon-chevron-down"></tg-svg>
-                        </button>
-                    </div>
-                    <div class="navbar-dropdown dropdown-user">
-                        <div class="dropdown-user-profile">
-                            <a tg-nav="profile" href="#" class="profile-link avatar">
-                                <img tg-avatar="vm.user" alt="mike" src="Home%20-%20Colvapro_files/user-avatar-05.png" title="mike" style="background: rgb(183, 203, 131);">
-                            </a>
-                            <div class="dropdown-user-data">
-                                <a tg-nav="profile" href="#" class="profile-link full-name">mike</a>
-                                <div class="profile-link email">manuel.david.13.b@gmail.com</div>
-                                <p>
-                                    <a href="#" tg-nav="user-settings-user-profile" title="Editar perfil" translate="PROJECT.NAVIGATION.EDIT_PROFILE" class="edit-profile">Editar perfil</a>
-                                </p>
-                            </div>
-                        </div>
-                        <ul>
-                            <li class="user-profile-option">
-                                <a href="#" tg-nav="user-settings-user-change-password" title="Configuración de la cuenta" translate="PROJECT.NAVIGATION.ACCOUNT_SETTINGS" class="secondary">Configuración de la cuenta</a>
-                            </li>
-                            <li class="user-profile-option">
-                                <a href="#" tg-nav="user-settings-mail-notifications" title="Editar tus configuraciones de notificación" translate="PROJECT.NAVIGATION.NOTIFICATIONS" class="secondary">Notificaciones</a>
-                            </li>
-                            <li class="user-profile-option">
-                                <a href="#" ng-click="vm.logout()" title="Cerrar sesión" translate="COMMON.LOGOUT">Cerrar sesión</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </nav>
+{% endblock %}
+
+{% block conten %}
+
+    <tg-legacy ng-version="10.0.14"></tg-legacy>
+    <div tg-navigation-bar="" ng-if="!errorHandling.showingError">
+
     </div>
-    <div>
-        <div class="master">
+    <div ng-if="!errorHandling.showingError">
+        <div ng-view="" class="master">
             <tg-create-project-form type="kanban">
                 <div class="create-project">
-                    <div ng-if="vm.type == 'kanban'" class="create-project-title-wrapper">
-                        <tg-svg svg-icon="icon-kanban">
-                            <svg class="icon icon-kanban">
-                                <use xlink:href="#icon-kanban" href="#icon-kanban"></use>
-                            </svg>
-                        </tg-svg>
-                        <h1 class="create-project-title">Proyecto</h1>
+                    <div class="tarjeta">
+                        <div class="titulo">
+                        <h1  class="create-project-title">Proyecto</h1>
                     </div>
-                    <h3 class="create-project-description">Administra tus proyectos de forma ágil y eficiente con nuestro gestor de proyectos personalizado. Mantén un flujo constante en tus tareas independientes y optimiza la colaboración en equipo</h3>
 
-                    <form name="projectForm" novalidate="novalidate" method="post" onsubmit="return validarFormulario()">
-                        {% csrf_token %}
-                        <fieldset>
-                            <label for="project-name">Nombre del Proyecto</label>
-                            <input value="{{context.name}}" type="text" id="project-name" name="project-name" placeholder="Nombre del Proyecto (Requerido)" readonly required>
-                        </fieldset>
-                        <fieldset>
-                            <label for="project-description">Descripción del Proyecto</label>
-                            <textarea id="project-description" name="project-description" placeholder="Descripción del Proyecto (Requerido)" required>{{ context.descr }}</textarea>
-                        </fieldset>
-
-                        <fieldset>
-                            <label for="project-start-date-planned">Fecha de inicio</label>
-                            <input type="date" id="project-start-date-planned" name="project-start-date-planned">
-                        </fieldset>
-
-                        <fieldset>
-                            <label for="project-end-date-planned">Fecha Fin Linea base</label>
-                            <input type="date" id="project-end-date-planned" name="project-end-date-planned">
-                        </fieldset>
-
-                        <fieldset>
-                            <label for="project-scope">Alcance</label>
-                            <textarea id="project-scope" name="project-scope" required></textarea>
-                        </fieldset>
-
-                        <fieldset>
-                            <label for="project-leader">Cluster</label>
-                            <select id="project-leader" name="project-leader" required>
-                                {% for gluste in gluster %}
-                                <option value="{{gluste.cluster}}"> {{gluste.cluster}} </option>
-                                {% endfor %}
-                            </select>
-                        </fieldset>
-
-                        <fieldset>
-                            <label for="project-group">Grupo</label>
-                            <select id="project-group" name="project-group" required>
-                                <!-- Agrega las opciones de grupo aquí -->
-                            </select>
-                        </fieldset>
-                        <fieldset>
-                            <label for="project-comments">Comentarios</label>
-                            <textarea id="project-comments" name="project-comments" required></textarea>
-                        </fieldset>
-
-                        <div ng-include="'projects/create/import-project-form-common/actions.html'">
-                            <div class="create-project-action">
-                                <a href="{% url 'main:inicio_manager'  id_gerente=re.id %}" variant="secondary" type="button" title="Volver" class="btn-small create-project-action-cancel">Volver</a>
-                                <button type="submit" class="btn-small create-project-action-submit" title="Cargar">Crear Proyecto</button>
+                    <form name="projectForm" method="POST">
+                            {% csrf_token %}
+                            <div>
+                                <fieldset>
+                                    <label for="project-name">Nombre del Proyecto</label>
+                                    <input type="text"  placeholder="Nombre del Proyecto (Requerido)" name="project-name" required="required" aria-required="true"  {% if context.name %}value="{{context.name}}" readonly{% endif %}  >
+                                </fieldset>
                             </div>
-                        </div>
-                    </form>
+                            <div>
+                                <fieldset>
+                                    <label for="project-contract-number">Número del contrato</label>
+                                    <input type="text" placeholder="Número del contrato" name="project-contract-number" {% if proyecto.contrato %}value="{{proyecto.contrato}}" readonly{% endif %}  >
+                                </fieldset>
+                            </div>
+                            <div>
+                                <fieldset>
+                                    <label for="project-contract-object">Objeto del contrato</label>
+                                    <input type="text" placeholder="Objeto del contrato" name="project-contract-object" {% if proyecto.objeto %}value="{{proyecto.objeto}}" readonly{% endif %}  >
+                                </fieldset>
+                            </div>
+                            <div>
+                                <fieldset>
+                                    <label for="project-client">Cliente</label>
+                                    <input type="text" placeholder="Nombre del cliente" name="project-client" required="required" aria-required="true"  {% if proyecto.cliente %}value="{{proyecto.cliente}}" readonly{% endif %}  >
+                                </fieldset>
+                            </div>
+                            <div>
+                                <fieldset>
+                                    <label for="project-value">Valor</label>
+                                    <input type="number" placeholder="Valor del proyecto" name="project-value" required="required" aria-required="true" {% if proyecto.valor %}value="{{proyecto.valor}}" readonly{% endif %} >
+                                </fieldset>
+                            </div>
+                            <div>
+                                <fieldset>
+                                    <label for="project-description">Descripción</label>
+                                    <textarea placeholder="Descripción del Proyecto (Requerido)" name="project-description" required="required" aria-required="true"  > {{proyecto.description}}</textarea>
+                                </fieldset>
+                            </div>
+                            <fieldset>
+                                <label for="project-type">Programa</label>
+                                <select id="project-type" name="project-type">
+                                    <option value="Proyectos Integración">Proyectos Integración</option>
+                                    <option value="Necesidades entrega operación">Necesidades entrega operación</option>
+                                    <option value="Proyectos Producto Propio">Proyectos Producto Propio</option>
+                                    <option value="Necesidades">Necesidades</option>
+                                </select>
+                            </fieldset>
+                            <fieldset>
+                                <label for="project-category">Categoría</label>
+                                <select id="project-category" name="project-category">
+                                    <option value="Tipo I - Complejidad Superior">Tipo I - Complejidad Superior </option>
+                                    <option value="Tipo II - Alta Complejidad">Tipo II - Alta Complejidad</option>
+                                    <option value="Tipo III - Media Complejidad">Tipo III - Media Complejidad</option>
+                                    <option value="Tipo IV - Baja Complejidad">Tipo IV - Baja Complejidad</option>
+                                </select>
+                            </fieldset>
+
+                           <fieldset>
+                                <label for="fecha-inicio">Fecha de inicio</label>
+                                <input type="date" id="fecha-inicio" name="fecha-inicio" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true" style="width: 90%;">
+                            </fieldset>
+                            <fieldset>
+                                <label for="fecha-finalizacion">Fecha de finalización</label>
+                                <input type="date" id="fecha-finalizacion" name="fecha-finalizacion" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true" style="width: 90%;">
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="project-leader">Cluster</label>
+                                <select id="project-leader" name="project-leader" required>
+                                    {% for gluste in gluster %}
+                                    <option value="{{gluste.cluster}}"> {{gluste.cluster}} </option>
+                                    {% endfor %}
+                                </select>
+                            </fieldset>
+
+                            <fieldset>
+                                <label for="project-group">Grupo</label>
+                                <select id="project-group" name="project-group" required>
+                                    <!-- Agrega las opciones de grupo aquí -->
+                                </select>
+                            </fieldset>
+
+                            <div>
+                                <fieldset>
+                                    <label for="project-contractor-manager">Gerente (contratista)</label>
+                                    <input type="text" placeholder="Gerente al cliente" name="project-contractor-manager" required="required" aria-required="true" {% if context.tipo %}value="{{context.tipo}}" readonly{% endif %} >
+                                </fieldset>
+                            </div>
+                            <div>
+                                <div class="create-project-action">
+                                    <a href="{% url 'main:inicio_administrator' %}" variant="secondary" type="button" title="Volver" class="btn-small create-project-action-cancel">Volver</a>
+                                    <button type="submit" class="btn-small create-project-action-submit" title="Asignar Proyecto">Asignar Proyecto</button>
+                                </div>
+                            </div>
+                        </form>
+
                 </div>
             </tg-create-project-form>
         </div>
     </div>
+</div>
+</div>
+
+{% block scripts %}
 
     <script>
         var leaderSelect = document.getElementById("project-leader");
@@ -165,8 +161,8 @@
             // Obtener referencias a los campos del formulario
             var nombreProyecto = document.getElementById('project-name').value;
             var descripcionProyecto = document.getElementById('project-description').value;
-            var fechaInicio = document.getElementById('project-start-date-planned').value;
-            var fechaFin = document.getElementById('project-end-date-planned').value;
+            var fechaInicio = document.getElementById('fecha-inicio').value;
+            var fechaFin = document.getElementById('fecha-finalizacion').value;
             var alcance = document.getElementById('project-scope').value;
             var lider = document.getElementById('project-leader').value;
             var grupo = document.getElementById('project-group').value;
@@ -191,8 +187,8 @@
             return true;
         }
 
-        const startDateInput = document.getElementById('project-start-date-planned');
-        const endDateInput = document.getElementById('project-end-date-planned');
+        const startDateInput = document.getElementById('fecha-inicio');
+        const endDateInput = document.getElementById('fecha-finalizacion');
 
         startDateInput.addEventListener('change', function () {
             const selectedStartDate = new Date(this.value);
@@ -203,5 +199,7 @@
             endDateInput.min = endDateMin;
         });
     </script>
-</body>
-</html>
+
+{% endblock %}
+
+{% endblock %}

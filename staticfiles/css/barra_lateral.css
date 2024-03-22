@@ -1,49 +1,57 @@
 :root {
     --color-principal: #2E3440;
     --color-secundario: #3B4252;
+    --gris: #f1f1f4;
+    --azul-uno: #216fbc;
+    --azul-dos: #0b3d93;
+    --azul-tres: #4f70af;
+    --azul-cuatro: #122754;
+    --azul-cinco: #080d28;
 }
 
-a{
+a {
     text-decoration: none;
     color: antiquewhite;
 }
 
-*{
+* {
     box-sizing: border-box;
     margin: 0;
-    padding: 0; 
+    padding: 0;
 }
 
-body{
+body {
     font-family: 'Protest Strike', sans-serif;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
-.contenedor-principal{
+.contenedor-principal {
     display: grid;
-	grid-template-rows: repeat(10, 1fr);
-	grid-template-columns: repeat(12, 1fr);
-	gap: 0;
+    grid-template-rows: repeat(10, 1fr);
+    gap: 0;
     height: 100%;
-	width: 100%;
+    position: relative;
+    width: 100%;
+    background: var(--gris);
 }
 
 /*menu lateral*/
 
-.menu-dashboard{
-	grid-area: 1 / 1 / 10 / 1;   
+.menu-dashboard {
+    grid-area: 1 / 1 / 10 / 1;
 }
 
-.top-menu{
-    background: var(--color-principal);
+.top-menu {
+    background: var(--azul-uno) ;
     align-items: center;
     display: flex;
     justify-content: space-between;
-    height: 60px;
-    color: aqua;
+    height: 70px;
+    color: white;
+
 }
- 
-.top-menu .logo{
+
+.top-menu .logo {
     align-items: center;
     display: flex;
 }
@@ -56,34 +64,19 @@ body{
 
 .top-menu .logo span {
     display: none;
-    font-size: 12px;
-    margin-left: 20px;
-    padding-right: 10px;
+    font-size: 14px;
+    margin-left: 15px;
+
+    color: white;
 }
 
-.bx-line-chart{
+.bx-line-chart {
     font-size: 35px;
     padding: 5px;
+    color: white;
 }
 
-hr{
-    border: solid 0.5px var(--color-principal);
-    margin: 14px auto auto;
-}
-
-.linea1{
-    position: absolute;
-    top: 380px;
-    width: 100%;
-}
-
-.linea2{
-    position: absolute;
-    bottom: 45px;
-    width: 100%;
-}
-
-.top-menu .toggle{
+.top-menu .toggle {
     align-items: center;
     cursor: pointer;
     display: flex;
@@ -97,31 +90,29 @@ hr{
     font-size: 35px;
 }
 
-.menu{
-
+.menu {
     justify-content: left;
-    align-items: center; 
-
+    align-items: center;
     height: 40px;
     color: #DFDFDF;
-
     flex-direction: column;
 }
 
-.menu-dashboard{
-    background: var(--color-secundario);
+.menu-dashboard {
+    background: var(--azul-cinco);
     height: 100vh;
     position: relative;
     transition: all 0.8s ease;
     top: 48px;
     width: 50px;
+    z-index: 1;
 }
 
 /*contenedor menu lateral abierto*/
 
-.menu-dashboard.open{
+.menu-dashboard.open {
     transition: all 0.8s ease;
-    grid-area: 1 / 1 / 12 / 1;   
+    grid-area: 1 / 1 / 12 / 1;
 }
 
 .menu-dashboard.open .menu .enlace {
@@ -141,13 +132,14 @@ hr{
 }
 
 .menu .enlace:hover {
-    background: var(--color-principal);
+    background: var(--azul-cinco);
     margin: 0px;
     transition: left 0.5s ease;
     width: 200px;
     margin: 0px;
     color: white;
     opacity: 100%;
+    text-decoration: none;
 }
 
 .menu .enlace i {
@@ -157,7 +149,7 @@ hr{
     margin-top: 6px;
 }
 
-.menu-dashboard.open .menu .enlace span{
+.menu-dashboard.open .menu .enlace span {
     display: block;
     opacity: 1;
 }
@@ -187,7 +179,7 @@ hr{
     margin: 4px;
 }
 
-.boton-desplegable{
+.boton-desplegable {
     text-decoration: none;
     align-items: center;
     display: flex;
@@ -195,11 +187,11 @@ hr{
     margin: 4px;
 }
 
-.bx-chevrons-left{
-    background: #080d28;
-    color: aqua;
+.bx-chevrons-right {
+    background: var(--azul-uno);
+    color: var(--azul-taiga);
     border-radius: 40px;
-    opacity: 20%;
+    opacity: 60%;
     font-size: 25px;
     position: absolute;
     bottom: 60px;
@@ -207,35 +199,59 @@ hr{
     cursor: pointer;
 }
 
-.bx-chevrons-left:hover{
+.bx-chevrons-right:hover {
     color: white;
     opacity: 100%;
 }
 
 .rotated {
-    transform: rotate(180deg); /* Ajusta el ángulo de rotación según tu diseño */
-    transition: transform 0.3s ease; /* Agrega una transición suave para la rotación */
-  }
+    transform: rotate(180deg);
+    /* Ajusta el ángulo de rotación según tu diseño */
+    transition: transform 0.3s ease;
+    /* Agrega una transición suave para la rotación */
+}
 
 /*contenedor header*/
 
-.menu-user{
+.menu-user {
     background-color: #d4d4d4;
-    grid-area: 1 / 1 / 1 / 14; 
-    height: 48px;  
+    grid-area: 1 / 1 / 1 / 14;
+    height: 48px;
 }
 
-.bx-moon{
-    margin: 5px;
-    color: black;
-    font-size: 40px;
-    transform: rotate(40deg);
+.logocolvatel{
+    width: 50px;
+    height: 50px;
+}
+
+.logocolvatel{
+    width: 48px;
+    height: 48px;
+}
+
+.bx-user-circle{
+    font-size: 35px;
+    color: var(--azul-uno);
+}
+
+.bx-user-circle:hover{
+    color: var(--azul-cuatro);
 }
 
 /*Contenedor principal*/
-.contdatos{
-    background-color: white;
-    margin-top: 48px;
-    grid-area: 1 / 2 / 12 / 14;   
+.contdatos {
+    position: absolute;
+    background-color: #F2F2F2;
+    grid-area: 1 / 2 / 12 / 14;
+    top: 4rem;
+    bottom: 0rem;
+    width: 100%;
+    overflow-y: scroll;
+
 }
+
+
+
+
+/* eestilos taiga */
 

@@ -1,4 +1,3 @@
-<br>
 {% extends 'plantilla2.html' %}
 {% load static %}
 {% block id_project %}
@@ -6,147 +5,225 @@ proyecto.id
 {% endblock %}
 
 {% block title %}
-gestion de proyecto  - {{proyecto.name}}
+gestion de proyecto - {{proyecto.name}}
 {% endblock %}
 
 {% block name %}
-    {{proyecto.name}}
+{{proyecto.name}}
 {% endblock %}
 
 {% block css %}
-    <meta
-      name="description"
-      content="Página de inicio de Colvapro con tus proyectos principales y todas tus historias de usuario, tareas y problemas asignados y seguidos"
-    />
-    <meta
-      name="keywords"
-      content="ágil, scrum, colvapro, gestión, proyecto, desarrollador, diseñador, experiencia de usuario"
-    />
-    <link rel="stylesheet" href="{% static './css/theme-taiga.css' %}" />
-    <link
-      rel="icon"
-      type="image/png"
-      href="http://localhost:9000/v-1708598134890/images/favicon.png"
-    />
-    <script
-      src="https://kit.fontawesome.com/e0bd086848.js"
-      crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="{% static './css/inicio_gerente.css' %}" />
+<meta name="description"
+  content="Página de inicio de Colvapro con tus proyectos principales y todas tus historias de usuario, tareas y problemas asignados y seguidos" />
+<meta name="keywords"
+  content="ágil, scrum, colvapro, gestión, proyecto, desarrollador, diseñador, experiencia de usuario" />
+<link rel="stylesheet" href="{% static './css/theme-taiga.css' %}" />
+<link rel="icon" type="image/png" href="http://localhost:9000/v-1708598134890/images/favicon.png" />
+<script src="https://kit.fontawesome.com/e0bd086848.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="{% static './css/inicio_gerente.css' %}" />
+
+<style>
+  .projects-empty {
+    top: 0rem;
+  }
+
+  .home-wrapper {
+    display: block;
+  }
+
+  .home-wrapper .dashboard-container {
+    gap: 30px;
+    margin-right: 0;
+  }
+
+  .home-wrapper .working-on-container {
+    margin-right: 0;
+  }
+
+  .watching-container_end {
+    flex: 1;
+    padding: 8px;
+    background-color: white;
+    height: 500px;
+    overflow-y: auto;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 2px;
+  }
+</style>
 
 {% endblock %}
 
 
 {% block conten %}
-    <div ng-if="!errorHandling.showingError">
-      <div ng-view="" class="master">
-        <div class="home-wrapper centered">
-          <div class="duty-summary">
-            <h1>Tablero de Proyectos</h1>
-            <tg-working-on class="dashboard-container">
-              <section class="working-on-container">
-                <header>
-                  <h2 class="title-bar working-on-title">Asignados</h2>
-                </header>
-                <div class="working-on-empty" >
-                  <div class="contable">
-                    <!-- proyecto desde aqui  -->
-                    {% for proyecto in  proyectos %}
-                    {% if proyecto.columna == False %}
-                    <div class="contCard">
-                      <div class="imagen">
-                            <img src="data:image/png;base64,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"/>
-                      </div>
-
-                      <div class="textos">
-                        <h3>{{proyecto.name}}</h3>
-
-                        <div class="estadotarea">
-                          <span class="tarea">Estado:</span>
-                          <p class="estado">{{proyecto.estado}}</p>
-                        </div>
-
-                        <div class="contAsig">
-                          <p class="datenumText">Asignación</p>
-                          <a  href="{% url 'main:nuevoproyecto' codigo=proyecto.codigo  id_gerente=gerente.id %}" class="asg">Ingrese aqui</a>
-                        </div>
-
-                      </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-
-
-                    <!-- hasta aqui  -->
+<div ng-if="!errorHandling.showingError">
+  <div ng-view="" class="master">
+    <div class="home-wrapper centered">
+      <div class="duty-summary">
+        <h1>Gestiona tu proyecto</h1>
+        <tg-working-on class="dashboard-container">
+          <section class="working-on-container">
+            <header>
+              <h2 class="title-bar working-on-title">Asignados</h2>
+            </header>
+            <div class="working-on-empty">
+              <div class="contable">
+                <!-- proyecto desde aqui  -->
+                {% for proyecto in proyectos %}
+                {% if proyecto.columna == False %}
+                <div class="contCard">
+                  <div class="imagen">
+                    <img
+                      src="data:image/png;base64,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" />
                   </div>
-                  <div class="empty-ticket">
-                    <div class="avatar"></div>
-                    <div class="data">
-                      <div class="line"></div>
-                      <div class="line"></div>
+
+                  <div class="textos">
+                    <h3 id="titulos">{{proyecto.name}}</h3>
+
+                    <div class="estadotarea">
+                      <span class="tarea">Estado:</span>
+                      <p class="estado">{{proyecto.estado}}</p>
                     </div>
+
+                    <div class="contAsig">
+                      <p class="datenumText">Asignación</p>
+                      <a href="{% url 'main:nuevoproyecto' codigo=proyecto.codigo  id_gerente=gerente.id %}"
+                        class="asg">Ingrese aqui</a>
+                    </div>
+
                   </div>
                 </div>
-              </section>
-              <section class="watching-container">
-                <header>
-                  <h2 class="title-bar watching-title">Aceptados</h2>
-                </header>
-                <div class="watching-empty" >
-                  <!--  desde aqui  proyectos  -->
-                  {% for proyecto in  proyectos %}
-                    {% if proyecto.columna %}
-                    <div class="contCard">
-                      <div class="imagen">
-                            <img src="data:image/png;base64,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"/>
-                      </div>
-
-                      <div class="textos">
-                        <h3>{{proyecto.name}}</h3>
-
-                        <div class="estadotarea">
-                          <span class="tarea">Estado:</span>
-                          <p class="estado">{{proyecto.estado}}</p>
-                        </div>
-
-                        <div class="contAsig">
-                          <p class="datenumText">Asignación</p>
-                          <a  href="{% url 'main:project' codigo=proyecto.codigo  %}" class="asg" >Ingrese aqui</a>
-                        </div>
-
-                      </div>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
+                {% endif %}
+                {% endfor %}
 
 
-                  <!--  hasta aqui proyectos  -->
-
-                  <div class="empty-ticket">
-                    <div class="avatar"></div>
-                    <div class="data">
-                      <div class="line"></div>
-                      <div class="line"></div>
-                    </div>
-                  </div>
+                <!-- hasta aqui  -->
+              </div>
+              <div class="empty-ticket">
+                <div class="avatar"></div>
+                <div class="data">
+                  <div class="line"></div>
+                  <div class="line"></div>
                 </div>
-              </section>
+              </div>
+            </div>
+          </section>
+          <section class="watching-container">
+            <header>
+              <h2 class="title-bar watching-title">En curso</h2>
+            </header>
+            <div class="watching-empty">
+              <!--  desde aqui  proyectos  -->
+              {% for proyecto in proyectos %}
+              {% if proyecto.columna %}
+              <div class="contCard">
+                <div class="imagen">
+                  <img
+                    src="data:image/png;base64,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" />
+                </div>
 
-            </tg-working-on>
-          </div>
-          <aside tg-home-project-list="" class="project-list">
-            <section class="projects-empty" >
-              <tg-svg svg-icon="icon-project"> </tg-svg>
-              <a
-                variant="primary"
-                href="{% url 'main:leccionesprojecall' id_gerente=gerente.id %}"
-                title="Historico de Lecciones"
-                class="btn-small create-project-button"
-                >Historico de Lecciones</a
-              >
-            </section=>
-          </aside>
-        </div>
+                <div class="textos">
+                  <h3 id="titulos">{{proyecto.name}}</h3>
+
+                  <div class="estadotarea">
+                    <span class="tarea">Estado:</span>
+                    <p class="estado">{{proyecto.estado}}</p>
+                  </div>
+
+                  <div class="contAsig">
+                    <p class="datenumText">Asignación</p>
+                    <a href="{% url 'main:project' codigo=proyecto.codigo  %}" class="asg">Ingrese aqui</a>
+                  </div>
+
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+
+
+              <!--  hasta aqui proyectos  -->
+
+              <div class="empty-ticket">
+                <div class="avatar"></div>
+                <div class="data">
+                  <div class="line"></div>
+                  <div class="line"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="watching-container_end">
+            <header>
+              <h2 class="title-bar watching-title">Finalizados</h2>
+            </header>
+            <div class="watching-empty">
+              <!--  desde aqui  proyectos  -->
+              {% for proyecto in proyectos %}
+              {% if proyecto.columna %}
+              <div class="contCard">
+                <div class="imagen">
+                  <img
+                    src="data:image/png;base64,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" />
+                </div>
+
+                <div class="textos">
+                  <h3 id="titulos"></h3>
+
+                  <div class="estadotarea">
+                    <span class="tarea">Estado:</span>
+                    <p class="estado">{{proyecto.estado}}</p>
+                  </div>
+
+                  <div class="contAsig">
+                    <p class="datenumText">Asignación</p>
+                    <a href="{% url 'main:project' codigo=proyecto.codigo  %}" class="asg">Ingrese aqui</a>
+                  </div>
+
+                </div>
+              </div>
+              {% endif %}
+              {% endfor %}
+
+
+              <!--  hasta aqui proyectos  -->
+
+              <div class="empty-ticket">
+                <div class="avatar"></div>
+                <div class="data">
+                  <div class="line"></div>
+                  <div class="line"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+        </tg-working-on>
       </div>
+      <aside tg-home-project-list="" class="project-list">
+        <section class="projects-empty">
+          <tg-svg svg-icon="icon-project"> </tg-svg>
+          <a variant="primary" href="{% url 'main:leccionesprojecall' id_gerente=gerente.id %}"
+            title="Historico de Lecciones" class="btn-small create-project-button">Historico de Lecciones</a>
+          </section=>
+      </aside>
     </div>
-  {% endblock %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var titulos = document.querySelectorAll('#titulos');
+        var limiteCaracteres = 40; // Puedes ajustar este valor según tus necesidades
+
+        titulos.forEach(function(titulo) {
+            if (titulo.textContent.length > limiteCaracteres) {
+                titulo.textContent = titulo.textContent.substring(0, limiteCaracteres) + '...';
+            }
+        });
+    });
+</script>
+
+{% endblock %}

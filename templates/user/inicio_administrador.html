@@ -1,4 +1,3 @@
-<br>
 {% extends 'plantilla2.html' %}
 {% load static %}
 {% block id_project %}proyecto.id{% endblock %}
@@ -17,6 +16,7 @@
 
     <link rel="stylesheet" href="{% static './css/theme-taiga.css' %}">
     <link rel="stylesheet" href="{% static './css/inicio_administrador.css' %}">
+    <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
 
 {% endblock %}
 
@@ -26,11 +26,11 @@
         <div ng-view="" class="master">
             <div class="home-wrapper centered">
                 <div class="duty-summary">
-                    <h1>Tablero de Proyectos</h1>
+                    <h1>Proyectos asignados </h1>
                     <tg-working-on class="dashboard-container">
                         <section class="working-on-container">
                             <header>
-                                <h2 class="title-bar working-on-title">Trabajando en</h2>
+                                <h2 class="title-bar working-on-title">Gerentes de proyectos </h2>
                             </header>
                             <div ng-if="vm.assignedTo != undefined &amp;&amp; vm.assignedTo.size === 0"
                                 class="working-on-empty">
@@ -39,13 +39,12 @@
                                     <table class="tableType">
                                     <thead>
                                         <tr>
-                                            <th style="width: 40%;" class="encabezadonombre">Nombre</th>
-                                            <th class="encabezadoinfo" onmouseenter="cambiarTexto(this, 'Necesidades entrega operacion')" onmouseleave="restaurarTexto(this)">&lt;&gt;</th>
-                                            <th class="encabezadoinfo" onmouseenter="cambiarTexto(this, 'Necesidades')" onmouseleave="restaurarTexto(this)">&lt;&gt;</th>
-                                            <th class="encabezadoinfo" onmouseenter="cambiarTexto(this, 'Proyectos integrados')" onmouseleave="restaurarTexto(this)">&lt;&gt;</th>
-                                            <th class="encabezadoinfo" onmouseenter="cambiarTexto(this, 'Proyectos productos propios')" onmouseleave="restaurarTexto(this)">&lt;&gt;</th>
-                                            <th class="encabezadoinfo" >Total</th>
-                                            <th class="encabezadoinfo" >Asignar</th>
+                                            <th style="width: 30%;" class="encabezadonombre">Nombre</th>
+                                            <th style="width: 15%;" class="encabezadoinfo" >Necesidades entrega operacion</th>
+                                            <th style="width: 15%;" class="encabezadoinfo" >Necesidades</th>
+                                            <th style="width: 15%;" class="encabezadoinfo" >Proyectos integrados</th>
+                                            <th style="width: 15%;" class="encabezadoinfo" >Proyectos productos propios</th>
+                                            <th style="width: 10%;" class="encabezadoinfo" >Total</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -57,7 +56,6 @@
                                             <td class="infotable">{{ gerente.tip3 }}</td>
                                             <td class="infotable">{{ gerente.tip4 }}</td>
                                             <td class="infotable">{{ gerente.total }}</td>
-                                            <td class="infotable"><button class="tableType-btn">+</button></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -78,15 +76,20 @@
                                     <table class="tableType">
                                     <thead>
                                         <tr>
-                                            <th style="width: 50%;" class="encabezadonombre">Nombre</th>
-                                            <th class="encabezadoinfo" >Asignar</th>
+                                            <th style="width: 40%;" class="encabezadonombre">Nombre</th>
+                                            <th style="width: 40%;" class="encabezadoinfo" >Project Manager</th>
+                                            <th style="width: 20%;" class="encabezadoinfo" >Asignar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% for pro in proyecto %}
                                         <tr>
                                             <td>{{ pro.name }}</td>
-                                            <td class="infotable"><a href="{% url 'main:dobleasignar' codigo=pro.codigo %}" class="tableType-btn" >+</a> </td>
+                                            <td>
+                                            {% for use in pro.user.all %}
+                                                {{use.usuario.first_name}} {{use.usuario.last_name}} ,
+                                            {% endfor %}</td>
+                                            <td class="infotable"><button class="tableType-btn" ><a href="{% url 'main:dobleasignar' codigo=pro.codigo %}" style="color: white;">+</a></button></td>
                                         </tr>
                                         {% endfor %}
                                     </tbody>
@@ -102,9 +105,18 @@
                     <section ng-if="vm.projects != undefined &amp;&amp; vm.projects.size === 0" class="projects-empty">
                         <tg-svg svg-icon="icon-project">
                         </tg-svg>
-                        <p>Asignar proyectos</p>
-                        <a variant="primary" href="{% url 'main:asignar' %}" title="Crear proyecto"
-                            class="btn-small create-project-button">Nuevo proyecto</a>
+                        <!--p>Asignar proyectos</p-->
+                        <div class="container">
+                            <button  class="btn-small create-project-button"><a href="{% url 'main:asignar' %}" style="color: white;" >Nuevo proyecto</a></button>
+                        </div>
+                    </section>
+
+                    <section ng-if="vm.projects != undefined &amp;&amp; vm.projects.size === 0" class="projects-empty">
+                        <tg-svg svg-icon="icon-project">
+                        </tg-svg>
+                        <div class="container">
+                            <button  class="btn-small create-project-button"><a href='https://app.powerbi.com/links/TPTjekDVh3?ctid=aa862528-bc3c-4d61-a4b8-745ce6c7217f&pbi_source=linkShare&bookmarkGuid=5198221b-90f9-4ac9-93fa-2836db183e67' style="color: white;" >Dashboard general</a></button>
+                        </div>
                     </section>
                 </aside>
             </div>

@@ -29,16 +29,16 @@ h1{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 
 .card {
-    width: 100%; 
-    margin-bottom: 20px; 
+    width: 100%;
+    margin-bottom: 20px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: auto;
 }
 
@@ -52,12 +52,12 @@ h1{
 }
 
 select#filterSelect {
-    flex: 1; 
+    flex: 1;
     padding: 8px;
 }
 
 .table-container {
-    width: 100%; 
+    width: 100%;
 }
 
 .tableType {
@@ -97,9 +97,9 @@ td.conAdd {
 }
 
 select#filterSelect {
-    margin: 20px 0.5em 12px; 
+    margin: 20px 0.5em 12px;
     padding: 8px;
-    vertical-align: middle; 
+    vertical-align: middle;
 }
 
 .pagination-link.is-current {
@@ -111,6 +111,8 @@ select#filterSelect {
 .projects-empty .create-project-button {
     display: block;
     margin-top: 30px;
+    height:40px;
+    width:100%;
 }
 
 table {
@@ -188,7 +190,7 @@ table {
     top: 2.5rem;
     left: -230px;
     background: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 280px;
 }
 
@@ -199,7 +201,6 @@ a, a:visited{
 a:hover, a:visited:hover{
     text-decoration: none;
     border-radius: 2px;
-    background: var(--gris);
 }
 
 .navbar{

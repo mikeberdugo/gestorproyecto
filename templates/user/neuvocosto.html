@@ -3,7 +3,7 @@
 {% block id_project %}proyecto.id{% endblock %}
 
 {% block title %} gestion de proyecto  - {{proyecto.name}} {% endblock %}
-{% block name %} 
+{% block name %}
     {{proyecto.name}}
 {% endblock %}
 
@@ -36,15 +36,15 @@
                     <option value="provedor">Provedor</option>
                     <option value="cliente">Cliente</option>
                 </select>
-            
+
             </fieldset>
         </div>
         <div>
             <fieldset>
                 <label for="aliado">Nombre </label>
-                
+
                 <input id="aliado" name="aliado" type="text" ng-model="vm.costoForm.aliado" placeholder="Aliado (Requerido)" required="required" class="ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" aria-invalid="true">
-                
+
             </fieldset>
         </div>
         <div>
@@ -86,7 +86,7 @@
         </div>
         <br>
     </form>
-    
+
 
 </div>
 
@@ -94,7 +94,7 @@
 
 
 {% block scripts %}
-    
+
 {% endblock %}
 
 

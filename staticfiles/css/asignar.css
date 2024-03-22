@@ -27,7 +27,7 @@ body {
 .navbar{
     background: white;
 }
-  
+
 .tarjeta {
     width: 100%;
     background-color: #fff;
@@ -65,7 +65,7 @@ h3{
     padding-right: 35px;
 }
 
-input[type=text]{
+input[type=text], input[type=number], input[type=date] {
     width: 90%;
 }
 

@@ -4,6 +4,8 @@ from markupfield.fields import MarkupField
 from django.contrib.auth import models as authmodels
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 
 class Usuario(models.Model):
@@ -81,7 +83,18 @@ class Proyecto(models.Model):
     spi = models.FloatField(default=0) ## indicador
     es = models.FloatField(default=0) ## formualdo
 
+    ## informacion extra
+
+    contrato = models.CharField(max_length=100,null=True, blank=True)
+    objeto = models.TextField(null=True, blank=True)
+    cliente = models.CharField(max_length=100,null=True,blank=True)
+    valor = models.FloatField(default=0.0,validators=[MinValueValidator(0.0)])
+    name_contractor =  models.CharField(max_length=100,null=True,blank=True )
+
+
+    ##
     columna = models.BooleanField(default=False) ##  asignado
+
 
 
 class Grupo(models.Model):
@@ -165,22 +178,34 @@ class MatrizRiesgo(models.Model):
     acciones_mitigacion = models.TextField() ## edit
 
 class Documentos(models.Model):
-    titulo = models.CharField(max_length = 100)
-    descriocion = models.TextField()
-    link = models.URLField()
     proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
+    contrato_cliente = models.BooleanField(default=False)
+    acta_inicio = models.BooleanField(default=False)
+    constitucion_proyecto = models.BooleanField(default=False)
+    kickoff_cliente_interno = models.BooleanField(default=False)
+    obligaciones_contractuales = models.BooleanField(default=False)
+    oferta_entregada_cliente = models.BooleanField(default=False)
+    plan_gestion_proyecto = models.BooleanField(default=False)
+    cronograma = models.BooleanField(default=False)
+    contrato_aliado = models.BooleanField(default=False)
+    acta_inicio_aliado = models.BooleanField(default=False)
+    resumen_oc = models.BooleanField(default=False)
+    conciliaciones_proveedor = models.BooleanField(default=False)
+    backlog_oc = models.BooleanField(default=False)
+    matriz_riesgos = models.BooleanField(default=False)
+    matriz_interesados = models.BooleanField(default=False)
+    correos_clientes_proveedor = models.BooleanField(default=False)
+    ficha_presentacion_proyecto = models.BooleanField(default=False)
+    solicitud_control_cambio = models.BooleanField(default=False)
+    actas_reuniones_tecnicas = models.BooleanField(default=False)
+    acta_entrega_cliente = models.BooleanField(default=False)
+    acta_recibido_aliado = models.BooleanField(default=False)
+    ficha_cierre = models.BooleanField(default=False)
+    entrega_aseguramiento = models.BooleanField(default=False)
+    entregas_obligaciones_contractura = models.BooleanField(default=False)
 
-class Costos(models.Model):
-    contrato = models.CharField(max_length = 100)
-    objeto = models.TextField()
-    tipo = models.CharField(max_length = 100)
-    aliado = models.CharField(max_length = 200)
-    contrato_aliado = models.CharField(max_length = 100)
-    backlog = models.TextField()
-    one_time = models.TextField()
-    recurrente = models.TextField()
-    meses = models.CharField(max_length = 100)
-    proyecto = models.ForeignKey(Proyecto, on_delete=models.CASCADE)
+
+
 
 class Tablero(models.Model):
     titulo = models.CharField(max_length=200)
@@ -256,14 +281,6 @@ class Des(models.Model):
     peso = models.IntegerField(default=1, verbose_name='Peso de actividad',blank=True)
 
 
-
-class FaseDes(models.Model):
-    titulo = models.CharField(max_length=200)
-
-class SubFaseDes(models.Model):
-    titulo = models.CharField(max_length=200)
-
-
 class Comunicacion(models.Model):
     codigo = models.CharField(max_length=100)
     rol = models.CharField(max_length=100) ## falta validar roles
@@ -282,6 +299,56 @@ class Acti(models.Model):
     subfasedes = models.CharField(max_length=200)
     tarea = models.CharField(max_length=200)
     horas = models.IntegerField(default=0, verbose_name='Tiempo Estimado (horas)',blank=True)
+
+
+class Costos(models.Model):
+    codigo = models.CharField(max_length=100)
+    contrato = models.CharField(max_length=100)
+    cliente = models.CharField(max_length=200)
+    valor_total_ingreso = models.FloatField(default=0.0,validators=[MinValueValidator(0.0)])
+    costo_presupuestado = models.FloatField(default=0.0,validators=[MinValueValidator(0.0)])
+    utilidad = models.FloatField(default=0.0,validators=[MinValueValidator(0.0)])
+    margen  = models.FloatField(default=0.0,validators=[MinValueValidator(0.0), MaxValueValidator(100.0)])
+    bloqueo = models.BooleanField(default=False)
+
+
+    def save(self, *args, **kwargs):
+        # Calcula la utilidad como la resta entre el valor total de ingreso y el costo presupuestado
+        self.utilidad = self.valor_total_ingreso - self.costo_presupuestado
+        self.margen = round(self.utilidad / self.valor_total_ingreso, 3)
+        super().save(*args, **kwargs)
+
+
+
+class Costosingresos(models.Model):
+    codigo = models.CharField(max_length=100, blank=True, null=True)
+    tipo = models.CharField(max_length=100, blank=True, null=True)
+    fecha_planeada = models.DateField(blank=True, null=True)
+    valor_planeado = models.FloatField(default=0.0, validators=[MinValueValidator(0.0)], blank=True, null=True)
+    fechapago = models.DateField(blank=True, null=True)
+    valorpagado = models.FloatField(default=0.0, validators=[MinValueValidator(0.0)], blank=True, null=True)
+    saldo = models.FloatField(default=0.0, validators=[MinValueValidator(0.0)], blank=True, null=True)
+    observaciones = models.CharField(max_length=100, blank=True, null=True)
+
+
+
+class Costoscostos(models.Model):
+    codigo = models.CharField(max_length=100)
+    tipo = models.CharField(max_length=100)
+    aliado = models.CharField(max_length=100)
+    fecha_planeada = models.DateField()
+    costos_p = models.FloatField(default=0.0,validators=[MinValueValidator(0.0)])
+    fecha_pago = models.DateField()
+    valor_pagado = models.FloatField(default=0.0,validators=[MinValueValidator(0.0)])
+    saldo = models.FloatField(default=0.0,validators=[MinValueValidator(0.0)])
+    obsevaciones = models.CharField(max_length=100)
+
+
+
+
+
+
+
 
 
 

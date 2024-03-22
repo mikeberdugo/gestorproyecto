@@ -1,0 +1,54 @@
+{% extends 'plantilla.html' %}
+{% load static %}
+{% block id_project %}proyecto.id{% endblock %}
+
+{% block title %} gestion de proyecto  - {{proyecto.name}} {% endblock %}
+{% block name %}
+    {{proyecto.name}}
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static './css/stilos_kanban.css' %}">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.1/css/dataTables.tailwindcss.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/2.0.2/css/dataTables.semanticui.css"
+    />
+    <link rel="stylesheet" href="{% static './css/colores.css' %}">
+
+
+{% endblock %}
+
+{% block conten %}
+
+<div class="content-matriz">
+    <div class="titulo">
+        <h1  class="create-project-title">Dashboard</h1>
+    </div>
+    <div class="">
+        <h2 class="create-project-title">Ventana en construcción</h2>
+        <a  href='https://app.powerbi.com/links/TPTjekDVh3?ctid=aa862528-bc3c-4d61-a4b8-745ce6c7217f&pbi_source=linkShare&bookmarkGuid=5198221b-90f9-4ac9-93fa-2836db183e67' class="btnAgregar">Dashboard</a>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block scripts %}
+    <script src="{% static './js/scripts.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.tailwindcss.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.9.2/semantic.min.js"></script>
+    <script src="{% static './js/colores.js' %}"></script>
+
+
+{% endblock %}

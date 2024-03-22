@@ -1,35 +1,49 @@
+:root {
+    --color-principal: #2E3440;
+    --color-secundario: #3B4252;
+    --gris: #f1f1f4;
+    --azul-uno: #216fbc;
+    --azul-dos: #0b3d93;
+    --azul-tres: #4f70af;
+    --azul-cuatro: #122754;
+    --azul-cinco: #080d28;
+}
+
 /* Tabla vista costos */
 .content-costos {
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     margin-top: 16px;
     overflow-x: auto;
     overflow-y: auto;
     height: 500px;
     padding: 12px;
-    width: 96%;
+    width: 90%;
+    background:white;
 }
 
 /* Tabla vista Matriz */
 .content-matriz {
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     margin-top: 16px;
     overflow-x: auto;
     overflow-y: auto;
     height: 500px;
     padding: 12px;
-    width: 96%;
+    width: 90%;
+    background:white;
 }
 
 /* Tabla vista lecciones project */
 .content-lecciones {
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
-    margin-top: 16px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     overflow-x: auto;
     overflow-y: auto;
-    height: 500px;
     padding: 12px;
-    width: 96%;
+    width: 95%;
+    background:white;
 }
+
+
 
 
 .scrolin {
@@ -73,6 +87,147 @@
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
+}
+
+#tabla_riesgos {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  #tabla_riesgos th, #tabla_riesgos td {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  #tabla_riesgos th {
+    background-color: #f2f2f2;
+  }
+
+  #tabla_riesgos tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  /* Estilos para la columna de nivel de riesgo */
+  .nivel-alto {
+    color: red;
+    font-weight: bold;
+  }
+
+  .nivel-medio {
+    color: orange;
+    font-weight: bold;
+  }
+
+  .nivel-bajo {
+    color: green;
+    font-weight: bold;
+  }
+
+  /* Otros estilos */
+  .colorestado {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+
+  .colorestado.estado-alto {
+    background-color: red;
+  }
+
+  .colorestado.estado-medio {
+    background-color: orange;
+  }
+
+  .colorestado.estado-bajo {
+    background-color: green;
+  }
+
+  h1{
+    padding-top: 10px;
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .btnAgregar {
+    padding: 8px;
+    margin-bottom: 12px;
+    /* border: solid; */
+    position: relative;
+    background: var(--azul-uno);
+    color: white;
+    border-radius: 2px;
+}
+
+
+.btnAgregar:hover{
+  background: var(--azul-cuatro);
+}
+
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */ /* Eliminamos la alineación vertical */
+  }
+  
+  .tarjeta {
+  
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center; /* Centro el contenido */
+    margin: auto; /* Centro horizontalmente */
+  }
+  
+  .titulo {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .contenido {
+    font-size: 16px;
+    color: #666;
+  }
+
+  h1{
+    padding-top: 10px;
+    color: black;
+    font-size: 24px;
+    font-weight: bold;
+    
+  }
+
+  /* modificaciones del css taiga*/
+
+.btn-small{
+  background: var(--azul-uno);
+  color: white;
+  margin-top: 10px;
+  border-radius: 2px;
+}
+
+.btn-small:hover{
+  background: var(--azul-cuatro);
+}
+
+.btn-small[variant="secondary"]{
+  margin-top: 10px;
+  border-radius: 2px;
+}
+
+.btn-small[variant="secondary"]:hover{
+  background-color: var(--azul-cuatro);
+  color: white;
 }
 
 /* Estilos para diferentes estados de los títulos de las columnas */

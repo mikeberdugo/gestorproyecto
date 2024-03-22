@@ -10,7 +10,6 @@ admin.site.register(Tarea)
 admin.site.register(ComentarioTarea)
 admin.site.register(MatrizRiesgo)
 admin.site.register(Documentos)
-admin.site.register(Costos)
 admin.site.register(Tablero)
 admin.site.register(Columna)
 admin.site.register(Tarjeta)
@@ -18,8 +17,10 @@ admin.site.register(Recurso)
 
 ## nuevos modelos
 admin.site.register(Des)
-admin.site.register(FaseDes)
-admin.site.register(SubFaseDes)
 admin.site.register(Comunicacion)
 admin.site.register(Acti)
 
+## modelos costos
+admin.site.register(Costos)
+admin.site.register(Costosingresos)
+admin.site.register(Costoscostos)
